@@ -1,8 +1,5 @@
 package net.darkhax.gyth.utils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
