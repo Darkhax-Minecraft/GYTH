@@ -35,10 +35,10 @@ public class Gyth {
         GameRegistry.registerBlock(modularTank, "modularTank");
         GameRegistry.registerTileEntity(TileEntityModularTank.class, "modularTank");
     }
-    
+
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        
+
         new PluginManager();
     }
 

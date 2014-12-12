@@ -5,7 +5,7 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 public class PluginManager {
 
     public PluginManager() {
-        
+
         FMLInterModComms.sendMessage("Waila", "register", "net.darkhax.gyth.plugins.PluginWaila.callbackRegister");
     }
 }

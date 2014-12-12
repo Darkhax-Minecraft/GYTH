@@ -25,39 +25,40 @@ public class PluginWaila implements IWailaDataProvider {
     @Override
     @Optional.Method(modid = "Waila")
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        
+
         return accessor.getStack();
     }
 
     @Override
     @Optional.Method(modid = "Waila")
     public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        
+
         return currenttip;
     }
 
     @Override
     @Optional.Method(modid = "Waila")
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        
+
         if (accessor.getTileEntity() instanceof TileEntityModularTank) {
-            
+
             TileEntityModularTank modularTank = (TileEntityModularTank) accessor.getTileEntity();
-            
-            if (modularTank.tank.getFluid().getFluid() != null)
+
+            if (modularTank.tank.getFluid() != null)
                 currenttip.add(StatCollector.translateToLocal("tooltip.gyth.fluidName") + ": " + modularTank.tank.getFluid().getLocalizedName());
-            
+
             currenttip.add(StatCollector.translateToLocal("tooltip.gyth.fluidName") + ": " + modularTank.tank.getFluidAmount() + "/" + modularTank.tank.getCapacity() + " mB");
-            currenttip.add(StatCollector.translateToLocal("tooltip.gyth.tankTier") + ": " + modularTank.tier);
+            currenttip.add(StatCollector.translateToLocal("tooltip.gyth.tankTier") + ": " + modularTank.tierName);
+
         }
-        
+
         return currenttip;
     }
 
     @Override
     @Optional.Method(modid = "Waila")
     public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        
+
         return currenttip;
     }
 }

@@ -2,7 +2,6 @@ package net.darkhax.gyth.common.tileentity;
 
 import java.util.ArrayList;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -22,32 +21,33 @@ public class TileEntityModularTank extends TileEntity implements IFluidHandler {
 
     public FluidTank tank;
     public int tier = 1;
+    public String tierName = "wood";
     public ArrayList<String> upgrades = new ArrayList<String>();
 
     public TileEntityModularTank() {
 
         tank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME * 2);
     }
-    
+
     public void setTankTier(int tankTier) {
-        
+
         this.tier = tankTier;
     }
-    
+
     public int getTankTier() {
-        
+
         return this.tier;
     }
-    
+
     public void upgradeTank(ItemStack upgradeItem) {
-        
+
         if (upgradeItem.getItem() != null && upgradeItem.hasTagCompound() && getTankTier() + 1 == upgradeItem.getTagCompound().getInteger("TankTier")) {
-            
+
             setTankTier(upgradeItem.getTagCompound().getInteger("TankTier"));
             setTankCapacity(getTankTier() * 16);
         }
     }
-    
+
     /**
      * Sets the capacity of the tank based on buckets.
      * 
@@ -102,14 +102,13 @@ public class TileEntityModularTank extends TileEntity implements IFluidHandler {
     public void readFromNBT(NBTTagCompound nbt) {
 
         super.readFromNBT(nbt);
-        
-        if (nbt.getBoolean("hasFluid")) {
-            
-            tier = nbt.getInteger("tier");
+
+        tier = nbt.getInteger("tier");
+        tierName = nbt.getString("tierName");
+        if (nbt.getBoolean("hasFluid"))
             tank.setFluid(FluidRegistry.getFluidStack(nbt.getString("fluidName"), nbt.getInteger("fluidAmount")));
-        }
-        
-        else 
+
+        else
             tank.setFluid(null);
     }
 
@@ -117,20 +116,22 @@ public class TileEntityModularTank extends TileEntity implements IFluidHandler {
     public void writeToNBT(NBTTagCompound nbt) {
 
         super.writeToNBT(nbt);
-        
+
         nbt.setBoolean("hasFluid", tank.getFluid() != null);
-        
+
         if (tank.getFluid() != null) {
-            
+
             nbt.setString("fluidName", tank.getFluid().getFluid().getName());
             nbt.setInteger("fluidAmount", tank.getFluidAmount());
-            nbt.setInteger("tier", tier);
         }
+
+        nbt.setInteger("tier", tier);
+        nbt.setString("tierName", tierName);
     }
-    
+
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-        
+
         int amount = tank.fill(resource, doFill);
 
         if (amount > 0 && doFill)
@@ -179,6 +180,6 @@ public class TileEntityModularTank extends TileEntity implements IFluidHandler {
         if (fluidStack != null)
             return new FluidTankInfo[] { new FluidTankInfo(fluidStack.copy(), tank.getCapacity()) };
 
-        return new FluidTankInfo[] {null};
+        return new FluidTankInfo[] { null };
     }
 }
