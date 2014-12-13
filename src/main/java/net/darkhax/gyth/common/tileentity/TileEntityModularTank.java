@@ -21,7 +21,7 @@ public class TileEntityModularTank extends TileEntity implements IFluidHandler {
 
     public FluidTank tank;
     public int tier = 1;
-    public String tierName = "wood";
+    public String tierName = "oak";
     public ArrayList<String> upgrades = new ArrayList<String>();
 
     public TileEntityModularTank() {

@@ -1,0 +1,117 @@
+package net.darkhax.gyth.common.items;
+
+import java.util.List;
+
+import net.darkhax.gyth.Gyth;
+import net.darkhax.gyth.common.blocks.BlockModularTank;
+import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
+import net.darkhax.gyth.utils.EnumTankData;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class ItemTankUpgrade extends Item {
+
+    public static IIcon[] iconArray;
+
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
+
+        if (world.getBlock(x, y, z) instanceof BlockModularTank) {
+
+            TileEntityModularTank tank = (TileEntityModularTank) world.getTileEntity(x, y, z);
+
+            if (tank != null && stack.hasTagCompound()) {
+
+                NBTTagCompound tag = stack.getTagCompound();
+
+                if (tag.hasKey("Tier") && tag.hasKey("TierName")) {
+
+                    if (tank.tier + 1 == tag.getInteger("Tier")) {
+
+                        tank.tier = tag.getInteger("Tier");
+                        tank.tierName = tag.getString("TierName");
+                        tank.increaseTankCapacity(tank.tier * FluidContainerRegistry.BUCKET_VOLUME);
+                        return true;
+                    }
+
+                    else if (tank.tier == tag.getInteger("Tier")) {
+
+                        tank.tierName = tag.getString("TierName");
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getUnlocalizedName(ItemStack stack) {
+
+        return stack.hasTagCompound() ? "item.gyth.upgrade." + stack.stackTagCompound.getString("TierName") : "item.gyth.upgrade.name";
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister ir) {
+
+        iconArray = new IIcon[EnumTankData.values().length];
+
+        for (int i = 0; i < iconArray.length; i++)
+            iconArray[i] = ir.registerIcon("gyth:upgrade_" + EnumTankData.values()[i].upgradeName);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean advanced) {
+
+        if (stack.hasTagCompound()) {
+
+        }
+
+        else {
+
+            info.add("This upgrade item is missing its data!");
+        }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconIndex(ItemStack stack) {
+
+        if (stack.hasTagCompound()) {
+
+            int pos = EnumTankData.getPosInEnum(stack.stackTagCompound.getString("TierName"));
+            this.itemIcon = iconArray[pos];
+            return iconArray[pos];
+        }
+
+        this.itemIcon = iconArray[0];
+        return iconArray[0];
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item item, CreativeTabs tab, List list) {
+
+        for (EnumTankData data : EnumTankData.values()) {
+
+            ItemStack stack = new ItemStack(Gyth.tankUpgrade);
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setString("TierName", data.upgradeName);
+            tag.setInteger("Tier", data.tier);
+            stack.setTagCompound(tag);
+            list.add(stack);
+        }
+    }
+}

@@ -4,7 +4,12 @@ import net.minecraftforge.common.util.EnumHelper;
 
 public enum EnumTankData {
 
-    WOOD("wood", 1),
+    ACACIA("acacia", 1),
+    BIRCH("birch", 1),
+    DARKOAK("darkoak", 1),
+    JUNGLE("jungle", 1),
+    OAK("oak", 1),
+    SPRUCE("spruce", 1),
     STONE("stone", 2),
     IRON("iron", 3),
     LAPIS("lapis", 4),
@@ -30,5 +35,14 @@ public enum EnumTankData {
         Class<?>[] paramTypes = { String.class, int.class };
         Object[] paramValues = { upgradeName, tier };
         return EnumHelper.addEnum(EnumTankData.class, enumName, paramTypes, paramValues);
+    }
+
+    public static int getPosInEnum(String value) {
+
+        for (int i = 0; i < EnumTankData.values().length; i++)
+            if (EnumTankData.values()[i].upgradeName.equalsIgnoreCase(value))
+                return i;
+
+        return 0;
     }
 }

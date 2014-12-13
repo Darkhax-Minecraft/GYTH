@@ -4,10 +4,13 @@ import java.util.Arrays;
 
 import net.darkhax.gyth.common.ProxyCommon;
 import net.darkhax.gyth.common.blocks.BlockModularTank;
+import net.darkhax.gyth.common.items.ItemTankUpgrade;
 import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
 import net.darkhax.gyth.plugins.PluginManager;
 import net.darkhax.gyth.utils.Constants;
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.ModMetadata;
@@ -26,14 +29,19 @@ public class Gyth {
     @Mod.Instance(Constants.MODID)
     public static Gyth instance;
 
+    public static Block modularTank;
+    public static Item tankUpgrade;
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
 
         setModMeta(event.getModMetadata());
-        proxy.registerBlockRenderers();
-        Block modularTank = new BlockModularTank();
+        modularTank = new BlockModularTank();
         GameRegistry.registerBlock(modularTank, "modularTank");
         GameRegistry.registerTileEntity(TileEntityModularTank.class, "modularTank");
+        tankUpgrade = new ItemTankUpgrade().setCreativeTab(CreativeTabs.tabDecorations);
+        GameRegistry.registerItem(tankUpgrade, "tankUpgrade");
+        proxy.registerBlockRenderers();
     }
 
     @EventHandler
