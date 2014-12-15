@@ -154,7 +154,7 @@ public class BlockModularTank extends BlockContainer {
                 int amount = tank.fill(ForgeDirection.UNKNOWN, liquid, false);
 
                 if (amount == liquid.amount) {
-
+                    
                     tank.fill(ForgeDirection.UNKNOWN, liquid, true);
                     if (!player.capabilities.isCreativeMode)
                         player.inventory.setInventorySlotContents(player.inventory.currentItem, Utilities.useItemSafely(stack));

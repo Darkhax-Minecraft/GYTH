@@ -106,15 +106,19 @@ public class ItemTankUpgrade extends Item {
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list) {
 
-        for (EnumTankData data : EnumTankData.values()) {
+        for (EnumTankData data : EnumTankData.values())
+            list.add(getUpgradeStackFromEnum(data));
+    }
 
-            ItemStack stack = new ItemStack(Gyth.tankUpgrade);
-            NBTTagCompound tag = new NBTTagCompound();
-            tag.setString("TierName", data.upgradeName);
-            tag.setInteger("Tier", data.tier);
-            tag.setInteger("TankCapacity", data.capacity);
-            stack.setTagCompound(tag);
-            list.add(stack);
-        }
+    public static ItemStack getUpgradeStackFromEnum(EnumTankData data) {
+
+        ItemStack stack = new ItemStack(Gyth.tankUpgrade);
+        NBTTagCompound tag = new NBTTagCompound();
+        tag.setInteger("Tier", data.tier);
+        tag.setInteger("TankCapacity", data.capacity);
+        tag.setString("TierName", data.upgradeName);
+        stack.setTagCompound(tag);
+
+        return stack;
     }
 }

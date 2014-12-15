@@ -22,7 +22,7 @@ public class TileEntityModularTank extends TileEntity implements IFluidHandler {
     public FluidTank tank;
     public int tier = 1;
     public String tierName = "oak";
-    public ArrayList<String> upgrades = new ArrayList<String>();
+    public ItemStack camoStack = null;
 
     public TileEntityModularTank() {
 
@@ -111,6 +111,12 @@ public class TileEntityModularTank extends TileEntity implements IFluidHandler {
 
         else
             tank.setFluid(null);
+        
+        if (nbt.hasKey("CamoBlock"))
+            camoStack = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("CammoBlock"));
+        
+        else
+            camoStack = null;
     }
 
     @Override
@@ -129,6 +135,13 @@ public class TileEntityModularTank extends TileEntity implements IFluidHandler {
         nbt.setInteger("tier", tier);
         nbt.setInteger("TankCapacity", tank.getCapacity() / FluidContainerRegistry.BUCKET_VOLUME);
         nbt.setString("tierName", tierName);
+        
+        if (camoStack != null) {
+            
+            NBTTagCompound itemTag = new NBTTagCompound();
+            camoStack.writeToNBT(itemTag);
+            nbt.setTag("CamoBlock", itemTag);
+        }
     }
 
     @Override

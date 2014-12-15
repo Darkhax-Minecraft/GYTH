@@ -52,15 +52,18 @@ public class ItemBlockModularTank extends ItemBlock {
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List itemList) {
 
-        for (EnumTankData data : EnumTankData.values()) {
+        for (EnumTankData data : EnumTankData.values())
+            itemList.add(getTankStackFromData(data));
+    }
 
-            ItemStack stack = new ItemStack(Item.getItemFromBlock(Gyth.modularTank));
-            NBTTagCompound tag = new NBTTagCompound();
-            tag.setInteger("Tier", data.tier);
-            tag.setString("TierName", data.upgradeName);
-            tag.setInteger("TankCapacity", data.capacity);
-            stack.setTagCompound(tag);
-            itemList.add(stack);
-        }
+    public static ItemStack getTankStackFromData(EnumTankData data) {
+
+        ItemStack stack = new ItemStack(Item.getItemFromBlock(Gyth.modularTank));
+        NBTTagCompound tag = new NBTTagCompound();
+        tag.setInteger("Tier", data.tier);
+        tag.setString("TierName", data.upgradeName);
+        tag.setInteger("TankCapacity", data.capacity);
+        stack.setTagCompound(tag);
+        return stack;
     }
 }
