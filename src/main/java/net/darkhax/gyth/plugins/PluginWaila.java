@@ -47,8 +47,8 @@ public class PluginWaila implements IWailaDataProvider {
             if (modularTank.tank.getFluid() != null)
                 currenttip.add(StatCollector.translateToLocal("tooltip.gyth.fluidName") + ": " + modularTank.tank.getFluid().getLocalizedName());
 
-            currenttip.add(StatCollector.translateToLocal("tooltip.gyth.fluidName") + ": " + modularTank.tank.getFluidAmount() + "/" + modularTank.tank.getCapacity() + " mB");
-            currenttip.add(StatCollector.translateToLocal("tooltip.gyth.tankTier") + ": " + modularTank.tierName);
+            currenttip.add(StatCollector.translateToLocal("tooltip.gyth.fluidAmount") + ": " + modularTank.tank.getFluidAmount() + "/" + modularTank.tank.getCapacity() + " mB");
+            currenttip.add(StatCollector.translateToLocal("tooltip.gyth.tankTier") + ": " + modularTank.tierName + " (" + modularTank.tier + ")");
 
         }
 
