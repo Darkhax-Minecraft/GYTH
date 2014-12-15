@@ -55,7 +55,7 @@ public class TileEntityModularTank extends TileEntity implements IFluidHandler {
      */
     public void setTankCapacity(int tankCapacityModifier) {
 
-        tank.setCapacity(FluidContainerRegistry.BUCKET_VOLUME * tankCapacityModifier);
+        tank.setCapacity(tankCapacityModifier);
     }
 
     /**
@@ -105,6 +105,7 @@ public class TileEntityModularTank extends TileEntity implements IFluidHandler {
 
         tier = nbt.getInteger("tier");
         tierName = nbt.getString("tierName");
+        tank.setCapacity(nbt.getInteger("TankCapacity") * FluidContainerRegistry.BUCKET_VOLUME);
         if (nbt.getBoolean("hasFluid"))
             tank.setFluid(FluidRegistry.getFluidStack(nbt.getString("fluidName"), nbt.getInteger("fluidAmount")));
 
@@ -126,6 +127,7 @@ public class TileEntityModularTank extends TileEntity implements IFluidHandler {
         }
 
         nbt.setInteger("tier", tier);
+        nbt.setInteger("TankCapacity", tank.getCapacity() / FluidContainerRegistry.BUCKET_VOLUME);
         nbt.setString("tierName", tierName);
     }
 
