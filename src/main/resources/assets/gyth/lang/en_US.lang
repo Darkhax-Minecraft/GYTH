@@ -1,0 +1,22 @@
+#English Language File by Darkhax
+
+tile.gyth.modularTank.name=Modular Tank
+item.gyth.upgrade.acacia.name=Acacia Tank Upgrade
+item.gyth.upgrade.birch.name=Birch Tank Upgrade
+item.gyth.upgrade.darkoak.name=Dark Oak Tank Upgrade
+item.gyth.upgrade.jungle.name=Jungle Tank Upgrade
+item.gyth.upgrade.oak.name=Oak Tank Upgrade
+item.gyth.upgrade.spruce.name=Spruce Tank Upgrade
+item.gyth.upgrade.stone.name=Stone Tank Upgrade
+item.gyth.upgrade.iron.name=Iron Tank Upgrade
+item.gyth.upgrade.lapis.name=Lapis Lazuli Tank Upgrade
+item.gyth.upgrade.redstone.name=Redstone Tank Upgrade
+item.gyth.upgrade.gold.name=Golden Tank Upgrade
+item.gyth.upgrade.quartz.name=Quartz Tank Upgrade
+item.gyth.upgrade.diamond.name=Diamond Tank Upgrade
+item.gyth.upgrade.obsidian.name=Obsidian Tank Upgrade
+item.gyth.upgrade.emerald.name=Emerald Tank Upgrade
+
+tooltip.gyth.fluidName=Contains
+tooltip.gyth.fluidAmount=Amount
+tooltip.gyth.tankTier=Tier
