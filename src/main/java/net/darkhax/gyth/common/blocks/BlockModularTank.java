@@ -252,7 +252,7 @@ public class BlockModularTank extends BlockContainer {
                 }
                 
                 if (stack.getTagCompound().hasKey("CamoBlock"))
-                    tank.camoStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag("ComoBlock"));
+                    tank.camoStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag("CamoBlock"));
 
                 tank.tier = stack.getTagCompound().getInteger("Tier");
                 tank.tierName = stack.getTagCompound().getString("TierName");
