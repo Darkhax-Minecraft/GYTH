@@ -215,6 +215,13 @@ public class BlockModularTank extends BlockContainer {
             fluid.writeToNBT(tagFluid);
             tag.setTag("Fluid", tagFluid);
         }
+        
+        if (tank.camoStack != null) {
+            
+            NBTTagCompound itemTag = new NBTTagCompound();
+            tank.camoStack.writeToNBT(itemTag);
+            tag.setTag("CamoBlock", itemTag);
+        }
 
         tag.setInteger("Tier", tank.tier);
         tag.setString("TierName", tank.tierName);
@@ -243,6 +250,9 @@ public class BlockModularTank extends BlockContainer {
                     FluidStack liquid = FluidStack.loadFluidStackFromNBT(tagFluid);
                     tank.tank.setFluid(liquid);
                 }
+                
+                if (stack.getTagCompound().hasKey("CamoBlock"))
+                    tank.camoStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag("ComoBlock"));
 
                 tank.tier = stack.getTagCompound().getInteger("Tier");
                 tank.tierName = stack.getTagCompound().getString("TierName");
