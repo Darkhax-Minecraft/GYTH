@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
@@ -43,7 +44,7 @@ public class RenderItemModularTank implements IItemRenderer {
                 if (liquid != null && liquid.getFluid().getBlock() != null) {
 
                     GL11.glEnable(GL11.GL_BLEND);
-                    float height = ((float) liquid.amount / (float) tag.getInteger("TankCapacity") * (float) 0.99);
+                    float height = ((float) liquid.amount / (float) (tag.getInteger("TankCapacity") * FluidContainerRegistry.BUCKET_VOLUME) * (float) 0.99);
                     renderblocks.setRenderBounds(0.01, 0.01, 0.01, 0.99, height, 0.99);
                     Utilities.renderStandardInvBlock(renderblocks, liquid.getFluid().getBlock(), 0);
                     GL11.glDisable(GL11.GL_BLEND);
