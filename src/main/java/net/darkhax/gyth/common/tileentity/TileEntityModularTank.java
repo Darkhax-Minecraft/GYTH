@@ -113,7 +113,7 @@ public class TileEntityModularTank extends TileEntity implements IFluidHandler {
             tank.setFluid(null);
         
         if (nbt.hasKey("CamoBlock"))
-            camoStack = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("CammoBlock"));
+            camoStack = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("CamoBlock"));
         
         else
             camoStack = null;
