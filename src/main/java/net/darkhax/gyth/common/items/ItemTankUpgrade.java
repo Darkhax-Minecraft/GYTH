@@ -38,13 +38,15 @@ public class ItemTankUpgrade extends Item {
 
                         tank.tier = tag.getInteger("Tier");
                         tank.tierName = tag.getString("TierName");
-                        tank.increaseTankCapacity(tank.tier * FluidContainerRegistry.BUCKET_VOLUME);
+                        tank.setTankCapacity(tag.getInteger("TankCapacity") * FluidContainerRegistry.BUCKET_VOLUME);
+                        world.func_147479_m(x, y, z);
                         return true;
                     }
 
                     else if (tank.tier == tag.getInteger("Tier")) {
 
                         tank.tierName = tag.getString("TierName");
+                        world.func_147479_m(x, y, z);
                         return true;
                     }
                 }
@@ -110,6 +112,7 @@ public class ItemTankUpgrade extends Item {
             NBTTagCompound tag = new NBTTagCompound();
             tag.setString("TierName", data.upgradeName);
             tag.setInteger("Tier", data.tier);
+            tag.setInteger("TankCapacity", data.capacity);
             stack.setTagCompound(tag);
             list.add(stack);
         }
