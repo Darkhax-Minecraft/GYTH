@@ -3,6 +3,7 @@ package net.darkhax.gyth.common.blocks;
 import java.util.HashMap;
 import java.util.Random;
 
+import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.client.renderer.RenderModularTank;
 import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
 import net.darkhax.gyth.utils.EnumTankData;
@@ -10,7 +11,6 @@ import net.darkhax.gyth.utils.Utilities;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -35,8 +35,8 @@ public class BlockModularTank extends BlockContainer {
     public BlockModularTank() {
 
         super(Material.glass);
-        this.setCreativeTab(CreativeTabs.tabDecorations);
         this.setBlockName("gyth.modularTank");
+        this.setCreativeTab(Gyth.tabGyth);
     }
 
     @Override
@@ -202,7 +202,7 @@ public class BlockModularTank extends BlockContainer {
     }
 
     @Override
-    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z) {
+    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
 
         ItemStack stack = new ItemStack(this, 1);
         TileEntityModularTank tank = (TileEntityModularTank) world.getTileEntity(x, y, z);
@@ -218,12 +218,11 @@ public class BlockModularTank extends BlockContainer {
 
         tag.setInteger("Tier", tank.tier);
         tag.setString("TierName", tank.tierName);
-        tag.setInteger("TankCapacity", tank.tank.getCapacity());
-
-        if (!player.capabilities.isCreativeMode || player.isSneaking())
-            Utilities.dropStackInWorld(world, x, y, z, stack);
-
+        tag.setInteger("TankCapacity", tank.tank.getCapacity() / FluidContainerRegistry.BUCKET_VOLUME);
         stack.setTagCompound(tag);
+
+        if (!player.capabilities.isCreativeMode)
+            Utilities.dropStackInWorld(world, x, y, z, stack);
 
         return world.setBlockToAir(x, y, z);
     }
@@ -247,7 +246,7 @@ public class BlockModularTank extends BlockContainer {
 
                 tank.tier = stack.getTagCompound().getInteger("Tier");
                 tank.tierName = stack.getTagCompound().getString("TierName");
-                tank.setTankCapacity(stack.getTagCompound().getInteger("TankCapacity") / FluidContainerRegistry.BUCKET_VOLUME);
+                tank.setTankCapacity(stack.getTagCompound().getInteger("TankCapacity") * FluidContainerRegistry.BUCKET_VOLUME);
             }
         }
     }
