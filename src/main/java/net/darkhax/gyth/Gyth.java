@@ -4,13 +4,16 @@ import java.util.Arrays;
 
 import net.darkhax.gyth.common.ProxyCommon;
 import net.darkhax.gyth.common.blocks.BlockModularTank;
+import net.darkhax.gyth.common.items.ItemBlockModularTank;
 import net.darkhax.gyth.common.items.ItemTankUpgrade;
+import net.darkhax.gyth.common.tabs.CreativeTabGyth;
 import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
 import net.darkhax.gyth.plugins.PluginManager;
 import net.darkhax.gyth.utils.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.ModMetadata;
@@ -31,23 +34,25 @@ public class Gyth {
 
     public static Block modularTank;
     public static Item tankUpgrade;
+    public static ItemBlock itemModularTank;
+    public static CreativeTabs tabGyth = new CreativeTabGyth();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
 
         setModMeta(event.getModMetadata());
-        modularTank = new BlockModularTank();
-        GameRegistry.registerBlock(modularTank, "modularTank");
-        GameRegistry.registerTileEntity(TileEntityModularTank.class, "modularTank");
-        tankUpgrade = new ItemTankUpgrade().setCreativeTab(CreativeTabs.tabDecorations);
-        GameRegistry.registerItem(tankUpgrade, "tankUpgrade");
-        proxy.registerBlockRenderers();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
 
         new PluginManager();
+        modularTank = new BlockModularTank();
+        GameRegistry.registerBlock(modularTank, ItemBlockModularTank.class, "modularTank");
+        GameRegistry.registerTileEntity(TileEntityModularTank.class, "modularTank");
+        tankUpgrade = new ItemTankUpgrade().setCreativeTab(tabGyth);
+        GameRegistry.registerItem(tankUpgrade, "tankUpgrade");
+        proxy.registerBlockRenderers();
     }
 
     @EventHandler
