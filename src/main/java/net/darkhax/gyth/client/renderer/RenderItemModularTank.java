@@ -46,7 +46,7 @@ public class RenderItemModularTank implements IItemRenderer {
                     GL11.glEnable(GL11.GL_BLEND);
                     float height = ((float) liquid.amount / (float) (tag.getInteger("TankCapacity") * FluidContainerRegistry.BUCKET_VOLUME) * (float) 0.99);
                     renderblocks.setRenderBounds(0.01, 0.01, 0.01, 0.99, height, 0.99);
-                    Utilities.renderStandardInvBlock(renderblocks, liquid.getFluid().getBlock(), 0);
+                    Utilities.renderInventoryBlock(renderblocks, liquid.getFluid().getBlock(), 0);
                     GL11.glDisable(GL11.GL_BLEND);
                 }
             }
@@ -64,7 +64,7 @@ public class RenderItemModularTank implements IItemRenderer {
                     iconArray[1] = Blocks.fire.getIcon(0, 0);
                 }
 
-                Utilities.renderStandardInvBlock(renderblocks, block, iconArray);
+                Utilities.renderInventoryBlock(renderblocks, block, iconArray);
                 GL11.glDisable(GL11.GL_ALPHA_TEST);
             }
         }

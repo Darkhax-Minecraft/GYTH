@@ -61,7 +61,14 @@ public class Utilities {
         }
     }
 
-    public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, int meta) {
+    /**
+     * Renders a standard block in the inventory. This is used to render the fluid blocks.
+     * 
+     * @param renderblocks: Instance of RenderBlocks.
+     * @param block: The block being rendered.
+     * @param meta: The meta value of the block.
+     */
+    public static void renderInventoryBlock(RenderBlocks renderblocks, Block block, int meta) {
 
         Tessellator tessellator = Tessellator.instance;
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
@@ -92,7 +99,16 @@ public class Utilities {
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
     }
 
-    public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, IIcon[] iconArray) {
+    /**
+     * Renders a standard block using an array of IIcons. Note that pos 0 is the top and bottom while pos
+     * 1 represents the four sides. This is used by Gyth to render the tank in the players hand, as
+     * getIcon only provides the valid texture for tanks if a TileEntity is present.
+     * 
+     * @param renderblocks: Instance of RenderBlocks.
+     * @param block: The block being rendered on.
+     * @param iconArray: An array of IIcons where 0 is the top and bottom, while 1 is the sides.
+     */
+    public static void renderInventoryBlock(RenderBlocks renderblocks, Block block, IIcon[] iconArray) {
 
         Tessellator tessellator = Tessellator.instance;
 
@@ -138,9 +154,26 @@ public class Utilities {
         return Blocks.fire.getIcon(0, 0);
     }
 
-    public static void renderFluid(Block block, int meta, RenderBlocks renderer, double filled, int x, int y, int z) {
+    /**
+     * Renders a block based on how complete it is. This can be used to render a block like a hologram,
+     * or a fluid in a tank. Note that this block is not rendered in a 1x1x1 block space, there is 0.01
+     * space between the bounds of this render and the sides and bottom of the block space it is rendered
+     * in.
+     * 
+     * @param block: The block that you wish to render.
+     * @param meta: The metadata of the block being rendered. This is so things like colored wool can be
+     *        supported.
+     * @param renderer: An instance of RenderBlocks. This can be obtained from your
+     *        ISimpleBlockRenderingHandler.
+     * @param complete: A double which represents how complete this block is. 1 is 100% and 0 is 0% while
+     *        0.50 is 50%.
+     * @param x: The X position for this block to be rendered at.
+     * @param y: The Y position for this block to be rendered at.
+     * @param z: The Z position for this block to be rendered at.
+     */
+    public static void renderBlockByCompleteness(Block block, int meta, RenderBlocks renderer, double complete, int x, int y, int z) {
 
-        renderer.setRenderBounds(0.01, 0.01, 0.01, 0.99, filled * 0.99, 0.99);
+        renderer.setRenderBounds(0.01, 0.01, 0.01, 0.99, complete * 0.99, 0.99);
         renderer.setOverrideBlockTexture(block.func_149735_b(3, meta));
         renderer.renderStandardBlock(block, x, y, z);
         renderer.clearOverrideBlockTexture();

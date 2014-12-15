@@ -34,7 +34,7 @@ public class RenderModularTank implements ISimpleBlockRenderingHandler {
                 if (tank.tank.getFluid() != null) {
 
                     Block fluid = tank.tank.getFluid().getFluid().getBlock();
-                    Utilities.renderFluid(fluid, world.getBlockMetadata(x, y, z), renderer, (double) tank.tank.getFluidAmount() / (double) tank.tank.getCapacity(), x, y, z);
+                    Utilities.renderBlockByCompleteness(fluid, world.getBlockMetadata(x, y, z), renderer, (double) tank.tank.getFluidAmount() / (double) tank.tank.getCapacity(), x, y, z);
                 }
             }
 
