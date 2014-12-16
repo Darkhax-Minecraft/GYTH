@@ -5,7 +5,8 @@ import net.darkhax.gyth.common.items.ItemTankUpgrade;
 import net.darkhax.gyth.utils.EnumTankData;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CraftingHandler {
@@ -32,7 +33,12 @@ public class CraftingHandler {
             GameRegistry.addShapedRecipe(ItemTankUpgrade.getUpgradeStackFromEnum(data), new Object[] { "xyx", "yxy", "xyx", Character.valueOf('x'), data.craftingStack, Character.valueOf('y'), Blocks.glass_pane });
     }
 
+    @SubscribeEvent
     public void addAbstractUpgradeRecipes() {
+
+    }
+
+    public void addCamoUpgrade(ItemCraftedEvent event) {
 
     }
 }

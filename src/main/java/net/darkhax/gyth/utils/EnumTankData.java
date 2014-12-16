@@ -22,8 +22,8 @@ public enum EnumTankData {
     DIAMOND("diamond", 6, 256, new ItemStack(Items.diamond)),
     OBSIDIAN("obsidian", 7, 512, new ItemStack(Blocks.obsidian)),
     EMERALD("emerald", 8, 1024, new ItemStack(Blocks.emerald_block));
-    //2048
-    //4096
+    // 2048
+    // 4096
 
     public String upgradeName;
     public int tier;

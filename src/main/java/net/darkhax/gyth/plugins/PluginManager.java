@@ -10,5 +10,6 @@ public class PluginManager {
         FMLInterModComms.sendMessage("Waila", "register", "net.darkhax.gyth.plugins.PluginWaila.callbackRegister");
         new PluginThaumcraft(Loader.isModLoaded("Thaumcraft"));
         new PluginUsefulDNS(Loader.isModLoaded("usefulDNS"));
+        new PluginTinkersConstruct(Loader.isModLoaded("TConstruct"));
     }
 }

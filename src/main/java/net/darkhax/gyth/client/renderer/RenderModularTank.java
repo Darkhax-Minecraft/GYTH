@@ -24,12 +24,11 @@ public class RenderModularTank implements ISimpleBlockRenderingHandler {
 
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-        
+
         if (modelId == renderID) {
 
             TileEntityModularTank tank = (TileEntityModularTank) world.getTileEntity(x, y, z);
 
-            
             if (renderPass == 0) {
 
                 if (tank.tank.getFluid() != null) {
@@ -42,12 +41,12 @@ public class RenderModularTank implements ISimpleBlockRenderingHandler {
             else if (renderPass == 1) {
 
                 renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
-                
+
                 if (tank.camoStack != null)
                     block = Block.getBlockFromItem(tank.camoStack.getItem());
-                
+
                 renderer.renderStandardBlock(block, x, y, z);
-                
+
                 renderer.setRenderFromInside(true);
                 renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
                 renderer.renderStandardBlock(block, x, y, z);

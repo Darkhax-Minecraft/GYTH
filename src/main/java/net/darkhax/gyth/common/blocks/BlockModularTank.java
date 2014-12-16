@@ -154,7 +154,7 @@ public class BlockModularTank extends BlockContainer {
                 int amount = tank.fill(ForgeDirection.UNKNOWN, liquid, false);
 
                 if (amount == liquid.amount) {
-                    
+
                     tank.fill(ForgeDirection.UNKNOWN, liquid, true);
                     if (!player.capabilities.isCreativeMode)
                         player.inventory.setInventorySlotContents(player.inventory.currentItem, Utilities.useItemSafely(stack));
@@ -215,9 +215,9 @@ public class BlockModularTank extends BlockContainer {
             fluid.writeToNBT(tagFluid);
             tag.setTag("Fluid", tagFluid);
         }
-        
+
         if (tank.camoStack != null) {
-            
+
             NBTTagCompound itemTag = new NBTTagCompound();
             tank.camoStack.writeToNBT(itemTag);
             tag.setTag("CamoBlock", itemTag);
@@ -250,7 +250,7 @@ public class BlockModularTank extends BlockContainer {
                     FluidStack liquid = FluidStack.loadFluidStackFromNBT(tagFluid);
                     tank.tank.setFluid(liquid);
                 }
-                
+
                 if (stack.getTagCompound().hasKey("CamoBlock"))
                     tank.camoStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag("CamoBlock"));
 
