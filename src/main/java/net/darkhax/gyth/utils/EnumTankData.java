@@ -22,8 +22,6 @@ public enum EnumTankData {
     DIAMOND("diamond", 6, 256, new ItemStack(Items.diamond)),
     OBSIDIAN("obsidian", 7, 512, new ItemStack(Blocks.obsidian)),
     EMERALD("emerald", 8, 1024, new ItemStack(Blocks.emerald_block));
-    // 2048
-    // 4096
 
     public String upgradeName;
     public int tier;
@@ -43,6 +41,15 @@ public enum EnumTankData {
         Class<?>[] paramTypes = { String.class, int.class, int.class, ItemStack.class };
         Object[] paramValues = { upgradeName, tier, capacity, stack };
         return EnumHelper.addEnum(EnumTankData.class, enumName, paramTypes, paramValues);
+    }
+
+    public static EnumTankData getDataFromName(String name) {
+
+        for (EnumTankData data : EnumTankData.values())
+            if (data.upgradeName.equalsIgnoreCase(name))
+                return data;
+        
+        return ACACIA;
     }
 
     public static int getPosInEnum(String value) {
