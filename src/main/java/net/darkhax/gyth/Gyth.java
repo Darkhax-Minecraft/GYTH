@@ -6,7 +6,6 @@ import net.darkhax.gyth.common.ProxyCommon;
 import net.darkhax.gyth.common.blocks.BlockModularTank;
 import net.darkhax.gyth.common.handler.CraftingHandler;
 import net.darkhax.gyth.common.items.ItemBlockModularTank;
-import net.darkhax.gyth.common.items.ItemCamoUpgrade;
 import net.darkhax.gyth.common.items.ItemTankUpgrade;
 import net.darkhax.gyth.common.tabs.CreativeTabGyth;
 import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
@@ -39,7 +38,6 @@ public class Gyth {
 
     public static Block modularTank;
     public static Item tankUpgrade;
-    public static Item camoUpgrade;
     public static ItemBlock itemModularTank;
     public static CreativeTabs tabGyth = new CreativeTabGyth();
 
@@ -57,10 +55,8 @@ public class Gyth {
         modularTank = new BlockModularTank();
         GameRegistry.registerBlock(modularTank, ItemBlockModularTank.class, "modularTank");
         GameRegistry.registerTileEntity(TileEntityModularTank.class, "modularTank");
-        tankUpgrade = new ItemTankUpgrade().setCreativeTab(tabGyth);
+        tankUpgrade = new ItemTankUpgrade().setCreativeTab(tabGyth).setUnlocalizedName("modularTankUpgrade");
         GameRegistry.registerItem(tankUpgrade, "tankUpgrade");
-        camoUpgrade = new ItemCamoUpgrade().setCreativeTab(tabGyth);
-        GameRegistry.registerItem(camoUpgrade, "camoUpgrade");
         new CraftingHandler();
         proxy.registerBlockRenderers();
     }
