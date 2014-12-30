@@ -95,18 +95,6 @@ public class BlockModularTank extends BlockContainer {
             }
 
             return (side > 1) ? Utilities.getValidIIcon(icons[1]) : Utilities.getValidIIcon(icons[0]);
-
-            /*
-             * switch (side) {
-             * 
-             * case 0: return Utilities.getValidIIcon(iconArray.get(tier)[0]); case 1: return
-             * Utilities.getValidIIcon(iconArray.get(tier)[1]); case 2: return
-             * Utilities.getValidIIcon(iconArray.get(tier)[2]); case 3: return
-             * Utilities.getValidIIcon(iconArray.get(tier)[3]); case 4: return
-             * Utilities.getValidIIcon(iconArray.get(tier)[4]); case 5: return
-             * Utilities.getValidIIcon(iconArray.get(tier)[5]); default: return
-             * Blocks.glass.getIcon(side, 0); }
-             */
         }
 
         return Blocks.glass.getIcon(0, 0);
@@ -127,15 +115,7 @@ public class BlockModularTank extends BlockContainer {
 
             tieredIcons[0] = ir.registerIcon("gyth:tank_" + data.upgradeName + "_cap");
             tieredIcons[1] = ir.registerIcon("gyth:tank_" + data.upgradeName + "_side");
-
-            /*
-             * tieredIcons[0] = ir.registerIcon("gyth:" + data.upgradeName + "_bottom"); tieredIcons[1] =
-             * ir.registerIcon("gyth:" + data.upgradeName + "_top"); tieredIcons[2] =
-             * ir.registerIcon("gyth:" + data.upgradeName + "_north"); tieredIcons[3] =
-             * ir.registerIcon("gyth:" + data.upgradeName + "_south"); tieredIcons[4] =
-             * ir.registerIcon("gyth:" + data.upgradeName + "_east"); tieredIcons[5] =
-             * ir.registerIcon("gyth:" + data.upgradeName + "_west");
-             */
+            
             iconArray.put(data.upgradeName, tieredIcons);
         }
     }
@@ -205,31 +185,33 @@ public class BlockModularTank extends BlockContainer {
     public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
 
         ItemStack stack = new ItemStack(this, 1);
-        TileEntityModularTank tank = (TileEntityModularTank) world.getTileEntity(x, y, z);
-        FluidStack fluid = tank.tank.getFluid();
-        NBTTagCompound tag = new NBTTagCompound();
+        
+        if (!player.capabilities.isCreativeMode) {
+            
+            TileEntityModularTank tank = (TileEntityModularTank) world.getTileEntity(x, y, z);
+            FluidStack fluid = tank.tank.getFluid();
+            NBTTagCompound tag = new NBTTagCompound();
 
-        if (fluid != null) {
+            if (fluid != null && !player.isSneaking()) {
 
-            NBTTagCompound tagFluid = new NBTTagCompound();
-            fluid.writeToNBT(tagFluid);
-            tag.setTag("Fluid", tagFluid);
-        }
+                NBTTagCompound tagFluid = new NBTTagCompound();
+                fluid.writeToNBT(tagFluid);
+                tag.setTag("Fluid", tagFluid);
+            }
 
-        if (tank.camoStack != null) {
+            if (tank.camoStack != null) {
 
-            NBTTagCompound itemTag = new NBTTagCompound();
-            tank.camoStack.writeToNBT(itemTag);
-            tag.setTag("CamoBlock", itemTag);
-        }
+                NBTTagCompound itemTag = new NBTTagCompound();
+                tank.camoStack.writeToNBT(itemTag);
+                tag.setTag("CamoBlock", itemTag);
+            }
 
-        tag.setInteger("Tier", tank.tier);
-        tag.setString("TierName", tank.tierName);
-        tag.setInteger("TankCapacity", tank.tank.getCapacity() / FluidContainerRegistry.BUCKET_VOLUME);
-        stack.setTagCompound(tag);
-
-        if (!player.capabilities.isCreativeMode)
+            tag.setInteger("Tier", tank.tier);
+            tag.setString("TierName", tank.tierName);
+            tag.setInteger("TankCapacity", tank.tank.getCapacity() / FluidContainerRegistry.BUCKET_VOLUME);
+            stack.setTagCompound(tag);            
             Utilities.dropStackInWorld(world, x, y, z, stack);
+        }
 
         return world.setBlockToAir(x, y, z);
     }
