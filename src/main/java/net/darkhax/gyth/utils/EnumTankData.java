@@ -14,6 +14,11 @@ public enum EnumTankData {
     OAK("oak", 1, 4, new ItemStack(Blocks.planks, 1, 0)),
     SPRUCE("spruce", 1, 4, new ItemStack(Blocks.planks, 1, 1)),
     STONE("stone", 2, 16, new ItemStack(Blocks.stone)),
+    STONEBRICK("stonebrick", 2, 16, new ItemStack(Blocks.stone_brick_stairs)),
+    SANDSTONE("sandstone", 2, 16, new ItemStack(Blocks.sandstone)),
+    COBBLE("cobble", 2, 16, new ItemStack(Blocks.cobblestone)),
+    NETHERBRICK("netherbrick", 2, 16, new ItemStack(Blocks.nether_brick)),
+    BRICK("brick", 2, 16, new ItemStack(Blocks.brick_block)),
     IRON("iron", 3, 32, new ItemStack(Items.iron_ingot)),
     LAPIS("lapis", 4, 64, new ItemStack(Blocks.lapis_block)),
     REDSTONE("redstone", 4, 64, new ItemStack(Blocks.redstone_block)),
@@ -48,7 +53,7 @@ public enum EnumTankData {
         for (EnumTankData data : EnumTankData.values())
             if (data.upgradeName.equalsIgnoreCase(name))
                 return data;
-        
+
         return ACACIA;
     }
 
