@@ -66,13 +66,6 @@ public class Gyth {
 
     }
 
-    @SubscribeEvent
-    public void onTooltip(ItemTooltipEvent event) {
-
-        if (event.itemStack.getItem() != null)
-            event.toolTip.add(Item.itemRegistry.getNameForObject(event.itemStack.getItem()));
-    }
-
     void setModMeta(ModMetadata meta) {
 
         meta.authorList = Arrays.asList("Darkhax");
