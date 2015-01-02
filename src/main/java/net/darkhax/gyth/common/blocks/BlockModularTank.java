@@ -168,30 +168,34 @@ public class BlockModularTank extends BlockContainer {
             else if (FluidContainerRegistry.isBucket(stack)) {
 
                 FluidTankInfo[] tanks = tank.getTankInfo(ForgeDirection.UNKNOWN);
-                FluidStack fillFluid = tanks[0].fluid;
-                ItemStack fillStack = FluidContainerRegistry.fillFluidContainer(fillFluid, stack);
+                
+                if (tanks[0] != null) {
+                    
+                    FluidStack fillFluid = tanks[0].fluid;
+                    ItemStack fillStack = FluidContainerRegistry.fillFluidContainer(fillFluid, stack);
 
-                if (fillStack != null) {
+                    if (fillStack != null) {
 
-                    tank.drain(ForgeDirection.UNKNOWN, FluidContainerRegistry.getFluidForFilledItem(fillStack).amount, true);
+                        tank.drain(ForgeDirection.UNKNOWN, FluidContainerRegistry.getFluidForFilledItem(fillStack).amount, true);
 
-                    if (!player.capabilities.isCreativeMode) {
+                        if (!player.capabilities.isCreativeMode) {
 
-                        if (stack.stackSize == 1)
-                            player.inventory.setInventorySlotContents(player.inventory.currentItem, fillStack);
+                            if (stack.stackSize == 1)
+                                player.inventory.setInventorySlotContents(player.inventory.currentItem, fillStack);
 
-                        else {
-                            player.inventory.setInventorySlotContents(player.inventory.currentItem, Utilities.useItemSafely(stack));
+                            else {
+                                player.inventory.setInventorySlotContents(player.inventory.currentItem, Utilities.useItemSafely(stack));
 
-                            if (!player.inventory.addItemStackToInventory(fillStack))
-                                player.dropPlayerItemWithRandomChoice(fillStack, false);
+                                if (!player.inventory.addItemStackToInventory(fillStack))
+                                    player.dropPlayerItemWithRandomChoice(fillStack, false);
+                            }
                         }
+                        return true;
                     }
-                    return true;
-                }
 
-                else
-                    return true;
+                    else
+                        return true;
+                }
             }
         }
 
