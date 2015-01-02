@@ -22,6 +22,7 @@ public class ItemBlockModularTank extends ItemBlock {
     public ItemBlockModularTank(Block block) {
 
         super(block);
+        this.setMaxStackSize(1);
     }
 
     @SideOnly(Side.CLIENT)
