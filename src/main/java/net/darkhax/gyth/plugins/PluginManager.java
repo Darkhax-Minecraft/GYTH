@@ -11,5 +11,6 @@ public class PluginManager {
         new PluginThaumcraft(Loader.isModLoaded("Thaumcraft"));
         new PluginUsefulDNS(Loader.isModLoaded("usefulDNS"));
         new PluginTinkersConstruct(Loader.isModLoaded("TConstruct"));
+        new PluginDendrology(Loader.isModLoaded("dendrology"));
     }
 }
