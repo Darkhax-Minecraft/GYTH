@@ -2,8 +2,8 @@ package net.darkhax.gyth.common.items;
 
 import java.util.List;
 
-import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.utils.EnumTankData;
+import net.darkhax.gyth.utils.Utilities;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -53,17 +53,6 @@ public class ItemBlockModularTank extends ItemBlock {
     public void getSubItems(Item item, CreativeTabs tab, List itemList) {
 
         for (EnumTankData data : EnumTankData.values())
-            itemList.add(getTankStackFromData(data));
-    }
-
-    public static ItemStack getTankStackFromData(EnumTankData data) {
-
-        ItemStack stack = new ItemStack(Item.getItemFromBlock(Gyth.modularTank));
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setInteger("Tier", data.tier);
-        tag.setString("TierName", data.upgradeName);
-        tag.setInteger("TankCapacity", data.capacity);
-        stack.setTagCompound(tag);
-        return stack;
+            itemList.add(Utilities.getTankStackFromData(data));
     }
 }

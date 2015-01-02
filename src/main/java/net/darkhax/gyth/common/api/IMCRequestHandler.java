@@ -7,10 +7,6 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class IMCRequestHandler {
 
-    public static void acceptIncomingMessage(NBTTagCompound tag) {
-
-    }
-
     public static void handleNewUpgradeRequest(NBTTagCompound tag, String sender) {
 
         // TODO add config option for logging.

@@ -1,8 +1,8 @@
 package net.darkhax.gyth.common.handler;
 
-import net.darkhax.gyth.common.items.ItemBlockModularTank;
 import net.darkhax.gyth.common.items.ItemTankUpgrade;
 import net.darkhax.gyth.utils.EnumTankData;
+import net.darkhax.gyth.utils.Utilities;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -23,7 +23,7 @@ public class CraftingHandler {
         for (EnumTankData data : EnumTankData.values()) {
 
             if (data.tier == 1)
-                GameRegistry.addShapedRecipe(ItemBlockModularTank.getTankStackFromData(data), new Object[] { "xyx", "yzy", "xyx", Character.valueOf('x'), data.craftingStack, Character.valueOf('y'), Blocks.glass_pane, Character.valueOf('z'), Items.bucket });
+                GameRegistry.addShapedRecipe(Utilities.getTankStackFromData(data), new Object[] { "xyx", "yzy", "xyx", Character.valueOf('x'), data.craftingStack, Character.valueOf('y'), Blocks.glass_pane, Character.valueOf('z'), Items.bucket });
         }
     }
 
