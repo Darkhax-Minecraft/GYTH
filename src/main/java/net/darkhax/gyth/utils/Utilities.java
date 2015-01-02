@@ -1,13 +1,19 @@
 package net.darkhax.gyth.utils;
 
+import net.darkhax.gyth.Gyth;
+import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
@@ -177,5 +183,41 @@ public class Utilities {
         renderer.setOverrideBlockTexture(block.func_149735_b(3, meta));
         renderer.renderStandardBlock(block, x, y, z);
         renderer.clearOverrideBlockTexture();
+    }
+
+    /**
+     * Creates an ItemStack which represents an EnumTankData entry.
+     * 
+     * @param data: The tank data you wish to represent in item form.
+     */
+    public static ItemStack getTankStackFromData(EnumTankData data) {
+
+        ItemStack stack = new ItemStack(Item.getItemFromBlock(Gyth.modularTank));
+        NBTTagCompound tag = new NBTTagCompound();
+        tag.setInteger("Tier", data.tier);
+        tag.setString("TierName", data.upgradeName);
+        tag.setInteger("TankCapacity", data.capacity);
+        stack.setTagCompound(tag);
+        return stack;
+    }
+
+    public static ItemStack getTankStackFromTile(TileEntityModularTank tank, boolean keepFluid) {
+
+        ItemStack stack = new ItemStack(Gyth.modularTank);
+        stack.setTagCompound(new NBTTagCompound());
+        FluidStack fluid = tank.tank.getFluid();
+
+        if (fluid != null && keepFluid) {
+
+            NBTTagCompound tagFluid = new NBTTagCompound();
+            fluid.writeToNBT(tagFluid);
+            stack.getTagCompound().setTag("Fluid", tagFluid);
+        }
+
+        stack.getTagCompound().setInteger("Tier", tank.tier);
+        stack.getTagCompound().setString("TierName", tank.tierName);
+        stack.getTagCompound().setInteger("TankCapacity", tank.tank.getCapacity() / FluidContainerRegistry.BUCKET_VOLUME);
+
+        return stack;
     }
 }
