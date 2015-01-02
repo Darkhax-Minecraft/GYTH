@@ -18,6 +18,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -37,6 +39,8 @@ public class BlockModularTank extends BlockContainer {
         super(Material.glass);
         this.setBlockName("gyth.modularTank");
         this.setCreativeTab(Gyth.tabGyth);
+        this.setHardness(0.3F);
+        this.setStepSound(soundTypeGlass);
     }
 
     @Override
@@ -70,12 +74,25 @@ public class BlockModularTank extends BlockContainer {
     }
 
     @Override
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+
+        return Utilities.getTankStackFromTile((TileEntityModularTank) world.getTileEntity(x, y, z), true);
+    }
+
+    @Override
+    public int quantityDropped(Random rnd) {
+
+        return 0;
+    }
+
+    @Override
     public boolean canRenderInPass(int pass) {
 
         RenderModularTank.renderPass = pass;
         return true;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(IBlockAccess block, int x, int y, int z, int side) {
 
@@ -100,6 +117,7 @@ public class BlockModularTank extends BlockContainer {
         return Blocks.glass.getIcon(0, 0);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta) {
 
@@ -107,6 +125,7 @@ public class BlockModularTank extends BlockContainer {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister ir) {
 
         for (EnumTankData data : EnumTankData.values()) {
@@ -115,7 +134,7 @@ public class BlockModularTank extends BlockContainer {
 
             tieredIcons[0] = ir.registerIcon("gyth:tank_" + data.upgradeName + "_cap");
             tieredIcons[1] = ir.registerIcon("gyth:tank_" + data.upgradeName + "_side");
-            
+
             iconArray.put(data.upgradeName, tieredIcons);
         }
     }
@@ -171,10 +190,8 @@ public class BlockModularTank extends BlockContainer {
                     return true;
                 }
 
-                else {
-
+                else
                     return true;
-                }
             }
         }
 
@@ -184,33 +201,10 @@ public class BlockModularTank extends BlockContainer {
     @Override
     public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
 
-        ItemStack stack = new ItemStack(this, 1);
-        
         if (!player.capabilities.isCreativeMode) {
-            
+
             TileEntityModularTank tank = (TileEntityModularTank) world.getTileEntity(x, y, z);
-            FluidStack fluid = tank.tank.getFluid();
-            NBTTagCompound tag = new NBTTagCompound();
-
-            if (fluid != null && !player.isSneaking()) {
-
-                NBTTagCompound tagFluid = new NBTTagCompound();
-                fluid.writeToNBT(tagFluid);
-                tag.setTag("Fluid", tagFluid);
-            }
-
-            if (tank.camoStack != null) {
-
-                NBTTagCompound itemTag = new NBTTagCompound();
-                tank.camoStack.writeToNBT(itemTag);
-                tag.setTag("CamoBlock", itemTag);
-            }
-
-            tag.setInteger("Tier", tank.tier);
-            tag.setString("TierName", tank.tierName);
-            tag.setInteger("TankCapacity", tank.tank.getCapacity() / FluidContainerRegistry.BUCKET_VOLUME);
-            stack.setTagCompound(tag);            
-            Utilities.dropStackInWorld(world, x, y, z, stack);
+            Utilities.dropStackInWorld(world, x, y, z, Utilities.getTankStackFromTile(tank, !player.isSneaking()));
         }
 
         return world.setBlockToAir(x, y, z);
@@ -244,8 +238,10 @@ public class BlockModularTank extends BlockContainer {
     }
 
     @Override
-    public int quantityDropped(Random rnd) {
+    public void onBlockExploded(World world, int x, int y, int z, Explosion explosion) {
 
-        return 0;
+        Utilities.dropStackInWorld(world, x, y, z, Utilities.getTankStackFromTile((TileEntityModularTank) world.getTileEntity(x, y, z), true));
+        world.setBlockToAir(x, y, z);
+        onBlockDestroyedByExplosion(world, x, y, z, explosion);
     }
 }
