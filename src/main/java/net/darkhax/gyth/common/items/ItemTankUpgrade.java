@@ -22,6 +22,11 @@ public class ItemTankUpgrade extends Item {
 
     public static IIcon[] iconArray;
 
+    public ItemTankUpgrade() {
+        
+        this.setMaxStackSize(16);
+    }
+    
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
 
         if (world.getBlock(x, y, z) instanceof BlockModularTank) {
@@ -40,13 +45,15 @@ public class ItemTankUpgrade extends Item {
                         tank.tierName = tag.getString("TierName");
                         tank.setTankCapacity(tag.getInteger("TankCapacity") * FluidContainerRegistry.BUCKET_VOLUME);
                         world.func_147479_m(x, y, z);
+                        stack.stackSize--;
                         return true;
                     }
 
-                    else if (tank.tier == tag.getInteger("Tier")) {
+                    else if (tank.tier == tag.getInteger("Tier") && !tank.tierName.equalsIgnoreCase(tag.getString("TierName"))) {
 
                         tank.tierName = tag.getString("TierName");
                         world.func_147479_m(x, y, z);
+                        stack.stackSize--;
                         return true;
                     }
                 }
