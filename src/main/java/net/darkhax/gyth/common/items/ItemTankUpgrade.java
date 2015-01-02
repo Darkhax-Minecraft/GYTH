@@ -12,7 +12,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -23,10 +25,10 @@ public class ItemTankUpgrade extends Item {
     public static IIcon[] iconArray;
 
     public ItemTankUpgrade() {
-        
+
         this.setMaxStackSize(16);
     }
-    
+
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
 
         if (world.getBlock(x, y, z) instanceof BlockModularTank) {
@@ -67,7 +69,7 @@ public class ItemTankUpgrade extends Item {
     @SideOnly(Side.CLIENT)
     public String getUnlocalizedName(ItemStack stack) {
 
-        return stack.hasTagCompound() ? "item.gyth.upgrade." + stack.stackTagCompound.getString("TierName") : "item.gyth.upgrade.name";
+        return "item.gyth.upgrade.name";
     }
 
     @Override
@@ -77,7 +79,7 @@ public class ItemTankUpgrade extends Item {
         iconArray = new IIcon[EnumTankData.values().length];
 
         for (int i = 0; i < iconArray.length; i++)
-            iconArray[i] = ir.registerIcon("gyth:upgrade_" + EnumTankData.values()[i].upgradeName);
+            iconArray[i] = ir.registerIcon("gyth:tank_" + EnumTankData.values()[i].upgradeName + "_side");
     }
 
     @Override
@@ -86,12 +88,13 @@ public class ItemTankUpgrade extends Item {
 
         if (stack.hasTagCompound()) {
 
+            NBTTagCompound tag = stack.getTagCompound();
+            info.add(StatCollector.translateToLocal("tooltip.gyth.tankTier") + ": " + tag.getString("TierName") + " (" + tag.getInteger("Tier") + ")");
+            info.add(tag.getInteger("TankCapacity") + " " + StatCollector.translateToLocal("tooltip.gyth.capacity"));
         }
 
-        else {
-
-            info.add("This upgrade item is missing its data!");
-        }
+        else
+            info.add(EnumChatFormatting.RED + "[WARNING]" + EnumChatFormatting.WHITE + "This upgrade item is missing its data, don't trust it!");
     }
 
     @Override

@@ -168,9 +168,9 @@ public class BlockModularTank extends BlockContainer {
             else if (FluidContainerRegistry.isBucket(stack)) {
 
                 FluidTankInfo[] tanks = tank.getTankInfo(ForgeDirection.UNKNOWN);
-                
+
                 if (tanks[0] != null) {
-                    
+
                     FluidStack fillFluid = tanks[0].fluid;
                     ItemStack fillStack = FluidContainerRegistry.fillFluidContainer(fillFluid, stack);
 
