@@ -44,6 +44,12 @@ public class BlockModularTank extends BlockContainer {
     }
 
     @Override
+    public boolean hasComparatorInputOverride() {
+
+        return true;
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World world, int meta) {
 
         return new TileEntityModularTank();
@@ -137,6 +143,12 @@ public class BlockModularTank extends BlockContainer {
 
             iconArray.put(data.upgradeName, tieredIcons);
         }
+    }
+
+    @Override
+    public int getComparatorInputOverride(World world, int x, int y, int z, int opSide) {
+
+        return 0;
     }
 
     @Override
