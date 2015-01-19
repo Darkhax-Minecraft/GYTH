@@ -163,7 +163,7 @@ public class TileEntityModularTank extends TileEntity implements IFluidHandler {
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
 
-        return tank.getFluid().getFluid() == fluid && tank.getFluidAmount() < tank.getCapacity();
+        return ((tank.getFluid() != null && tank.getFluid().getFluid() == fluid && tank.getFluidAmount() < tank.getCapacity()) || tank.getFluid() == null);
     }
 
     @Override
