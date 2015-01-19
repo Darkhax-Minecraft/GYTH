@@ -179,10 +179,13 @@ public class Utilities {
      */
     public static void renderBlockByCompleteness(Block block, int meta, RenderBlocks renderer, double complete, int x, int y, int z) {
 
-        renderer.setRenderBounds(0.01, 0.01, 0.01, 0.99, complete * 0.99, 0.99);
-        renderer.setOverrideBlockTexture(block.func_149735_b(3, meta));
-        renderer.renderStandardBlock(block, x, y, z);
-        renderer.clearOverrideBlockTexture();
+        if (block != null && renderer != null) {
+            
+            renderer.setRenderBounds(0.01, 0.01, 0.01, 0.99, complete * 0.99, 0.99);
+            renderer.setOverrideBlockTexture(block.func_149735_b(3, meta));
+            renderer.renderStandardBlock(block, x, y, z);
+            renderer.clearOverrideBlockTexture();
+        }
     }
 
     /**
