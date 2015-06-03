@@ -18,41 +18,41 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBlockModularTank extends ItemBlock {
-
+    
     public ItemBlockModularTank(Block block) {
-
+    
         super(block);
         this.setMaxStackSize(1);
     }
-
+    
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean isAdvanced) {
-
+    public void addInformation (ItemStack stack, EntityPlayer player, List tooltip, boolean isAdvanced) {
+    
         if (stack.hasTagCompound()) {
-
+            
             NBTTagCompound tag = stack.stackTagCompound;
-
+            
             FluidStack fluid = null;
-
+            
             if (tag.hasKey("Fluid")) {
-
+                
                 fluid = FluidStack.loadFluidStackFromNBT((NBTTagCompound) tag.getTag("Fluid"));
                 tooltip.add(StatCollector.translateToLocal("tooltip.gyth.fluidName") + ": " + fluid.getLocalizedName());
             }
-
+            
             int amount = (fluid != null) ? fluid.amount : 0;
-
+            
             tooltip.add(StatCollector.translateToLocal("tooltip.gyth.fluidAmount") + ": " + amount + "/" + (tag.getInteger("TankCapacity") * FluidContainerRegistry.BUCKET_VOLUME) + " mB");
             tooltip.add(StatCollector.translateToLocal("tooltip.gyth.tankTier") + ": " + tag.getString("TierName") + " (" + tag.getInteger("Tier") + ")");
         }
-
+        
         else
             tooltip.add(StatCollector.translateToLocal("tooltip.gyth.itemError"));
     }
-
+    
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List itemList) {
-
+    public void getSubItems (Item item, CreativeTabs tab, List itemList) {
+    
         for (EnumTankData data : EnumTankData.values())
             itemList.add(Utilities.getTankStackFromData(data));
     }

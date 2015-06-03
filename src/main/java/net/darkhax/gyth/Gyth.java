@@ -27,28 +27,28 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = Constants.MODID, name = Constants.MOD_NAME, version = Constants.VERSION)
 public class Gyth {
-
+    
     @SidedProxy(serverSide = Constants.SERVER, clientSide = Constants.CLIENT)
     public static ProxyCommon proxy;
-
+    
     @Mod.Instance(Constants.MODID)
     public static Gyth instance;
-
+    
     public static Block modularTank;
     public static Item tankUpgrade;
     public static ItemBlock itemModularTank;
     public static CreativeTabs tabGyth = new CreativeTabGyth();
-
+    
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-
+    public void preInit (FMLPreInitializationEvent event) {
+    
         setModMeta(event.getModMetadata());
         MinecraftForge.EVENT_BUS.register(this);
     }
-
+    
     @EventHandler
-    public void init(FMLInitializationEvent event) {
-
+    public void init (FMLInitializationEvent event) {
+    
         new PluginManager();
         modularTank = new BlockModularTank();
         GameRegistry.registerBlock(modularTank, ItemBlockModularTank.class, "modularTank");
@@ -58,14 +58,14 @@ public class Gyth {
         new CraftingHandler();
         proxy.registerBlockRenderers();
     }
-
+    
     @EventHandler
-    public void messageRecieved(FMLInterModComms.IMCEvent event) {
-
+    public void messageRecieved (FMLInterModComms.IMCEvent event) {
+    
     }
-
-    void setModMeta(ModMetadata meta) {
-
+    
+    void setModMeta (ModMetadata meta) {
+    
         meta.authorList = Arrays.asList("Darkhax");
         meta.credits = "Coded by Darkhax";
         meta.description = "The simple way to store and transport your fluids.";

@@ -12,29 +12,29 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class CreativeTabGyth extends CreativeTabs {
-
+    
     public CreativeTabGyth() {
-
+    
         super("tabGyth");
     }
-
+    
     @Override
-    public Item getTabIconItem() {
-
+    public Item getTabIconItem () {
+    
         return Items.bucket;
     }
-
+    
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayAllReleventItems(List itemList) {
-
+    public void displayAllReleventItems (List itemList) {
+    
         super.displayAllReleventItems(itemList);
     }
-
+    
     @Override
     @SideOnly(Side.CLIENT)
-    public ItemStack getIconItemStack() {
-
+    public ItemStack getIconItemStack () {
+    
         return Utilities.getTankStackFromData(EnumTankData.SPRUCE);
     }
 }

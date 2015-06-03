@@ -10,35 +10,35 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CraftingHandler {
-
+    
     public CraftingHandler() {
-
+    
         addTankRecipes();
         addUpgradeRecipes();
         addAbstractUpgradeRecipes();
     }
-
-    public void addTankRecipes() {
-
+    
+    public void addTankRecipes () {
+    
         for (EnumTankData data : EnumTankData.values()) {
-
+            
             if (data.tier == 1)
                 GameRegistry.addShapedRecipe(Utilities.getTankStackFromData(data), new Object[] { "xyx", "yzy", "xyx", Character.valueOf('x'), data.craftingStack, Character.valueOf('y'), Blocks.glass_pane, Character.valueOf('z'), Items.bucket });
         }
     }
-
-    public void addUpgradeRecipes() {
-
+    
+    public void addUpgradeRecipes () {
+    
         for (EnumTankData data : EnumTankData.values())
             GameRegistry.addShapedRecipe(ItemTankUpgrade.getUpgradeStackFromEnum(data), new Object[] { "xyx", "yxy", "xyx", Character.valueOf('x'), data.craftingStack, Character.valueOf('y'), Blocks.glass_pane });
     }
-
+    
     @SubscribeEvent
-    public void addAbstractUpgradeRecipes() {
-
+    public void addAbstractUpgradeRecipes () {
+    
     }
-
-    public void addCamoUpgrade(ItemCraftedEvent event) {
-
+    
+    public void addCamoUpgrade (ItemCraftedEvent event) {
+    
     }
 }

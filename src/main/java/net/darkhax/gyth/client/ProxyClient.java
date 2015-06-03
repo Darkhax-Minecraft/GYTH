@@ -10,10 +10,10 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ProxyClient extends ProxyCommon {
-
+    
     @Override
-    public void registerBlockRenderers() {
-
+    public void registerBlockRenderers () {
+    
         int id = RenderingRegistry.getNextAvailableRenderId();
         BlockModularTank.renderID = id;
         RenderingRegistry.registerBlockHandler(id, new RenderModularTank(id));

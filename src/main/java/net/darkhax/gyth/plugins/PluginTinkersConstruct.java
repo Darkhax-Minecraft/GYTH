@@ -6,12 +6,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class PluginTinkersConstruct {
-
+    
     // ID == TConstruct
     public PluginTinkersConstruct(boolean loaded) {
-
+    
         if (loaded) {
-
+            
             EnumTankData.addEnumTankData("TINKERSBROWNSTONE", "tinkers_brownstone", 2, 16, new ItemStack((Block) Block.blockRegistry.getObject("TConstruct:SpeedBlock"), 1, 2));
             EnumTankData.addEnumTankData("TINKERSBROWNSTONEROUGH", "tinkers_brownstone_rough", 2, 16, new ItemStack((Block) Block.blockRegistry.getObject("TConstruct:SpeedBlock"), 1, 0));
             EnumTankData.addEnumTankData("TINKERSBROWNSTONEBRICK", "tinkers_brownstone_brick", 2, 16, new ItemStack((Block) Block.blockRegistry.getObject("TConstruct:SpeedBlock"), 1, 3));
