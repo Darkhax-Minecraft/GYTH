@@ -6,7 +6,8 @@ import java.util.Random;
 import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.client.renderer.RenderModularTank;
 import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
-import net.darkhax.gyth.utils.EnumTankData;
+import net.darkhax.gyth.utils.TankData;
+import net.darkhax.gyth.utils.TankTier;
 import net.darkhax.gyth.utils.Utilities;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -134,14 +135,14 @@ public class BlockModularTank extends BlockContainer {
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons (IIconRegister ir) {
     
-        for (EnumTankData data : EnumTankData.values()) {
+        for (TankTier tier : TankData.tiers.values()) {
             
             IIcon[] tieredIcons = new IIcon[2];
             
-            tieredIcons[0] = ir.registerIcon("gyth:tank_" + data.upgradeName + "_cap");
-            tieredIcons[1] = ir.registerIcon("gyth:tank_" + data.upgradeName + "_side");
+            tieredIcons[0] = ir.registerIcon("gyth:tank_" + tier.getName() + "_cap");
+            tieredIcons[1] = ir.registerIcon("gyth:tank_" + tier.getName() + "_side");
             
-            iconArray.put(data.upgradeName, tieredIcons);
+            iconArray.put(tier.getName(), tieredIcons);
         }
     }
     
@@ -242,9 +243,6 @@ public class BlockModularTank extends BlockContainer {
                     FluidStack liquid = FluidStack.loadFluidStackFromNBT(tagFluid);
                     tank.tank.setFluid(liquid);
                 }
-                
-                if (stack.getTagCompound().hasKey("CamoBlock"))
-                    tank.camoStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag("CamoBlock"));
                 
                 tank.tier = stack.getTagCompound().getInteger("Tier");
                 tank.tierName = stack.getTagCompound().getString("TierName");

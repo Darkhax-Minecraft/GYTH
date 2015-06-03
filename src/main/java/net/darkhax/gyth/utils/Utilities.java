@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
@@ -189,22 +188,6 @@ public class Utilities {
             renderer.renderStandardBlock(block, x, y, z);
             renderer.clearOverrideBlockTexture();
         }
-    }
-    
-    /**
-     * Creates an ItemStack which represents an EnumTankData entry.
-     * 
-     * @param data: The tank data you wish to represent in item form.
-     */
-    public static ItemStack getTankStackFromData (EnumTankData data) {
-    
-        ItemStack stack = new ItemStack(Item.getItemFromBlock(Gyth.modularTank));
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setInteger("Tier", data.tier);
-        tag.setString("TierName", data.upgradeName);
-        tag.setInteger("TankCapacity", data.capacity);
-        stack.setTagCompound(tag);
-        return stack;
     }
     
     public static ItemStack getTankStackFromTile (TileEntityModularTank tank, boolean keepFluid) {

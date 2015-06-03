@@ -2,8 +2,7 @@ package net.darkhax.gyth.common.tabs;
 
 import java.util.List;
 
-import net.darkhax.gyth.utils.EnumTankData;
-import net.darkhax.gyth.utils.Utilities;
+import net.darkhax.gyth.utils.TankData;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -35,6 +34,6 @@ public class CreativeTabGyth extends CreativeTabs {
     @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack () {
     
-        return Utilities.getTankStackFromData(EnumTankData.SPRUCE);
+        return TankData.tiers.get("spruce").getTankItemStack();
     }
 }

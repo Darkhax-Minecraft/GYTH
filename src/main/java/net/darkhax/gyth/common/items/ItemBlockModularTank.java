@@ -2,8 +2,8 @@ package net.darkhax.gyth.common.items;
 
 import java.util.List;
 
-import net.darkhax.gyth.utils.EnumTankData;
-import net.darkhax.gyth.utils.Utilities;
+import net.darkhax.gyth.utils.TankData;
+import net.darkhax.gyth.utils.TankTier;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -53,7 +53,7 @@ public class ItemBlockModularTank extends ItemBlock {
     @SideOnly(Side.CLIENT)
     public void getSubItems (Item item, CreativeTabs tab, List itemList) {
     
-        for (EnumTankData data : EnumTankData.values())
-            itemList.add(Utilities.getTankStackFromData(data));
+        for (TankTier tier : TankData.tiers.values())
+            itemList.add(tier.getTankItemStack());
     }
 }

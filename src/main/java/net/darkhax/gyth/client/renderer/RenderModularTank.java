@@ -41,12 +41,7 @@ public class RenderModularTank implements ISimpleBlockRenderingHandler {
             else if (renderPass == 1) {
                 
                 renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
-                
-                if (tank.camoStack != null)
-                    block = Block.getBlockFromItem(tank.camoStack.getItem());
-                
                 renderer.renderStandardBlock(block, x, y, z);
-                
                 renderer.setRenderFromInside(true);
                 renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
                 renderer.renderStandardBlock(block, x, y, z);
@@ -67,5 +62,4 @@ public class RenderModularTank implements ISimpleBlockRenderingHandler {
     
         return renderID;
     }
-    
 }

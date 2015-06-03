@@ -1,21 +1,22 @@
 package net.darkhax.gyth.plugins;
 
-import net.darkhax.gyth.utils.EnumTankData;
+import net.darkhax.gyth.utils.TankData;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import cpw.mods.fml.common.Loader;
 
 public class PluginThaumcraft {
     
     // ID == Thaumcraft
-    public PluginThaumcraft(boolean enabled) {
+    public PluginThaumcraft() {
     
-        if (enabled) {
+        if (Loader.isModLoaded("Thaumcraft")) {
             
-            EnumTankData.addEnumTankData("THAUMCRAFTGREATWOOD", "thaumcraft_greatwood", 1, 4, new ItemStack(Block.getBlockFromName("Thaumcraft:blockWoodenDevice"), 1, 6));
-            EnumTankData.addEnumTankData("THAUMCRAFTSILVERWOOD", "thaumcraft_silverwood", 1, 4, new ItemStack(Block.getBlockFromName("Thaumcraft:blockWoodenDevice"), 1, 7));
-            EnumTankData.addEnumTankData("THAUMCRAFTARCANESTONE", "thaumcraft_arcanestone", 2, 16, new ItemStack(Block.getBlockFromName("Thaumcraft:blockCosmeticSolid"), 1, 6));
-            EnumTankData.addEnumTankData("THAUMCRAFTTHAUMIUM", "thaumcraft_thaumium", 5, 128, new ItemStack((Item) Item.itemRegistry.getObject("Thaumcraft:ItemResource"), 1, 2));
+            TankData.addTankTier("thaumcraft_greatwood", 1, 4, new ItemStack(Block.getBlockFromName("Thaumcraft:blockWoodenDevice"), 1, 6));
+            TankData.addTankTier("thaumcraft_silverwood", 1, 4, new ItemStack(Block.getBlockFromName("Thaumcraft:blockWoodenDevice"), 1, 7));
+            TankData.addTankTier("thaumcraft_arcanestone", 2, 16, new ItemStack(Block.getBlockFromName("Thaumcraft:blockCosmeticSolid"), 1, 6));
+            TankData.addTankTier("thaumcraft_thaumium", 5, 128, new ItemStack((Item) Item.itemRegistry.getObject("Thaumcraft:ItemResource"), 1, 2));
         }
     }
 }
