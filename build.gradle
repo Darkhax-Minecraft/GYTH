@@ -1,51 +1,67 @@
 buildscript {
+
     repositories {
+
         mavenCentral()
         maven {
+
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
         maven {
+
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
     }
     dependencies {
+
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
 
 apply plugin: 'forge'
 
-version = "1.0"
-group= "net.darkhax.gyth"
-archivesBaseName = "gyth"
+version = "1.0.0"
+group = "net.darkhax.gyth"
+archivesBaseName = "Gyth"
 
 minecraft {
-    version = "1.7.10-10.13.0.1180"
-    assetDir = "eclipse/assets"
+
+    version = "1.7.10-10.13.3.1420-1.7.10"
+    runDir = "eclipse"
 }
 
 dependencies {
 
 }
 
-processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+processResources {
 
-    // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
+
         include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
-        
-    // copy everything else, thats not the mcmod.info
+
     from(sourceSets.main.resources.srcDirs) {
+
         exclude 'mcmod.info'
     }
+}
+
+repositories {
+
+    maven {
+        name "Mobius Repo"
+        url "http://mobiusstrip.eu/maven"
+    }
+    maven {
+        name 'CB Repo'
+        url "http://chickenbones.net/maven/"
+    }
+}
+dependencies {
+
+    compile "mcp.mobius.waila:Waila:1.5.10_1.7.10"
 }
