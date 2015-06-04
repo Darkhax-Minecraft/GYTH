@@ -43,19 +43,11 @@ public class ItemTankUpgrade extends Item {
                 
                 if (tag.hasKey("Tier") && tag.hasKey("TierName")) {
                     
-                    if (tank.tier + 1 == tag.getInteger("Tier")) {
+                    if (tank.tier + 1 == tag.getInteger("Tier") || (tank.tier == tag.getInteger("Tier") && !tank.tierName.equalsIgnoreCase(tag.getString("TierName")))) {
                         
                         tank.tier = tag.getInteger("Tier");
                         tank.tierName = tag.getString("TierName");
                         tank.setTankCapacity(tag.getInteger("TankCapacity") * FluidContainerRegistry.BUCKET_VOLUME);
-                        world.func_147479_m(x, y, z);
-                        stack.stackSize--;
-                        return true;
-                    }
-                    
-                    else if (tank.tier == tag.getInteger("Tier") && !tank.tierName.equalsIgnoreCase(tag.getString("TierName"))) {
-                        
-                        tank.tierName = tag.getString("TierName");
                         world.func_147479_m(x, y, z);
                         stack.stackSize--;
                         return true;
