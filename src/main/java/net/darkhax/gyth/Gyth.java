@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import net.darkhax.gyth.common.ProxyCommon;
 import net.darkhax.gyth.common.blocks.BlockModularTank;
+import net.darkhax.gyth.common.handler.ConfigurationHandler;
 import net.darkhax.gyth.common.handler.CraftingHandler;
 import net.darkhax.gyth.common.items.ItemBlockModularTank;
 import net.darkhax.gyth.common.items.ItemTankUpgrade;
@@ -25,7 +26,7 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = Constants.MODID, name = Constants.MOD_NAME, version = Constants.VERSION)
+@Mod(modid = Constants.MODID, name = Constants.MOD_NAME, version = Constants.VERSION, guiFactory = Constants.FACTORY)
 public class Gyth {
     
     @SidedProxy(serverSide = Constants.SERVER, clientSide = Constants.CLIENT)
@@ -43,14 +44,15 @@ public class Gyth {
     public void preInit (FMLPreInitializationEvent event) {
     
         setModMeta(event.getModMetadata());
+        
+        new TankData();
+        new PluginManager();
+        new ConfigurationHandler(event.getSuggestedConfigurationFile());
     }
     
     @EventHandler
     public void init (FMLInitializationEvent event) {
     
-        new TankData();
-        new PluginManager();
-        
         tabGyth = new CreativeTabGyth();
         modularTank = new BlockModularTank();
         GameRegistry.registerBlock(modularTank, ItemBlockModularTank.class, "modularTank");

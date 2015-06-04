@@ -1,5 +1,6 @@
 package net.darkhax.gyth.client.renderer;
 
+import net.darkhax.gyth.common.handler.ConfigurationHandler;
 import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
 import net.darkhax.gyth.utils.Utilities;
 import net.minecraft.block.Block;
@@ -42,10 +43,14 @@ public class RenderModularTank implements ISimpleBlockRenderingHandler {
                 
                 renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
                 renderer.renderStandardBlock(block, x, y, z);
-                renderer.setRenderFromInside(true);
-                renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
-                renderer.renderStandardBlock(block, x, y, z);
-                renderer.setRenderFromInside(false);
+                
+                if (ConfigurationHandler.useFancyRender) {
+                    
+                    renderer.setRenderFromInside(true);
+                    renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
+                    renderer.renderStandardBlock(block, x, y, z);
+                    renderer.setRenderFromInside(false);
+                }
             }
         }
         return true;
