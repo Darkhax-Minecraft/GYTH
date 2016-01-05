@@ -1,4 +1,4 @@
 GYTH
 ====
 
-This mod is pretty
+This mod is pretty dead
