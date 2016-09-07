@@ -1,67 +1,61 @@
 buildscript {
-
     repositories {
-
-        mavenCentral()
+        jcenter()
         maven {
-
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-        maven {
-
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
     }
     dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
 
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+repositories {
+    maven {
+        url "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        url "https://maven.epoxide.xyz/"
     }
 }
 
-apply plugin: 'forge'
-
-version = "1.0.0"
+version = "1.2.0"
 group = "net.darkhax.gyth"
 archivesBaseName = "Gyth"
 
 minecraft {
-
-    version = "1.7.10-10.13.3.1420-1.7.10"
-    runDir = "eclipse"
+    version = "1.10.2-12.18.1.2044"
+    mappings = "snapshot_20160731"
+    runDir = "run"
 }
 
 dependencies {
-
+    deobfCompile "net.darkhax.bookshelf:Bookshelf:1.10.2-1.4.0.292"
+//    deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
+//    deobfCompile "mcp.mobius.waila:Waila:${waila_version}_${minecraft_version}"
 }
 
 processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
 
     from(sourceSets.main.resources.srcDirs) {
-
         include 'mcmod.info'
         expand 'version': project.version, 'mcversion': project.minecraft.version
     }
 
     from(sourceSets.main.resources.srcDirs) {
-
         exclude 'mcmod.info'
     }
 }
 
-repositories {
-
-    maven {
-        name "Mobius Repo"
-        url "http://mobiusstrip.eu/maven"
-    }
-    maven {
-        name 'CB Repo'
-        url "http://chickenbones.net/maven/"
-    }
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'dev'
 }
-dependencies {
 
-    compile "mcp.mobius.waila:Waila:1.5.10_1.7.10"
+artifacts {
+    archives deobfJar
 }

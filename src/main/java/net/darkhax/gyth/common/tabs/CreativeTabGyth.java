@@ -7,8 +7,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CreativeTabGyth extends CreativeTabs {
     
@@ -20,14 +20,7 @@ public class CreativeTabGyth extends CreativeTabs {
     @Override
     public Item getTabIconItem () {
     
-        return Items.bucket;
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void displayAllReleventItems (List itemList) {
-    
-        super.displayAllReleventItems(itemList);
+        return Items.BUCKET;
     }
     
     @Override

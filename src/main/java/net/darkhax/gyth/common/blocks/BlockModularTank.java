@@ -1,261 +1,218 @@
 package net.darkhax.gyth.common.blocks;
 
-import java.util.HashMap;
-import java.util.Random;
-
+import net.darkhax.bookshelf.lib.BlockStates;
 import net.darkhax.gyth.Gyth;
-import net.darkhax.gyth.client.renderer.RenderModularTank;
 import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
 import net.darkhax.gyth.utils.TankData;
 import net.darkhax.gyth.utils.TankTier;
 import net.darkhax.gyth.utils.Utilities;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.common.property.ExtendedBlockState;
+import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BlockModularTank extends BlockContainer {
-    
-    public static int renderID;
-    public static HashMap<String, IIcon[]> iconArray = new HashMap<String, IIcon[]>();
-    
+
     public BlockModularTank() {
-    
-        super(Material.glass);
-        this.setBlockName("gyth.modularTank");
+
+        super(Material.GLASS);
+        this.setUnlocalizedName("gyth.modularTank");
+        this.setRegistryName(new ResourceLocation("gyth", "modularTank"));
         this.setCreativeTab(Gyth.tabGyth);
         this.setHardness(0.3F);
-        this.setStepSound(soundTypeGlass);
+        this.setSoundType(SoundType.GLASS);
+        this.setDefaultState(((IExtendedBlockState) this.blockState.getBaseState()).withProperty(BlockStates.HELD_STATE, null).withProperty(BlockStates.BLOCK_ACCESS, null).withProperty(BlockStates.BLOCKPOS, null));
     }
-    
+
+
     @Override
-    public boolean hasComparatorInputOverride () {
-    
+    public BlockStateContainer createBlockState() {
+
+        return new ExtendedBlockState(this, new IProperty[]{}, new IUnlistedProperty[]{BlockStates.HELD_STATE, BlockStates.BLOCK_ACCESS, BlockStates.BLOCKPOS});
+    }
+
+    @Override
+    public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
+
+        state = ((IExtendedBlockState) state).withProperty(BlockStates.BLOCK_ACCESS, world).withProperty(BlockStates.BLOCKPOS, pos);
+
+        if (world.getTileEntity(pos) instanceof TileEntityModularTank) {
+
+            final TileEntityModularTank tile = (TileEntityModularTank) world.getTileEntity(pos);
+            if (tile != null) {
+                TankTier tier = TankData.tiers.get(tile.tierName);
+                if (tier != null)
+                    return ((IExtendedBlockState) state).withProperty(BlockStates.HELD_STATE, tier.getRenderBlock());
+            }
+        }
+        return state;
+    }
+
+    @Override
+    public boolean hasComparatorInputOverride(IBlockState state) {
         return true;
     }
-    
+
     @Override
-    public TileEntity createNewTileEntity (World world, int meta) {
-    
+    public TileEntity createNewTileEntity(World world, int meta) {
+
         return new TileEntityModularTank();
     }
-    
+
     @Override
-    public boolean isOpaqueCube () {
-    
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
-    
+
     @Override
-    public int getRenderType () {
-    
-        return renderID;
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.CUTOUT;
     }
-    
+
     @Override
-    public boolean renderAsNormalBlock () {
-    
-        return false;
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.MODEL;
     }
-    
+
     @Override
-    public int getRenderBlockPass () {
-    
-        return 1;
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer
+            player) {
+        return Utilities.getTankStackFromTile((TileEntityModularTank) world.getTileEntity(pos), true);
     }
-    
+
     @Override
-    public ItemStack getPickBlock (MovingObjectPosition target, World world, int x, int y, int z) {
-    
-        return Utilities.getTankStackFromTile((TileEntityModularTank) world.getTileEntity(x, y, z), true);
-    }
-    
-    @Override
-    public int quantityDropped (Random rnd) {
-    
+    public int quantityDropped(Random rnd) {
+
         return 0;
     }
-    
+
+
     @Override
-    public boolean canRenderInPass (int pass) {
-    
-        RenderModularTank.renderPass = pass;
-        return true;
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon (IBlockAccess block, int x, int y, int z, int side) {
-    
-        TileEntityModularTank tank = (TileEntityModularTank) block.getTileEntity(x, y, z);
-        
-        if (tank != null && iconArray != null) {
-            
-            String tier = tank.tierName;
-            
-            IIcon[] icons = iconArray.get(tier);
-            
-            if (icons == null) {
-                
-                icons = new IIcon[2];
-                icons[0] = Blocks.glass.getIcon(0, 0);
-                icons[1] = Blocks.fire.getIcon(0, 0);
-            }
-            
-            return (side > 1) ? Utilities.getValidIIcon(icons[1]) : Utilities.getValidIIcon(icons[0]);
-        }
-        
-        return Blocks.glass.getIcon(0, 0);
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon (int side, int meta) {
-    
-        return Blocks.glass.getIcon(side, meta);
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons (IIconRegister ir) {
-    
-        for (TankTier tier : TankData.tiers.values()) {
-            
-            IIcon[] tieredIcons = new IIcon[2];
-            
-            tieredIcons[0] = ir.registerIcon("gyth:tank_" + tier.getName() + "_cap");
-            tieredIcons[1] = ir.registerIcon("gyth:tank_" + tier.getName() + "_side");
-            
-            iconArray.put(tier.getName(), tieredIcons);
-        }
-    }
-    
-    @Override
-    public int getComparatorInputOverride (World world, int x, int y, int z, int opSide) {
-    
+    public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
         return 0;
     }
-    
+
+
     @Override
-    public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
-    
-        ItemStack stack = player.inventory.getCurrentItem();
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand
+            hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+        ItemStack stack = playerIn.inventory.getCurrentItem();
         if (stack != null) {
-            
+
             FluidStack liquid = FluidContainerRegistry.getFluidForFilledItem(stack);
-            TileEntityModularTank tank = (TileEntityModularTank) world.getTileEntity(x, y, z);
-            
+            TileEntityModularTank tank = (TileEntityModularTank) worldIn.getTileEntity(pos);
+
             if (liquid != null) {
-                
-                int amount = tank.fill(ForgeDirection.UNKNOWN, liquid, false);
-                
+
+                int amount = tank.fill(EnumFacing.DOWN, liquid, false);
+
                 if (amount == liquid.amount) {
-                    
-                    tank.fill(ForgeDirection.UNKNOWN, liquid, true);
-                    if (!player.capabilities.isCreativeMode)
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, Utilities.useItemSafely(stack));
-                    
+
+                    tank.fill(EnumFacing.DOWN, liquid, true);
+                    if (!playerIn.capabilities.isCreativeMode)
+                        playerIn.inventory.setInventorySlotContents(playerIn.inventory.currentItem, Utilities.useItemSafely(stack));
+
                     return true;
-                }
-                
-                else
+                } else
                     return true;
-            }
-            
-            else if (FluidContainerRegistry.isBucket(stack)) {
-                
-                FluidTankInfo[] tanks = tank.getTankInfo(ForgeDirection.UNKNOWN);
-                
+            } else if (FluidContainerRegistry.isBucket(stack)) {
+
+                FluidTankInfo[] tanks = tank.getTankInfo(EnumFacing.DOWN);
+
                 if (tanks[0] != null) {
-                    
+
                     FluidStack fillFluid = tanks[0].fluid;
                     ItemStack fillStack = FluidContainerRegistry.fillFluidContainer(fillFluid, stack);
-                    
+
                     if (fillStack != null) {
-                        
-                        tank.drain(ForgeDirection.UNKNOWN, FluidContainerRegistry.getFluidForFilledItem(fillStack).amount, true);
-                        
-                        if (!player.capabilities.isCreativeMode) {
-                            
+
+                        tank.drain(EnumFacing.DOWN, FluidContainerRegistry.getFluidForFilledItem(fillStack).amount, true);
+
+                        if (!playerIn.capabilities.isCreativeMode) {
+
                             if (stack.stackSize == 1)
-                                player.inventory.setInventorySlotContents(player.inventory.currentItem, fillStack);
-                            
+                                playerIn.inventory.setInventorySlotContents(playerIn.inventory.currentItem, fillStack);
+
                             else {
-                                player.inventory.setInventorySlotContents(player.inventory.currentItem, Utilities.useItemSafely(stack));
-                                
-                                if (!player.inventory.addItemStackToInventory(fillStack))
-                                    player.dropPlayerItemWithRandomChoice(fillStack, false);
+                                playerIn.inventory.setInventorySlotContents(playerIn.inventory.currentItem, Utilities.useItemSafely(stack));
+
+//                                if (!playerIn.inventory.addItemStackToInventory(fillStack))
+//                                    playerIn.dropPlayerItemWithRandomChoice(fillStack, false);
                             }
                         }
                         return true;
-                    }
-                    
-                    else
+                    } else
                         return true;
                 }
             }
         }
-        
+
         return false;
     }
-    
+
     @Override
-    public boolean removedByPlayer (World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
-    
+    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player,
+                                   boolean willHarvest) {
         if (!player.capabilities.isCreativeMode) {
-            
-            TileEntityModularTank tank = (TileEntityModularTank) world.getTileEntity(x, y, z);
-            Utilities.dropStackInWorld(world, x, y, z, Utilities.getTankStackFromTile(tank, !player.isSneaking()));
+
+            TileEntityModularTank tank = (TileEntityModularTank) world.getTileEntity(pos);
+            Utilities.dropStackInWorld(world, pos, Utilities.getTankStackFromTile(tank, !player.isSneaking()));
         }
-        
-        return world.setBlockToAir(x, y, z);
+
+        return world.setBlockToAir(pos);
     }
-    
+
     @Override
-    public void onBlockPlacedBy (World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-    
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack
+            stack) {
         if (stack.hasTagCompound()) {
-            
-            TileEntityModularTank tank = (TileEntityModularTank) world.getTileEntity(x, y, z);
-            
+
+            TileEntityModularTank tank = (TileEntityModularTank) worldIn.getTileEntity(pos);
+
             if (tank != null) {
-                
+
                 NBTTagCompound tagFluid = stack.getTagCompound().getCompoundTag("Fluid");
-                
+
                 if (tagFluid != null) {
-                    
+
                     FluidStack liquid = FluidStack.loadFluidStackFromNBT(tagFluid);
                     tank.tank.setFluid(liquid);
                 }
-                
+
                 tank.tier = stack.getTagCompound().getInteger("Tier");
                 tank.tierName = stack.getTagCompound().getString("TierName");
                 tank.setTankCapacity(stack.getTagCompound().getInteger("TankCapacity") * FluidContainerRegistry.BUCKET_VOLUME);
             }
         }
     }
-    
+
     @Override
-    public void onBlockExploded (World world, int x, int y, int z, Explosion explosion) {
-    
-        Utilities.dropStackInWorld(world, x, y, z, Utilities.getTankStackFromTile((TileEntityModularTank) world.getTileEntity(x, y, z), true));
-        world.setBlockToAir(x, y, z);
-        onBlockDestroyedByExplosion(world, x, y, z, explosion);
+    public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {
+        Utilities.dropStackInWorld(world, pos, Utilities.getTankStackFromTile((TileEntityModularTank) world.getTileEntity(pos), true));
+        world.setBlockToAir(pos);
+        onBlockDestroyedByExplosion(world, pos, explosion);
     }
 }

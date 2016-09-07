@@ -1,114 +1,91 @@
 package net.darkhax.gyth.common.items;
 
-import java.util.HashMap;
-import java.util.List;
-
+import com.mojang.realmsclient.gui.ChatFormatting;
+import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.common.blocks.BlockModularTank;
 import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
 import net.darkhax.gyth.utils.TankData;
 import net.darkhax.gyth.utils.TankTier;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemTankUpgrade extends Item {
-    
-    public static HashMap<String, IIcon> iconArray = new HashMap<String, IIcon>();
-    
+
     public ItemTankUpgrade() {
-    
+
         this.setMaxStackSize(16);
+        this.setRegistryName(new ResourceLocation("gyth", "tankUpgrade"));
+        this.setCreativeTab(Gyth.tabGyth);
+        this.setUnlocalizedName("modularTankUpgrade");
     }
-    
-    public boolean onItemUse (ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
-    
-        if (world.getBlock(x, y, z) instanceof BlockModularTank) {
-            
-            TileEntityModularTank tank = (TileEntityModularTank) world.getTileEntity(x, y, z);
-            
+
+    @Override
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+
+        if (worldIn.getBlockState(pos).getBlock() instanceof BlockModularTank) {
+
+            TileEntityModularTank tank = (TileEntityModularTank) worldIn.getTileEntity(pos);
+
             if (tank != null && stack.hasTagCompound()) {
-                
+
                 NBTTagCompound tag = stack.getTagCompound();
-                
+
                 if (tag.hasKey("Tier") && tag.hasKey("TierName")) {
-                    
+
                     if (tank.tier + 1 == tag.getInteger("Tier") || (tank.tier == tag.getInteger("Tier") && !tank.tierName.equalsIgnoreCase(tag.getString("TierName")))) {
-                        
+
                         tank.tier = tag.getInteger("Tier");
                         tank.tierName = tag.getString("TierName");
                         tank.setTankCapacity(tag.getInteger("TankCapacity") * FluidContainerRegistry.BUCKET_VOLUME);
-                        world.func_147479_m(x, y, z);
+//                        worldIn.func_147479_m(x, y, z);
                         stack.stackSize--;
-                        return true;
+                        return EnumActionResult.SUCCESS;
                     }
                 }
             }
         }
-        
-        return false;
+        return EnumActionResult.FAIL;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
-    public String getUnlocalizedName (ItemStack stack) {
-    
+    public String getUnlocalizedName(ItemStack stack) {
+
         return "item.gyth.upgrade.name";
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons (IIconRegister ir) {
-    
-        for (TankTier tier : TankData.tiers.values())
-            iconArray.put(tier.getName(), ir.registerIcon("gyth:tank_" + tier.getName() + "_side"));
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation (ItemStack stack, EntityPlayer player, List info, boolean advanced) {
-    
+    public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean advanced) {
+
         if (stack.hasTagCompound()) {
-            
+
             NBTTagCompound tag = stack.getTagCompound();
-            info.add(StatCollector.translateToLocal("tooltip.gyth.tankTier") + ": " + tag.getString("TierName") + " (" + tag.getInteger("Tier") + ")");
-            info.add(tag.getInteger("TankCapacity") + " " + StatCollector.translateToLocal("tooltip.gyth.capacity"));
-        }
-        
-        else
-            info.add(EnumChatFormatting.RED + "[WARNING]" + EnumChatFormatting.WHITE + "This upgrade item is missing its data, don't trust it!");
+            info.add(I18n.format("tooltip.gyth.tankTier") + ": " + tag.getString("TierName") + " (" + tag.getInteger("Tier") + ")");
+            info.add(tag.getInteger("TankCapacity") + " " + I18n.format("tooltip.gyth.capacity"));
+        } else
+            info.add(ChatFormatting.RED + "[WARNING]" + ChatFormatting.WHITE + "This upgrade item is missing its data, don't trust it!");
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconIndex (ItemStack stack) {
-    
-        if (stack.hasTagCompound()) {
-            
-            IIcon icon = iconArray.get(stack.stackTagCompound.getString("TierName"));
-            
-            if (icon != null)
-                return icon;
-        }
-        
-        this.itemIcon = Blocks.fire.getIcon(0, 0);
-        return Blocks.fire.getIcon(0, 0);
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems (Item item, CreativeTabs tab, List list) {
-    
+    public void getSubItems(Item item, CreativeTabs tab, List list) {
+
         for (TankTier tier : TankData.tiers.values())
             list.add(tier.getUpgradeItemStack());
     }

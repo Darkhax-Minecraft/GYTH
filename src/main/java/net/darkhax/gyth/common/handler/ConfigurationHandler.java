@@ -6,9 +6,9 @@ import net.darkhax.gyth.utils.Constants;
 import net.darkhax.gyth.utils.TankData;
 import net.darkhax.gyth.utils.TankTier;
 import net.minecraftforge.common.config.Configuration;
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigurationHandler {
     
@@ -26,7 +26,7 @@ public class ConfigurationHandler {
     @SubscribeEvent
     public void onConfigChange (ConfigChangedEvent.OnConfigChangedEvent event) {
     
-        if (event.modID.equals(Constants.MODID))
+        if (event.getModID().equals(Constants.MODID))
             syncConfigData();
     }
     
