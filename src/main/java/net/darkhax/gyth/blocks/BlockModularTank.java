@@ -1,4 +1,4 @@
-package net.darkhax.gyth.common.blocks;
+package net.darkhax.gyth.blocks;
 
 import java.util.Random;
 
@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 
 import net.darkhax.bookshelf.lib.BlockStates;
 import net.darkhax.gyth.Gyth;
-import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
+import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.darkhax.gyth.utils.TankData;
 import net.darkhax.gyth.utils.TankTier;
 import net.darkhax.gyth.utils.Utilities;

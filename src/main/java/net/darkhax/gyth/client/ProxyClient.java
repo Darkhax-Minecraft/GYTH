@@ -4,7 +4,7 @@ import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.client.renderer.BakedModularTank;
 import net.darkhax.gyth.client.renderer.RendererModularTank;
 import net.darkhax.gyth.common.ProxyCommon;
-import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
+import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;

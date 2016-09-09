@@ -1,7 +1,7 @@
 package net.darkhax.gyth.client.renderer;
 
 import net.darkhax.bookshelf.lib.util.RenderUtils;
-import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
+import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraftforge.fluids.FluidTank;

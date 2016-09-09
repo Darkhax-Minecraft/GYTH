@@ -1,4 +1,4 @@
-package net.darkhax.gyth.common.handler;
+package net.darkhax.gyth.handler;
 
 import java.io.File;
 

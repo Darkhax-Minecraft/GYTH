@@ -2,15 +2,15 @@ package net.darkhax.gyth;
 
 import java.util.Arrays;
 
+import net.darkhax.gyth.blocks.BlockModularTank;
 import net.darkhax.gyth.common.ProxyCommon;
-import net.darkhax.gyth.common.blocks.BlockModularTank;
-import net.darkhax.gyth.common.handler.ConfigurationHandler;
-import net.darkhax.gyth.common.handler.CraftingHandler;
-import net.darkhax.gyth.common.items.ItemBlockModularTank;
-import net.darkhax.gyth.common.items.ItemTankUpgrade;
-import net.darkhax.gyth.common.tabs.CreativeTabGyth;
-import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
+import net.darkhax.gyth.handler.ConfigurationHandler;
+import net.darkhax.gyth.handler.CraftingHandler;
+import net.darkhax.gyth.items.ItemBlockModularTank;
+import net.darkhax.gyth.items.ItemTankUpgrade;
 import net.darkhax.gyth.plugins.PluginManager;
+import net.darkhax.gyth.tabs.CreativeTabGyth;
+import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.darkhax.gyth.utils.Constants;
 import net.darkhax.gyth.utils.TankData;
 import net.minecraft.block.Block;

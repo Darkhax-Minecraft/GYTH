@@ -1,4 +1,4 @@
-package net.darkhax.gyth.common.handler;
+package net.darkhax.gyth.handler;
 
 import net.darkhax.gyth.utils.TankData;
 import net.darkhax.gyth.utils.TankTier;

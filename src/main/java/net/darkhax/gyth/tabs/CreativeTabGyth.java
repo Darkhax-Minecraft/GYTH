@@ -1,4 +1,4 @@
-package net.darkhax.gyth.common.tabs;
+package net.darkhax.gyth.tabs;
 
 import net.darkhax.gyth.utils.TankData;
 import net.minecraft.creativetab.CreativeTabs;

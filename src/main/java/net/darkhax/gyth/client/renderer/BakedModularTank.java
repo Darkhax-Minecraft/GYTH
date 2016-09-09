@@ -14,7 +14,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import net.darkhax.bookshelf.lib.BlockStates;
-import net.darkhax.gyth.common.blocks.BlockModularTank;
+import net.darkhax.gyth.blocks.BlockModularTank;
 import net.darkhax.gyth.utils.TankData;
 import net.darkhax.gyth.utils.TankTier;
 import net.minecraft.block.state.IBlockState;

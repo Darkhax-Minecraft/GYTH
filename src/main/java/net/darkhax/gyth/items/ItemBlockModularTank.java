@@ -1,4 +1,4 @@
-package net.darkhax.gyth.common.items;
+package net.darkhax.gyth.items;
 
 import java.util.List;
 

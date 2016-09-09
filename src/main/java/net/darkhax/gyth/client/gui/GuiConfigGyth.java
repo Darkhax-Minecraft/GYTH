@@ -3,7 +3,7 @@ package net.darkhax.gyth.client.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.darkhax.gyth.common.handler.ConfigurationHandler;
+import net.darkhax.gyth.handler.ConfigurationHandler;
 import net.darkhax.gyth.utils.Constants;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;

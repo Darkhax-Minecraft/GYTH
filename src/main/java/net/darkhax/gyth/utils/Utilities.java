@@ -1,7 +1,7 @@
 package net.darkhax.gyth.utils;
 
 import net.darkhax.gyth.Gyth;
-import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
+import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

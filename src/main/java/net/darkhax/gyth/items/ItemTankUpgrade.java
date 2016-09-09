@@ -1,12 +1,12 @@
-package net.darkhax.gyth.common.items;
+package net.darkhax.gyth.items;
 
 import java.util.List;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 
 import net.darkhax.gyth.Gyth;
-import net.darkhax.gyth.common.blocks.BlockModularTank;
-import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
+import net.darkhax.gyth.blocks.BlockModularTank;
+import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.darkhax.gyth.utils.TankData;
 import net.darkhax.gyth.utils.TankTier;
 import net.minecraft.client.resources.I18n;

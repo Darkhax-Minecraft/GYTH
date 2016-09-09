@@ -1,4 +1,4 @@
-package net.darkhax.gyth.common.tileentity;
+package net.darkhax.gyth.tileentity;
 
 import javax.annotation.Nullable;
 

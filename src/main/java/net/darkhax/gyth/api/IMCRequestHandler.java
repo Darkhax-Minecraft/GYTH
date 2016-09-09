@@ -1,4 +1,4 @@
-package net.darkhax.gyth.common.api;
+package net.darkhax.gyth.api;
 
 import net.minecraft.nbt.NBTTagCompound;
 
