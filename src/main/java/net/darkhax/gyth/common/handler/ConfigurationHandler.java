@@ -17,22 +17,22 @@ public class ConfigurationHandler {
     public static boolean useFancyRender = false;
     
     public ConfigurationHandler(File configFile) {
-    
+        
         config = new Configuration(configFile);
         FMLCommonHandler.instance().bus().register(this);
-        syncConfigData();
+        this.syncConfigData();
     }
     
     @SubscribeEvent
     public void onConfigChange (ConfigChangedEvent.OnConfigChangedEvent event) {
-    
+        
         if (event.getModID().equals(Constants.MODID))
-            syncConfigData();
+            this.syncConfigData();
     }
     
     private void syncConfigData () {
-    
-        for (TankTier tier : TankData.tiers.values()) {
+        
+        for (final TankTier tier : TankData.tiers.values()) {
             
             tier.setCapacity(config.getInt("capacity_" + tier.getName(), "capacity", tier.getCapacity(), 0, 2147483, "How many buckets (1000mb) should the " + tier.getName() + " tank tier hold?"));
             tier.setTier(config.getInt("tier_" + tier.getName(), "tiers", tier.getTier(), 1, 1024, "How high should the " + tier.getName() + " tier be on the tier tree?"));

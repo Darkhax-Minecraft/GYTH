@@ -11,7 +11,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 public class Utilities {
-
+    
     /**
      * Safely consumes an item, without losing any container data. Useful for things like
      * buckets or bottles.
@@ -19,59 +19,60 @@ public class Utilities {
      * @param stack: The ItemStack being used.
      * @return ItemStack: The returned ItemStack.
      */
-    public static ItemStack useItemSafely(ItemStack stack) {
-
+    public static ItemStack useItemSafely (ItemStack stack) {
+        
         if (stack.stackSize == 1) {
-
+            
             if (stack.getItem().hasContainerItem(stack))
                 return stack.getItem().getContainerItem(stack);
             else
                 return null;
-        } else {
-
+        }
+        else {
+            
             stack.splitStack(1);
             return stack;
         }
     }
-
+    
     /**
      * Safely drops an ItemStack into the world as an EntityItem.
      *
      * @param world Instance of the world.
-     * @param pos     The  position for the item to spawn.
+     * @param pos The position for the item to spawn.
      * @param stack The ItemStack being dropped into the world.
      */
-    public static void dropStackInWorld(World world, BlockPos pos, ItemStack stack) {
-
+    public static void dropStackInWorld (World world, BlockPos pos, ItemStack stack) {
+        
         if (!world.isRemote && world.getGameRules().getBoolean("doTileDrops")) {
-
-            float f = 0.7F;
-            double d0 = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-            double d1 = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-            double d2 = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-            EntityItem entityitem = new EntityItem(world, (double) pos.getX() + d0, (double) pos.getY() + d1, (double) pos.getZ() + d2, stack);
+            
+            final float f = 0.7F;
+            final double d0 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+            final double d1 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+            final double d2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+            final EntityItem entityitem = new EntityItem(world, pos.getX() + d0, pos.getY() + d1, pos.getZ() + d2, stack);
             entityitem.setPickupDelay(10);
             world.spawnEntityInWorld(entityitem);
         }
     }
-
-    public static ItemStack getTankStackFromTile(TileEntityModularTank tank, boolean keepFluid) {
-
-        ItemStack stack = new ItemStack(Gyth.blockModularTanks);
+    
+    public static ItemStack getTankStackFromTile (TileEntityModularTank tank, boolean keepFluid) {
+        
+        final ItemStack stack = new ItemStack(Gyth.blockModularTanks);
         stack.setTagCompound(new NBTTagCompound());
-        FluidStack fluid = tank.tank.getFluid();
-
+        final FluidStack fluid = tank.tank.getFluid();
+        
         if (fluid != null && keepFluid) {
-
-            NBTTagCompound tagFluid = new NBTTagCompound();
+            
+            final NBTTagCompound tagFluid = new NBTTagCompound();
             fluid.writeToNBT(tagFluid);
             stack.getTagCompound().setTag("Fluid", tagFluid);
         }
-
+        
         stack.getTagCompound().setInteger("Tier", tank.tier);
         stack.getTagCompound().setString("TierName", tank.tierName);
         stack.getTagCompound().setInteger("TankCapacity", tank.tank.getCapacity() / FluidContainerRegistry.BUCKET_VOLUME);
-
+        
         return stack;
     }
 }

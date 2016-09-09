@@ -21,18 +21,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemBlockModularTank extends ItemBlock {
     
     public ItemBlockModularTank(Block block) {
-    
+        
         super(block);
         this.setMaxStackSize(1);
         this.setRegistryName(new ResourceLocation("gyth", "modularTank"));
     }
-
+    
+    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation (ItemStack stack, EntityPlayer player, List tooltip, boolean isAdvanced) {
-    
+        
         if (stack.hasTagCompound()) {
             
-            NBTTagCompound tag = stack.getTagCompound();
+            final NBTTagCompound tag = stack.getTagCompound();
             
             FluidStack fluid = null;
             
@@ -42,9 +43,9 @@ public class ItemBlockModularTank extends ItemBlock {
                 tooltip.add(I18n.format("tooltip.gyth.fluidName") + ": " + fluid.getLocalizedName());
             }
             
-            int amount = (fluid != null) ? fluid.amount : 0;
+            final int amount = fluid != null ? fluid.amount : 0;
             
-            tooltip.add(I18n.format("tooltip.gyth.fluidAmount") + ": " + amount + "/" + (tag.getInteger("TankCapacity") * FluidContainerRegistry.BUCKET_VOLUME) + " mB");
+            tooltip.add(I18n.format("tooltip.gyth.fluidAmount") + ": " + amount + "/" + tag.getInteger("TankCapacity") * FluidContainerRegistry.BUCKET_VOLUME + " mB");
             tooltip.add(I18n.format("tooltip.gyth.tankTier") + ": " + tag.getString("TierName") + " (" + tag.getInteger("Tier") + ")");
         }
         
@@ -52,10 +53,11 @@ public class ItemBlockModularTank extends ItemBlock {
             tooltip.add(I18n.format("tooltip.gyth.itemError"));
     }
     
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems (Item item, CreativeTabs tab, List itemList) {
-    
-        for (TankTier tier : TankData.tiers.values())
+        
+        for (final TankTier tier : TankData.tiers.values())
             itemList.add(tier.getTankItemStack());
     }
 }

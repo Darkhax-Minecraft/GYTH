@@ -17,13 +17,13 @@ public class GuiConfigGyth extends GuiConfig {
     static ConfigurationHandler cfgh;
     
     public GuiConfigGyth(GuiScreen parent) {
-    
+        
         super(parent, generateConfigList(), Constants.MODID, false, false, GuiConfig.getAbridgedConfigPath(ConfigurationHandler.config.toString()));
     }
     
     public static List<IConfigElement> generateConfigList () {
-    
-        ArrayList<IConfigElement> elements = new ArrayList<IConfigElement>();
+        
+        final ArrayList<IConfigElement> elements = new ArrayList<IConfigElement>();
         elements.add(new ConfigElement(cfg.getCategory("capacity")));
         elements.add(new ConfigElement(cfg.getCategory("tiers")));
         elements.add(new ConfigElement(cfg.getCategory("general")));

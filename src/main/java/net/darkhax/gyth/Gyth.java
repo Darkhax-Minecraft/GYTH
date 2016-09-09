@@ -1,5 +1,7 @@
 package net.darkhax.gyth;
 
+import java.util.Arrays;
+
 import net.darkhax.gyth.common.ProxyCommon;
 import net.darkhax.gyth.common.blocks.BlockModularTank;
 import net.darkhax.gyth.common.handler.ConfigurationHandler;
@@ -22,62 +24,58 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import java.util.Arrays;
-
 @Mod(modid = Constants.MODID, name = Constants.MOD_NAME, version = Constants.VERSION, guiFactory = Constants.FACTORY)
 public class Gyth {
-
+    
     @SidedProxy(serverSide = Constants.SERVER, clientSide = Constants.CLIENT)
     public static ProxyCommon proxy;
-
+    
     @Mod.Instance(Constants.MODID)
     public static Gyth instance;
-
+    
     public static Block blockModularTanks;
     public static Item itemTankUpgrade;
     public static Item itemBlockModularTank;
-
+    
     public static CreativeTabs tabGyth;
-
+    
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-
-        setModMeta(event.getModMetadata());
-
+    public void preInit (FMLPreInitializationEvent event) {
+        
+        this.setModMeta(event.getModMetadata());
+        
         new TankData();
         new PluginManager();
         new ConfigurationHandler(event.getSuggestedConfigurationFile());
-
-
+        
         tabGyth = new CreativeTabGyth();
         blockModularTanks = new BlockModularTank();
         itemBlockModularTank = new ItemBlockModularTank(blockModularTanks);
         GameRegistry.register(blockModularTanks);
         GameRegistry.register(itemBlockModularTank);
         GameRegistry.registerTileEntity(TileEntityModularTank.class, "modularTank");
-
+        
         itemTankUpgrade = new ItemTankUpgrade();
         GameRegistry.register(itemTankUpgrade);
-
+        
         proxy.registerBlockRenderers();
     }
-
+    
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
-
-
+    public void init (FMLInitializationEvent event) {
+        
         new CraftingHandler();
-
+        
         proxy.registerBlockRenderers();
     }
-
+    
     @Mod.EventHandler
-    public void messageRecieved(FMLInterModComms.IMCEvent event) {
-
+    public void messageRecieved (FMLInterModComms.IMCEvent event) {
+    
     }
-
-    void setModMeta(ModMetadata meta) {
-
+    
+    void setModMeta (ModMetadata meta) {
+        
         meta.authorList = Arrays.asList("Darkhax", "lclc98");
         meta.credits = "Coded by Darkhax and lclc98";
         meta.description = "The simple way to store and transport your fluids.";

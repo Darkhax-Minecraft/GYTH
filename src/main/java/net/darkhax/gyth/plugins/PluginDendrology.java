@@ -6,11 +6,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 
 public class PluginDendrology {
-
+    
     public PluginDendrology() {
-
+        
         if (Loader.isModLoaded("dendrology")) {
-
+            
             TankData.addTankTier("ancienttree_acemus", 1, 4, new ItemStack(Block.getBlockFromName("dendrology:wood0"), 1, 0));
             TankData.addTankTier("ancienttree_cedrum", 1, 4, new ItemStack(Block.getBlockFromName("dendrology:wood0"), 1, 1));
             TankData.addTankTier("ancienttree_cerasu", 1, 4, new ItemStack(Block.getBlockFromName("dendrology:wood0"), 1, 2));

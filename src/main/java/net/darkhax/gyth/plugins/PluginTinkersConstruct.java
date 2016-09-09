@@ -7,12 +7,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 
 public class PluginTinkersConstruct {
-
+    
     // ID == TConstruct
     public PluginTinkersConstruct() {
-
+        
         if (Loader.isModLoaded("TConstruct")) {
-
+            
             TankData.addTankTier("tinkers_brownstone", 2, 16, new ItemStack(Block.getBlockFromName("TConstruct:SpeedBlock"), 1, 2));
             TankData.addTankTier("tinkers_brownstone_rough", 2, 16, new ItemStack(Block.getBlockFromName("TConstruct:SpeedBlock"), 1, 0));
             TankData.addTankTier("tinkers_brownstone_brick", 2, 16, new ItemStack(Block.getBlockFromName("TConstruct:SpeedBlock"), 1, 3));

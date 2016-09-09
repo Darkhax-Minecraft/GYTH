@@ -1,73 +1,84 @@
-//package net.darkhax.gyth.plugins;
+// package net.darkhax.gyth.plugins;
 //
-//import java.util.List;
+// import java.util.List;
 //
-//import net.darkhax.gyth.common.blocks.BlockModularTank;
-//import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
-//import net.minecraft.entity.player.EntityPlayerMP;
-//import net.minecraft.item.ItemStack;
-//import net.minecraft.nbt.NBTTagCompound;
-//import net.minecraft.tileentity.TileEntity;
-//import net.minecraft.world.World;
-//import net.minecraftforge.fml.common.Optional;
+// import net.darkhax.gyth.common.blocks.BlockModularTank;
+// import net.darkhax.gyth.common.tileentity.TileEntityModularTank;
+// import net.minecraft.entity.player.EntityPlayerMP;
+// import net.minecraft.item.ItemStack;
+// import net.minecraft.nbt.NBTTagCompound;
+// import net.minecraft.tileentity.TileEntity;
+// import net.minecraft.world.World;
+// import net.minecraftforge.fml.common.Optional;
 //
-//@Optional.Interface(iface = "mcp.mobius.waila.api.IWailaDataProvider", modid = "Waila")
-//public class PluginWaila implements IWailaDataProvider {
+// @Optional.Interface(iface = "mcp.mobius.waila.api.IWailaDataProvider", modid
+// = "Waila")
+// public class PluginWaila implements IWailaDataProvider {
 //
-//    @Optional.Method(modid = "Waila")
-//    public static void callbackRegister (IWailaRegistrar register) {
+// @Optional.Method(modid = "Waila")
+// public static void callbackRegister (IWailaRegistrar register) {
 //
-//        PluginWaila instance = new PluginWaila();
-//        register.registerBodyProvider(instance, BlockModularTank.class);
-//        register.registerNBTProvider(instance, BlockModularTank.class);
-//    }
+// PluginWaila instance = new PluginWaila();
+// register.registerBodyProvider(instance, BlockModularTank.class);
+// register.registerNBTProvider(instance, BlockModularTank.class);
+// }
 //
-//    @Override
-//    @Optional.Method(modid = "Waila")
-//    public ItemStack getWailaStack (IWailaDataAccessor accessor, IWailaConfigHandler config) {
+// @Override
+// @Optional.Method(modid = "Waila")
+// public ItemStack getWailaStack (IWailaDataAccessor accessor,
+// IWailaConfigHandler config) {
 //
-//        return accessor.getStack();
-//    }
+// return accessor.getStack();
+// }
 //
-//    @Override
-//    @Optional.Method(modid = "Waila")
-//    public List<String> getWailaHead (ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+// @Override
+// @Optional.Method(modid = "Waila")
+// public List<String> getWailaHead (ItemStack itemStack, List<String>
+// currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 //
-//        return currenttip;
-//    }
+// return currenttip;
+// }
 //
-//    @Override
-//    @Optional.Method(modid = "Waila")
-//    public List<String> getWailaBody (ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+// @Override
+// @Optional.Method(modid = "Waila")
+// public List<String> getWailaBody (ItemStack itemStack, List<String>
+// currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 //
-//        if (accessor.getTileEntity() instanceof TileEntityModularTank) {
+// if (accessor.getTileEntity() instanceof TileEntityModularTank) {
 //
-//            TileEntityModularTank modularTank = (TileEntityModularTank) accessor.getTileEntity();
+// TileEntityModularTank modularTank = (TileEntityModularTank)
+// accessor.getTileEntity();
 //
-//            if (modularTank.tank.getFluid() != null)
-//                currenttip.add(I18n.format("tooltip.gyth.fluidName") + ": " + modularTank.tank.getFluid().getLocalizedName());
+// if (modularTank.tank.getFluid() != null)
+// currenttip.add(I18n.format("tooltip.gyth.fluidName") + ": " +
+// modularTank.tank.getFluid().getLocalizedName());
 //
-//            currenttip.add(I18n.format("tooltip.gyth.fluidAmount") + ": " + modularTank.tank.getFluidAmount() + "/" + modularTank.tank.getCapacity() + " mB");
-//            currenttip.add(I18n.format("tooltip.gyth.tankTier") + ": " + modularTank.tierName + " (" + modularTank.tier + ")");
+// currenttip.add(I18n.format("tooltip.gyth.fluidAmount") + ": " +
+// modularTank.tank.getFluidAmount() + "/" + modularTank.tank.getCapacity() + "
+// mB");
+// currenttip.add(I18n.format("tooltip.gyth.tankTier") + ": " +
+// modularTank.tierName + " (" + modularTank.tier + ")");
 //
-//        }
+// }
 //
-//        return currenttip;
-//    }
+// return currenttip;
+// }
 //
-//    @Override
-//    @Optional.Method(modid = "Waila")
-//    public List<String> getWailaTail (ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+// @Override
+// @Optional.Method(modid = "Waila")
+// public List<String> getWailaTail (ItemStack itemStack, List<String>
+// currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 //
-//        return currenttip;
-//    }
+// return currenttip;
+// }
 //
-//    @Override
-//    public NBTTagCompound getNBTData (EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
+// @Override
+// public NBTTagCompound getNBTData (EntityPlayerMP player, TileEntity te,
+// NBTTagCompound tag, World world, int x, int y, int z) {
 //
-//        if (te != null)
-//            te.writeToNBT(tag);
+// if (te != null)
+// te.writeToNBT(tag);
 //
-//        return null;
-//    }
-//}
+// return null;
+// }
+// }

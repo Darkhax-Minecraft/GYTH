@@ -10,7 +10,7 @@ public class PluginThaumcraft {
     
     // ID == Thaumcraft
     public PluginThaumcraft() {
-    
+        
         if (Loader.isModLoaded("Thaumcraft")) {
             
             TankData.addTankTier("thaumcraft_greatwood", 1, 4, new ItemStack(Block.getBlockFromName("Thaumcraft:blockWoodenDevice"), 1, 6));
