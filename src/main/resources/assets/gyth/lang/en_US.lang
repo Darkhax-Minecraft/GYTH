@@ -12,4 +12,5 @@ itemGroup.gyth=Get Ya' Tanks Here
 #Tooltip
 tooltip.gyth.tier=Tier
 tooltip.gyth.owner=Added by %s%s
+tooltip.gyth.block=Type
 tooltip.gyth.missing=There is no data for this item. Do not trust it!

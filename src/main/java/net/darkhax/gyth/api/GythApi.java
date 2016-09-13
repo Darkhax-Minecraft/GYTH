@@ -145,6 +145,7 @@ public class GythApi {
         
         if (tier != null) {
             
+            tooltip.add(I18n.format("tooltip.gyth.block") +": " + ItemStackUtils.getStackFromState(tier.renderState, 1).getDisplayName());
             tooltip.add(I18n.format("tooltip.gyth.tier") + ": " + tier.tier);
             tooltip.add(I18n.format("tooltip.gyth.owner", ChatFormatting.BLUE, ModUtils.getModName(tier.identifier.getResourceDomain())));
             return;
