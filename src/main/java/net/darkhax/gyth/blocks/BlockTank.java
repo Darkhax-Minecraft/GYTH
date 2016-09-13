@@ -166,7 +166,6 @@ public class BlockTank extends BlockContainer {
             
             final TileEntityModularTank tank = (TileEntityModularTank) worldIn.getTileEntity(pos);
             
-            System.out.println("placed");
             if (tank != null)
                 tank.readNBT(stack.getTagCompound().getCompoundTag("TileData"));
         }
