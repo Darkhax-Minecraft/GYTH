@@ -30,7 +30,6 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -64,7 +63,9 @@ public class ModelTank implements IPerspectiveAwareModel {
         
         if (this.cache.containsKey(texture))
             bakedModel = this.cache.get(texture);
+            
         else if (this.model != null) {
+            
             final ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
             builder.put("case", texture);
             final IModel retexturedModel = this.model.retexture(builder.build());
@@ -76,7 +77,6 @@ public class ModelTank implements IPerspectiveAwareModel {
         return bakedModel;
     }
     
-    @Nonnull
     @Override
     public List<BakedQuad> getQuads (IBlockState state, EnumFacing side, long rand) {
         
@@ -87,6 +87,7 @@ public class ModelTank implements IPerspectiveAwareModel {
             
         final IBlockState heldState = ((IExtendedBlockState) state).getValue(BlockStates.HELD_STATE);
         String texture = getTextureFromBlock(Blocks.LOG.getDefaultState()).getIconName();
+        
         if (heldState != null)
             texture = getTextureFromBlock(heldState).getIconName();
             
@@ -140,17 +141,16 @@ public class ModelTank implements IPerspectiveAwareModel {
         static TableItemOverrideList INSTANCE = new TableItemOverrideList();
         
         private TableItemOverrideList() {
+            
             super(ImmutableList.of());
         }
         
-        @Nonnull
         @Override
         public IBakedModel handleItemState (@Nonnull IBakedModel originalModel, ItemStack stack, @Nonnull World world, @Nonnull EntityLivingBase entity) {
             
-            if (originalModel instanceof ModelTank && stack != null && stack.hasTagCompound() && stack.getTagCompound().hasKey("TileData")) {
+            if (stack != null && stack.hasTagCompound() && stack.getTagCompound().hasKey("TileData")) {
                 
-                final NBTTagCompound tag = stack.getTagCompound().getCompoundTag("TileData");
-                final TankTier tier = GythApi.getTier(tag.getString("TierID"));
+                TankTier tier = GythApi.getTier(stack.getTagCompound().getCompoundTag("TileData").getString("TierID"));
                 
                 if (tier != null) {
                     

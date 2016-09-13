@@ -56,7 +56,7 @@ public class Gyth {
     }
     
     @Mod.EventHandler
-    public void messageRecieved (FMLInterModComms.IMCEvent event) {
+    public void handleIMC (FMLInterModComms.IMCEvent event) {
     
     }
 }
