@@ -2,8 +2,6 @@ package net.darkhax.gyth.blocks;
 
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
 import net.darkhax.bookshelf.lib.BlockStates;
 import net.darkhax.bookshelf.lib.util.ItemStackUtils;
 import net.darkhax.gyth.Gyth;
@@ -16,6 +14,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -31,6 +30,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class BlockTank extends BlockContainer {
     
@@ -43,6 +45,19 @@ public class BlockTank extends BlockContainer {
         this.setHardness(0.3F);
         this.setSoundType(SoundType.GLASS);
         this.setDefaultState(((IExtendedBlockState) this.blockState.getBaseState()).withProperty(BlockStates.HELD_STATE, null).withProperty(BlockStates.BLOCK_ACCESS, null).withProperty(BlockStates.BLOCKPOS, null));
+    }
+    
+    @Override
+    public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+        
+        final TileEntity tank = worldIn.getTileEntity(pos);
+        
+        if (tank == null || !tank.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
+            return false;
+            
+        final IFluidHandler fluidHandler = tank.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
+        FluidUtil.interactWithFluidHandler(heldItem, fluidHandler, playerIn);
+        return heldItem != null && !(heldItem.getItem() instanceof ItemBlock);
     }
     
     @Override
@@ -112,13 +127,6 @@ public class BlockTank extends BlockContainer {
     public int getComparatorInputOverride (IBlockState blockState, World worldIn, BlockPos pos) {
         
         return 0;
-    }
-    
-    @Override
-    public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-        
-        // TODO fix
-        return false;
     }
     
     @Override

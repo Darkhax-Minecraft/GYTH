@@ -4,8 +4,11 @@ import net.darkhax.bookshelf.tileentity.TileEntityBasic;
 import net.darkhax.gyth.api.GythApi;
 import net.darkhax.gyth.api.TankTier;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntityModularTank extends TileEntityBasic {
     
@@ -49,5 +52,26 @@ public class TileEntityModularTank extends TileEntityBasic {
         
         if (dataTag.hasKey("FluidData"))
             this.tank = new FluidTank(FluidStack.loadFluidStackFromNBT(dataTag.getCompoundTag("FluidData")), this.tier.getCapacity());
+            
+        else
+            this.tank = new FluidTank(this.tier.getCapacity());
+    }
+    
+    @Override
+    public boolean hasCapability (Capability<?> capability, EnumFacing facing) {
+        
+        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+            return true;
+            
+        return super.hasCapability(capability, facing);
+    }
+    
+    @Override
+    public <T> T getCapability (Capability<T> capability, EnumFacing facing) {
+        
+        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+            return (T) this.tank;
+            
+        return super.getCapability(capability, facing);
     }
 }
