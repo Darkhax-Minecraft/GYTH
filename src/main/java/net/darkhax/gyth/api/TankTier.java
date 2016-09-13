@@ -59,6 +59,6 @@ public class TankTier {
      */
     public boolean canApplyUpgrage (TankTier upgradeTier) {
         
-        return upgradeTier.tier > this.tier;
+        return upgradeTier.tier >= this.tier;
     }
 }
