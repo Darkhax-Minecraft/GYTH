@@ -1,8 +1,8 @@
 package net.darkhax.gyth;
 
-import net.darkhax.gyth.blocks.BlockModularTank;
+import net.darkhax.gyth.blocks.BlockTank;
 import net.darkhax.gyth.common.ProxyCommon;
-import net.darkhax.gyth.items.ItemBlockModularTank;
+import net.darkhax.gyth.items.ItemBlockTank;
 import net.darkhax.gyth.items.ItemTankUpgrade;
 import net.darkhax.gyth.tabs.CreativeTabGyth;
 import net.darkhax.gyth.tileentity.TileEntityModularTank;
@@ -37,8 +37,8 @@ public class Gyth {
     public void preInit (FMLPreInitializationEvent event) {
         
         tabGyth = new CreativeTabGyth();
-        blockModularTanks = new BlockModularTank();
-        itemBlockModularTank = new ItemBlockModularTank(blockModularTanks);
+        blockModularTanks = new BlockTank();
+        itemBlockModularTank = new ItemBlockTank(blockModularTanks);
         GameRegistry.register(blockModularTanks);
         GameRegistry.register(itemBlockModularTank);
         GameRegistry.registerTileEntity(TileEntityModularTank.class, "modularTank");

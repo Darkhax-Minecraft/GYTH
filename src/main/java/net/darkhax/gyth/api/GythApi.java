@@ -1,10 +1,16 @@
 package net.darkhax.gyth.api;
 
+import java.util.List;
+
+import com.mojang.realmsclient.gui.ChatFormatting;
+
 import net.darkhax.bookshelf.lib.util.ItemStackUtils;
+import net.darkhax.bookshelf.lib.util.ModUtils;
 import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.utils.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -127,6 +133,24 @@ public class GythApi {
             
         // TODO add default tier
         return null;
+    }
+    
+    /**
+     * Generates the tooltip for a TankTier.
+     * 
+     * @param tier The tier to represent.
+     * @param tooltip The list to add to.
+     */
+    public static void createTierTooltip (TankTier tier, List<String> tooltip) {
+        
+        if (tier != null) {
+            
+            tooltip.add(I18n.format("tooltip.gyth.tier") + ": " + tier.tier);
+            tooltip.add(I18n.format("tooltip.gyth.owner", ChatFormatting.BLUE, ModUtils.getModName(tier.identifier.getResourceDomain())));
+            return;
+        }
+        
+        tooltip.add(ChatFormatting.RED + "[WARNING]" + ChatFormatting.GRAY + I18n.format("tooltip.gyth.missing"));
     }
     
     private static TankTier createTier (String name, Block block, int tier) {

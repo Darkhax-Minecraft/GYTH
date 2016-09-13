@@ -1,8 +1,8 @@
 package net.darkhax.gyth.client;
 
 import net.darkhax.gyth.Gyth;
-import net.darkhax.gyth.client.renderer.BakedModularTank;
-import net.darkhax.gyth.client.renderer.RendererModularTank;
+import net.darkhax.gyth.client.renderer.ModelTank;
+import net.darkhax.gyth.client.renderer.RendererTank;
 import net.darkhax.gyth.common.ProxyCommon;
 import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -28,9 +28,9 @@ public class ProxyClient extends ProxyCommon {
         
         // ModelLoader.setCustomModelResourceLocation(Gyth.itemTankUpgrade, 0,
         // BakedModularTank.MODEL);
-        ModelLoader.setCustomModelResourceLocation(Gyth.itemBlockModularTank, 0, BakedModularTank.MODEL);
+        ModelLoader.setCustomModelResourceLocation(Gyth.itemBlockModularTank, 0, ModelTank.MODEL);
         
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityModularTank.class, new RendererModularTank());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityModularTank.class, new RendererTank());
         ForgeHooksClient.registerTESRItemStack(Gyth.itemBlockModularTank, 0, TileEntityModularTank.class);
         ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(Gyth.blockModularTanks), 0, TileEntityModularTank.class);
     }
@@ -39,13 +39,13 @@ public class ProxyClient extends ProxyCommon {
     public void onModelBake (ModelBakeEvent event) {
         
         try {
-            final IModel m = ModelLoaderRegistry.getModel(new ResourceLocation("gyth", "block/modularTank"));
+            final IModel m = ModelLoaderRegistry.getModel(new ResourceLocation("gyth", "block/modular_tank"));
             
             if (m instanceof IRetexturableModel) {
                 final IRetexturableModel model = (IRetexturableModel) m;
-                final IBakedModel standard = event.getModelRegistry().getObject(BakedModularTank.MODEL);
+                final IBakedModel standard = event.getModelRegistry().getObject(ModelTank.MODEL);
                 if (standard instanceof IPerspectiveAwareModel)
-                    event.getModelRegistry().putObject(BakedModularTank.MODEL, new BakedModularTank((IPerspectiveAwareModel) standard, model));
+                    event.getModelRegistry().putObject(ModelTank.MODEL, new ModelTank((IPerspectiveAwareModel) standard, model));
             }
         }
         catch (final Exception e) {

@@ -25,6 +25,6 @@ public class CreativeTabGyth extends CreativeTabs {
     @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack () {
         
-        return GythApi.createTierUpgrade(GythApi.WOOD_OAK);
+        return GythApi.createTieredTank(GythApi.WOOD_OAK);
     }
 }
