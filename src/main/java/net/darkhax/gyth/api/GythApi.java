@@ -6,13 +6,12 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 
 import net.darkhax.bookshelf.lib.util.ItemStackUtils;
 import net.darkhax.bookshelf.lib.util.ModUtils;
+import net.darkhax.bookshelf.lib.util.OreDictUtils;
 import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.utils.Constants;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -27,43 +26,43 @@ public class GythApi {
     public static final RegistrySimple<ResourceLocation, TankTier> REGISTRY = new RegistrySimple<ResourceLocation, TankTier>();
     
     // Tier 1
-    public static final TankTier WOOD_OAK = createTier("oak", Blocks.PLANKS, 0, 1);
-    public static final TankTier WOOD_SPRUCE = createTier("spruce", Blocks.PLANKS, 1, 1);
-    public static final TankTier WOOD_BIRCH = createTier("birch", Blocks.PLANKS, 2, 1);
-    public static final TankTier WOOD_JUNGLE = createTier("jungle", Blocks.PLANKS, 3, 1);
-    public static final TankTier WOOD_ACACIA = createTier("acacia", Blocks.PLANKS, 4, 1);
-    public static final TankTier WOOD_DARK_OAK = createTier("dark_oak", Blocks.PLANKS, 5, 1);
+    public static final TankTier WOOD_OAK = createTier("oak", Blocks.PLANKS, 0, new ItemStack(Blocks.PLANKS, 1, 0), 1);
+    public static final TankTier WOOD_SPRUCE = createTier("spruce", Blocks.PLANKS, 1, new ItemStack(Blocks.PLANKS, 1, 1), 1);
+    public static final TankTier WOOD_BIRCH = createTier("birch", Blocks.PLANKS, 2, new ItemStack(Blocks.PLANKS, 1, 2), 1);
+    public static final TankTier WOOD_JUNGLE = createTier("jungle", Blocks.PLANKS, 3, new ItemStack(Blocks.PLANKS, 1, 3), 1);
+    public static final TankTier WOOD_ACACIA = createTier("acacia", Blocks.PLANKS, 4, new ItemStack(Blocks.PLANKS, 1, 4), 1);
+    public static final TankTier WOOD_DARK_OAK = createTier("dark_oak", Blocks.PLANKS, 5, new ItemStack(Blocks.PLANKS, 1, 5), 1);
     
     // Tier 2
-    public static final TankTier STONE_COBBLE = createTier("stone_cobble", Blocks.COBBLESTONE, 0);
-    public static final TankTier STONE_SMOOTH = createTier("stone_smooth", Blocks.STONE, 0, 2);
-    public static final TankTier STONE_GRANITE = createTier("stone_granite", Blocks.STONE, 1, 2);
-    public static final TankTier STONE_GRANITE_SMOOTH = createTier("stone_granite_smooth", Blocks.STONE, 2, 2);
-    public static final TankTier STONE_DIORITE = createTier("stone_diorite", Blocks.STONE, 3, 2);
-    public static final TankTier STONE_DIORITE_SMOOTH = createTier("stone_diorite_smooth", Blocks.STONE, 4, 2);
-    public static final TankTier STONE_ANDESITE = createTier("stone_andesite", Blocks.STONE, 5, 2);
-    public static final TankTier STONE_ANDESITE_SMOOTH = createTier("stone_andesite_smooth", Blocks.STONE, 6, 2);
-    public static final TankTier SANDSTONE_BRICK = createTier("sandstone_brick", Blocks.SANDSTONE, 2);
-    public static final TankTier SANDSTONE_BRICK_RED = createTier("sandstone_brick_red", Blocks.RED_SANDSTONE, 2);
-    public static final TankTier BRICK = createTier("brick", Blocks.BRICK_BLOCK, 2);
-    public static final TankTier BRICK_NETHER = createTier("brick_nether", Blocks.NETHER_BRICK, 2);
-    public static final TankTier BRICK_STONE = createTier("brick_stone", Blocks.STONEBRICK, 2);
-    public static final TankTier BRICK_END = createTier("brick_end", Blocks.END_BRICKS, 2);
-    public static final TankTier BRICK_PURPUR = createTier("brick_purpur", Blocks.PURPUR_BLOCK, 2);
+    public static final TankTier STONE_COBBLE = createTier("stone_cobble", Blocks.COBBLESTONE, 0, OreDictUtils.COBBLESTONE, 0);
+    public static final TankTier STONE_SMOOTH = createTier("stone_smooth", Blocks.STONE, 0, new ItemStack(Blocks.STONE, 1, 0), 2);
+    public static final TankTier STONE_GRANITE = createTier("stone_granite", Blocks.STONE, 1, new ItemStack(Blocks.STONE, 1, 1), 2);
+    public static final TankTier STONE_GRANITE_SMOOTH = createTier("stone_granite_smooth", Blocks.STONE, 2, new ItemStack(Blocks.STONE, 1, 2), 2);
+    public static final TankTier STONE_DIORITE = createTier("stone_diorite", Blocks.STONE, 3, new ItemStack(Blocks.STONE, 1, 3), 2);
+    public static final TankTier STONE_DIORITE_SMOOTH = createTier("stone_diorite_smooth", Blocks.STONE, 4, new ItemStack(Blocks.STONE, 1, 4), 2);
+    public static final TankTier STONE_ANDESITE = createTier("stone_andesite", Blocks.STONE, 5, new ItemStack(Blocks.STONE, 1, 5), 2);
+    public static final TankTier STONE_ANDESITE_SMOOTH = createTier("stone_andesite_smooth", Blocks.STONE, 6, new ItemStack(Blocks.STONE, 1, 6), 2);
+    public static final TankTier SANDSTONE_BRICK = createTier("sandstone_brick", Blocks.SANDSTONE, 0, Blocks.SANDSTONE, 2);
+    public static final TankTier SANDSTONE_BRICK_RED = createTier("sandstone_brick_red", Blocks.RED_SANDSTONE, 0, Blocks.RED_SANDSTONE, 2);
+    public static final TankTier BRICK = createTier("brick", Blocks.BRICK_BLOCK, 0, OreDictUtils.INGOT_BRICK, 2);
+    public static final TankTier BRICK_NETHER = createTier("brick_nether", Blocks.NETHER_BRICK, 0, OreDictUtils.INGOT_BRICK_NETHER, 2);
+    public static final TankTier BRICK_STONE = createTier("brick_stone", Blocks.STONEBRICK, 0, Blocks.STONEBRICK, 2);
+    public static final TankTier BRICK_END = createTier("brick_end", Blocks.END_BRICKS, 0, Blocks.END_BRICKS, 2);
+    public static final TankTier BRICK_PURPUR = createTier("brick_purpur", Blocks.PURPUR_BLOCK, 0, Blocks.PURPUR_BLOCK, 2);
     
     // Tier 3
-    public static final TankTier IRON = createTier("iron", Blocks.IRON_BLOCK, new ItemStack(Items.IRON_INGOT), 3);
-    public static final TankTier GOLD = createTier("gold", Blocks.GOLD_BLOCK, new ItemStack(Items.GOLD_INGOT), 3);
-    public static final TankTier OBSIDIAN = createTier("obsidian", Blocks.OBSIDIAN, 3);
+    public static final TankTier IRON = createTier("iron", Blocks.IRON_BLOCK, 0, OreDictUtils.INGOT_IRON, 3);
+    public static final TankTier GOLD = createTier("gold", Blocks.GOLD_BLOCK, 0, OreDictUtils.INGOT_GOLD, 3);
+    public static final TankTier OBSIDIAN = createTier("obsidian", Blocks.OBSIDIAN, 0, OreDictUtils.OBSIDIAN, 3);
     
     // Tier 4
-    public static final TankTier LAPIS = createTier("lapis", Blocks.LAPIS_BLOCK, new ItemStack(Items.DYE, 1, 4), 4);
-    public static final TankTier REDSTONE = createTier("redstone", Blocks.REDSTONE_BLOCK, new ItemStack(Items.REDSTONE), 4);
-    public static final TankTier QUARTZ = createTier("quartz", Blocks.QUARTZ_BLOCK, new ItemStack(Items.QUARTZ), 4);
+    public static final TankTier LAPIS = createTier("lapis", Blocks.LAPIS_BLOCK, 0, OreDictUtils.GEM_LAPIS, 4);
+    public static final TankTier REDSTONE = createTier("redstone", Blocks.REDSTONE_BLOCK, 0, OreDictUtils.DUST_REDSTONE, 4);
+    public static final TankTier QUARTZ = createTier("quartz", Blocks.QUARTZ_BLOCK, 0, OreDictUtils.GEM_QUARTZ, 4);
     
     // Tier 5
-    public static final TankTier DIAMOND = createTier("diamond", Blocks.DIAMOND_BLOCK, new ItemStack(Items.DIAMOND), 5);
-    public static final TankTier EMERALD = createTier("emerald", Blocks.EMERALD_BLOCK, new ItemStack(Items.EMERALD), 5);
+    public static final TankTier DIAMOND = createTier("diamond", Blocks.DIAMOND_BLOCK, 0, OreDictUtils.GEM_DIAMOND, 5);
+    public static final TankTier EMERALD = createTier("emerald", Blocks.EMERALD_BLOCK, 0, OreDictUtils.GEM_EMERALD, 5);
     
     /**
      * Registers a tier with the tier registry.
@@ -164,25 +163,10 @@ public class GythApi {
         tooltip.add(ChatFormatting.RED + "[WARNING]" + ChatFormatting.GRAY + I18n.format("tooltip.gyth.missing"));
     }
     
-    private static TankTier createTier (String name, Block block, int tier) {
-        
-        return createTier(name, block, 0, tier);
-    }
-    
-    private static TankTier createTier (String name, Block block, int meta, int tier) {
-        
-        return createTier(name, block.getStateFromMeta(meta), new ItemStack(block, 1, meta), tier);
-    }
-    
-    private static TankTier createTier (String name, Block block, ItemStack recipe, int tier) {
-        
-        return createTier(name, block.getStateFromMeta(0), recipe, tier);
-    }
-    
-    private static TankTier createTier (String name, IBlockState renderState, ItemStack recipe, int tier) {
+    private static TankTier createTier (String name, Block block, int meta, Object recipe, int tier) {
         
         final ResourceLocation identifier = new ResourceLocation(Constants.MODID, name);
-        final TankTier tankTier = new TankTier(identifier, renderState, recipe, tier);
+        final TankTier tankTier = new TankTier(identifier, block.getStateFromMeta(meta), recipe, tier);
         REGISTRY.putObject(identifier, tankTier);
         return tankTier;
     }

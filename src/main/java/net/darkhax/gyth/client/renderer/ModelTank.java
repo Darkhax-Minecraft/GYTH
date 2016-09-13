@@ -150,7 +150,7 @@ public class ModelTank implements IPerspectiveAwareModel {
             
             if (stack != null && stack.hasTagCompound() && stack.getTagCompound().hasKey("TileData")) {
                 
-                TankTier tier = GythApi.getTier(stack.getTagCompound().getCompoundTag("TileData").getString("TierID"));
+                final TankTier tier = GythApi.getTier(stack.getTagCompound().getCompoundTag("TileData").getString("TierID"));
                 
                 if (tier != null) {
                     

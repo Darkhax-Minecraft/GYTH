@@ -1,7 +1,6 @@
 package net.darkhax.gyth.api;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class TankTier {
@@ -12,9 +11,9 @@ public class TankTier {
     public final ResourceLocation identifier;
     
     /**
-     * The ItemStack to use for crafting this tank tier.
+     * The crafting ingredient for the tier. Can be ItemStack, Item, Block, or oredict name.
      */
-    public final ItemStack recipe;
+    public final Object recipe;
     
     /**
      * The tier of the tank. Used to establish the upgrade hierarchy.
@@ -31,10 +30,10 @@ public class TankTier {
      * 
      * @param identifier The identifier for the tier. Follows standard mc format.
      * @param renderState The block to use in tank rendering.
-     * @param recipe The ItemStack to use for related crafting recipes.
+     * @param recipe The crafting ingredient for the tier.
      * @param tier The tier of the tank, used to establish the upgrade hierarchy.
      */
-    public TankTier(ResourceLocation identifier, IBlockState renderState, ItemStack recipe, int tier) {
+    public TankTier(ResourceLocation identifier, IBlockState renderState, Object recipe, int tier) {
         
         this.identifier = identifier;
         this.renderState = renderState;
