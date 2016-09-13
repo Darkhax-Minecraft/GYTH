@@ -2,8 +2,10 @@ package net.darkhax.gyth.items;
 
 import java.util.List;
 
-import net.darkhax.gyth.utils.TankData;
-import net.darkhax.gyth.utils.TankTier;
+import com.mojang.realmsclient.gui.ChatFormatting;
+
+import net.darkhax.gyth.api.GythApi;
+import net.darkhax.gyth.api.TankTier;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
@@ -13,8 +15,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,35 +29,29 @@ public class ItemBlockModularTank extends ItemBlock {
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation (ItemStack stack, EntityPlayer player, List tooltip, boolean isAdvanced) {
+    public void addInformation (ItemStack stack, EntityPlayer player, List<String> info, boolean advanced) {
         
-        if (stack.hasTagCompound()) {
+        if (stack.hasTagCompound() && stack.getTagCompound().hasKey("TileData")) {
             
-            final NBTTagCompound tag = stack.getTagCompound();
+            final NBTTagCompound tileData = stack.getTagCompound().getCompoundTag("TileData");
+            final TankTier tier = GythApi.getTier(tileData.getString("TierID"));
             
-            FluidStack fluid = null;
-            
-            if (tag.hasKey("Fluid")) {
+            if (tier != null) {
                 
-                fluid = FluidStack.loadFluidStackFromNBT((NBTTagCompound) tag.getTag("Fluid"));
-                tooltip.add(I18n.format("tooltip.gyth.fluidName") + ": " + fluid.getLocalizedName());
+                info.add(I18n.format("tooltip.gyth.tier") + ": " + tier.tier);
+                info.add(I18n.format("tooltip.gyth.owner") + ": " + tier.identifier.getResourceDomain());
+                return;
             }
-            
-            final int amount = fluid != null ? fluid.amount : 0;
-            
-            tooltip.add(I18n.format("tooltip.gyth.fluidAmount") + ": " + amount + "/" + tag.getInteger("TankCapacity") * FluidContainerRegistry.BUCKET_VOLUME + " mB");
-            tooltip.add(I18n.format("tooltip.gyth.tankTier") + ": " + tag.getString("TierName") + " (" + tag.getInteger("Tier") + ")");
         }
         
-        else
-            tooltip.add(I18n.format("tooltip.gyth.itemError"));
+        info.add(ChatFormatting.RED + "[WARNING]" + ChatFormatting.GRAY + I18n.format("tooltip.gyth.missing"));
     }
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems (Item item, CreativeTabs tab, List itemList) {
+    public void getSubItems (Item item, CreativeTabs tab, List<ItemStack> itemList) {
         
-        for (final TankTier tier : TankData.tiers.values())
-            itemList.add(tier.getTankItemStack());
+        for (final TankTier tier : GythApi.REGISTRY)
+            itemList.add(GythApi.createTieredTank(tier));
     }
 }

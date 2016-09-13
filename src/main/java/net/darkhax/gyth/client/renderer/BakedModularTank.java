@@ -14,9 +14,9 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import net.darkhax.bookshelf.lib.BlockStates;
+import net.darkhax.gyth.api.GythApi;
+import net.darkhax.gyth.api.TankTier;
 import net.darkhax.gyth.blocks.BlockModularTank;
-import net.darkhax.gyth.utils.TankData;
-import net.darkhax.gyth.utils.TankTier;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -29,6 +29,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -150,14 +151,17 @@ public class BakedModularTank implements IPerspectiveAwareModel {
         @Override
         public IBakedModel handleItemState (@Nonnull IBakedModel originalModel, ItemStack stack, @Nonnull World world, @Nonnull EntityLivingBase entity) {
             
-            if (originalModel instanceof BakedModularTank) {
-                final TankTier tier = TankData.tiers.get(stack.getTagCompound().getString("TierName"));
+            if (originalModel instanceof BakedModularTank && stack != null && stack.hasTagCompound() && stack.getTagCompound().hasKey("TileData")) {
+                
+                final NBTTagCompound tag = stack.getTagCompound().getCompoundTag("TileData");
+                final TankTier tier = GythApi.getTier(tag.getString("TierID"));
+                
                 if (tier != null) {
-                    final IBlockState blockStack = tier.getRenderBlock();
+                    
+                    final IBlockState blockStack = tier.renderState;
+                    
                     if (blockStack != null) {
-                        final TextureAtlasSprite t = getTextureFromBlock(blockStack);
-                        final String texture = t.getIconName();
-                        return ((BakedModularTank) originalModel).getActualModel(texture);
+                        return ((BakedModularTank) originalModel).getActualModel(getTextureFromBlock(blockStack).getIconName());
                     }
                 }
             }

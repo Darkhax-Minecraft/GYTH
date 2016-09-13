@@ -1,6 +1,6 @@
 package net.darkhax.gyth.tabs;
 
-import net.darkhax.gyth.utils.TankData;
+import net.darkhax.gyth.api.GythApi;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -12,7 +12,7 @@ public class CreativeTabGyth extends CreativeTabs {
     
     public CreativeTabGyth() {
         
-        super("tabGyth");
+        super("gyth");
     }
     
     @Override
@@ -25,6 +25,6 @@ public class CreativeTabGyth extends CreativeTabs {
     @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack () {
         
-        return TankData.tiers.get("spruce").getTankItemStack();
+        return GythApi.createTierUpgrade(GythApi.WOOD_OAK);
     }
 }
