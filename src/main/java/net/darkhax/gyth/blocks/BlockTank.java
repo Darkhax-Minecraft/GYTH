@@ -5,6 +5,9 @@ import java.util.Random;
 import net.darkhax.bookshelf.lib.BlockStates;
 import net.darkhax.bookshelf.lib.util.ItemStackUtils;
 import net.darkhax.gyth.Gyth;
+import net.darkhax.gyth.api.GythApi;
+import net.darkhax.gyth.api.TankTier;
+import net.darkhax.gyth.items.ItemTankUpgrade;
 import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
@@ -50,11 +53,26 @@ public class BlockTank extends BlockContainer {
     @Override
     public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         
-        final TileEntity tank = worldIn.getTileEntity(pos);
+        final TileEntityModularTank tank = (TileEntityModularTank) worldIn.getTileEntity(pos);
         
+        // Handle bad tank
         if (tank == null || !tank.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
             return false;
             
+        // Handle upgrade
+        if (tank != null && heldItem != null && heldItem.getItem() instanceof ItemTankUpgrade) {
+            
+            final TankTier upgradeTier = GythApi.getTierFromStack(heldItem);
+            
+            if (tank != null && !tank.isInvalid() && upgradeTier != null && tank.tier != null && tank.tier.canApplyUpgrage(upgradeTier)) {
+                
+                tank.upgradeTank(upgradeTier, state);
+                ItemStackUtils.consumeStack(heldItem);
+                return true;
+            }
+        }
+        
+        // Handle input
         final IFluidHandler fluidHandler = tank.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
         FluidUtil.interactWithFluidHandler(heldItem, fluidHandler, playerIn);
         return heldItem != null && !(heldItem.getItem() instanceof ItemBlock);

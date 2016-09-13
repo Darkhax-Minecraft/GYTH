@@ -3,6 +3,7 @@ package net.darkhax.gyth.tileentity;
 import net.darkhax.bookshelf.tileentity.TileEntityBasic;
 import net.darkhax.gyth.api.GythApi;
 import net.darkhax.gyth.api.TankTier;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -20,13 +21,12 @@ public class TileEntityModularTank extends TileEntityBasic {
         this.tank = new FluidTank(0);
     }
     
-    public void upgradeTank (TankTier upgradeTier) {
+    public void upgradeTank (TankTier upgradeTier, IBlockState state) {
         
-        if (this.tier.canApplyUpgrage(upgradeTier)) {
-            
-            this.tier = upgradeTier;
-            this.tank.setCapacity(upgradeTier.getCapacity());
-        }
+        this.tier = upgradeTier;
+        this.tank.setCapacity(upgradeTier.getCapacity());
+        this.getWorld().notifyBlockUpdate(this.pos, state, state, 8);
+        this.markDirty();
     }
     
     @Override

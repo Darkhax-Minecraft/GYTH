@@ -2,11 +2,10 @@ package net.darkhax.gyth.items;
 
 import java.util.List;
 
+import net.darkhax.bookshelf.lib.Constants;
 import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.api.GythApi;
 import net.darkhax.gyth.api.TankTier;
-import net.darkhax.gyth.blocks.BlockTank;
-import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -33,14 +32,8 @@ public class ItemTankUpgrade extends Item {
     @Override
     public EnumActionResult onItemUse (ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         
-        if (worldIn.getBlockState(pos).getBlock() instanceof BlockTank) {
-            
-            final TileEntityModularTank tank = (TileEntityModularTank) worldIn.getTileEntity(pos);
-            final TankTier upgradeTier = GythApi.getTierFromStack(stack);
-            
-            if (tank != null && !tank.isInvalid() && upgradeTier != null && tank.tier != null && tank.tier.canApplyUpgrage(upgradeTier))
-                tank.upgradeTank(upgradeTier);
-        }
+        Constants.LOG.info("fuck");
+        
         return EnumActionResult.FAIL;
     }
     
