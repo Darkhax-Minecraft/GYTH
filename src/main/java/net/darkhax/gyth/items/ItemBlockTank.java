@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,11 +29,15 @@ public class ItemBlockTank extends ItemBlock {
     public void addInformation (ItemStack stack, EntityPlayer player, List<String> info, boolean advanced) {
         
         TankTier tier = null;
+        FluidStack fluid = null;
         
-        if (stack.hasTagCompound() && stack.getTagCompound().hasKey("TileData"))
-            tier = GythApi.getTier(stack.getTagCompound().getCompoundTag("TileData").getString("TierID"));
+        if (stack.hasTagCompound() && stack.getTagCompound().hasKey("TileData")) {
             
-        GythApi.createTierTooltip(tier, info);
+            tier = GythApi.getTier(stack.getTagCompound().getCompoundTag("TileData").getString("TierID"));
+            fluid = FluidStack.loadFluidStackFromNBT(stack.getTagCompound().getCompoundTag("TileData").getCompoundTag("FluidData"));
+        }
+        
+        GythApi.createTierTooltip(tier, fluid, info);
     }
     
     @Override

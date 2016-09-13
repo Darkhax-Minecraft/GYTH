@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.RegistrySimple;
+import net.minecraftforge.fluids.FluidStack;
 
 public class GythApi {
     
@@ -141,11 +142,20 @@ public class GythApi {
      * @param tier The tier to represent.
      * @param tooltip The list to add to.
      */
-    public static void createTierTooltip (TankTier tier, List<String> tooltip) {
+    public static void createTierTooltip (TankTier tier, FluidStack stack, List<String> tooltip) {
         
         if (tier != null) {
             
-            tooltip.add(I18n.format("tooltip.gyth.block") +": " + ItemStackUtils.getStackFromState(tier.renderState, 1).getDisplayName());
+            if (stack != null) {
+                
+                tooltip.add(I18n.format("tooltip.gyth.capacity", stack.amount, tier.getCapacity()));
+                tooltip.add(I18n.format("tooltip.gyth.contents") + ": " + stack.getLocalizedName());
+            }
+            
+            else
+                tooltip.add(I18n.format("tooltip.gyth.capacity", 0, tier.getCapacity()));
+                
+            tooltip.add(I18n.format("tooltip.gyth.block") + ": " + ItemStackUtils.getStackFromState(tier.renderState, 1).getDisplayName());
             tooltip.add(I18n.format("tooltip.gyth.tier") + ": " + tier.tier);
             tooltip.add(I18n.format("tooltip.gyth.owner", ChatFormatting.BLUE, ModUtils.getModName(tier.identifier.getResourceDomain())));
             return;

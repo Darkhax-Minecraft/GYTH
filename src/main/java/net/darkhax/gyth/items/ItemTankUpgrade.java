@@ -49,10 +49,11 @@ public class ItemTankUpgrade extends Item {
     public void addInformation (ItemStack stack, EntityPlayer player, List<String> info, boolean advanced) {
         
         TankTier tier = null;
+        
         if (stack.hasTagCompound() && stack.getTagCompound().hasKey("TierID"))
             tier = GythApi.getTier(stack.getTagCompound().getString("TierID"));
             
-        GythApi.createTierTooltip(tier, info);
+        GythApi.createTierTooltip(tier, null, info);
     }
     
     @Override
