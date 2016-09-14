@@ -54,7 +54,7 @@ public class ModelTank implements IPerspectiveAwareModel {
         
         this.model = model;
         this.textureGetter = location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
-        this.transforms = getTransforms(standard);
+        this.transforms = IPerspectiveAwareModel.MapWrapper.getTransforms(standard.getItemCameraTransforms());
     }
     
     protected IBakedModel getActualModel (String texture) {
@@ -164,20 +164,9 @@ public class ModelTank implements IPerspectiveAwareModel {
             return originalModel;
         }
     }
-    
+
     private static TextureAtlasSprite getTextureFromBlock (IBlockState blockStack) {
         
         return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(blockStack);
-    }
-    
-    public static ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> getTransforms (IPerspectiveAwareModel model) {
-        
-        final ImmutableMap.Builder<ItemCameraTransforms.TransformType, TRSRTransformation> builder = ImmutableMap.builder();
-        for (final ItemCameraTransforms.TransformType type : ItemCameraTransforms.TransformType.values()) {
-            final TRSRTransformation transformation = new TRSRTransformation(model.handlePerspective(type).getRight());
-            if (!transformation.equals(TRSRTransformation.identity()))
-                builder.put(type, TRSRTransformation.blockCenterToCorner(transformation));
-        }
-        return builder.build();
     }
 }
