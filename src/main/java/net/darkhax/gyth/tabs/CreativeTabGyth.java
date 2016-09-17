@@ -5,14 +5,13 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CreativeTabGyth extends CreativeTabs {
     
     public CreativeTabGyth() {
         
         super("gyth");
+        this.setBackgroundImageName("item_search.png");
     }
     
     @Override
@@ -22,9 +21,14 @@ public class CreativeTabGyth extends CreativeTabs {
     }
     
     @Override
-    @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack () {
         
         return GythApi.createTieredTank(GythApi.WOOD_OAK);
+    }
+    
+    @Override
+    public boolean hasSearchBar () {
+        
+        return true;
     }
 }
