@@ -2,6 +2,7 @@ package net.darkhax.gyth.client.renderer;
 
 import net.darkhax.bookshelf.client.event.RenderItemEvent;
 import net.darkhax.bookshelf.lib.util.RenderUtils;
+import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.api.GythApi;
 import net.darkhax.gyth.api.TankTier;
 import net.minecraft.client.renderer.GlStateManager;
@@ -13,7 +14,14 @@ public class ItemBlockRenderer {
 
 
     @SubscribeEvent
-    public void renderItem(RenderItemEvent event) {
+    public void renderItem(RenderItemEvent.Allow event) {
+        
+        if (event.getItemStack().getItem() == Gyth.itemBlockModularTank)
+            event.setCanceled(true);
+    }
+    
+    @SubscribeEvent
+    public void renderItem(RenderItemEvent.Pre event) {
 
         GlStateManager.pushMatrix();
         TankTier tier = null;
@@ -28,11 +36,10 @@ public class ItemBlockRenderer {
         if (tier != null && fluid != null) {
 
             GlStateManager.enableBlend();
-            GlStateManager.translate(-0.5f, -0.5f, -0.5f);
             RenderUtils.renderFluid(fluid, new BlockPos(0, 0, 0), 0.06d, 0.12d, 0.06d, 0.0d, 0.0d, 0.0d, 0.88d, (double) fluid.amount / (double) tier.getCapacity() * 0.8d, 0.88d);
-
             GlStateManager.disableBlend();
         }
+        
         GlStateManager.popMatrix();
     }
 }
