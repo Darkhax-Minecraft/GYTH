@@ -7,7 +7,7 @@ tile.gyth.tank.name=Modular Tank
 item.gyth.upgrade.name=Tank Upgrade
 
 #Misc
-itemGroup.gyth=Get Ya' Tanks Here
+itemGroup.gyth=GYTH
 
 #Tooltip
 tooltip.gyth.tier=Tier
