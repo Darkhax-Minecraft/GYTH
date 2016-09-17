@@ -50,11 +50,14 @@ public class TileEntityModularTank extends TileEntityBasic {
         
         this.tier = GythApi.getTier(dataTag.getString("TierID"));
         
-        if (dataTag.hasKey("FluidData"))
-            this.tank = new FluidTank(FluidStack.loadFluidStackFromNBT(dataTag.getCompoundTag("FluidData")), this.tier.getCapacity());
+        if (this.tier != null) {
             
-        else
-            this.tank = new FluidTank(this.tier.getCapacity());
+            if (dataTag.hasKey("FluidData"))
+                this.tank = new FluidTank(FluidStack.loadFluidStackFromNBT(dataTag.getCompoundTag("FluidData")), this.tier.getCapacity());
+                
+            else
+                this.tank = new FluidTank(this.tier.getCapacity());
+        }
     }
     
     @Override

@@ -67,7 +67,7 @@ public class BlockTank extends BlockContainer {
             if (tank != null && !tank.isInvalid() && upgradeTier != null && tank.tier != null && tank.tier.canApplyUpgrage(upgradeTier)) {
                 
                 tank.upgradeTank(upgradeTier, state);
-                ItemStackUtils.consumeStack(heldItem);
+                heldItem.stackSize--;
                 return true;
             }
         }

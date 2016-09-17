@@ -6,6 +6,7 @@ import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.client.renderer.ItemBlockRenderer;
 import net.darkhax.gyth.client.renderer.RendererTank;
 import net.darkhax.gyth.client.renderer.TankItemOverride;
+import net.darkhax.gyth.client.renderer.UpgradeItemOverride;
 import net.darkhax.gyth.common.ProxyCommon;
 import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.darkhax.gyth.utils.Constants;
@@ -24,39 +25,52 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ProxyClient extends ProxyCommon {
-
+    
     public static final ModelResourceLocation MODEL = new ModelResourceLocation(new ResourceLocation("gyth", "modular_tank"), null);
+    public static final ModelResourceLocation MODEL_UPGRADE = new ModelResourceLocation(new ResourceLocation("gyth", "tank_upgrade"), null);
     
     @Override
-    public void registerBlockRenderers() {
-
+    public void registerBlockRenderers () {
+        
         MinecraftForge.EVENT_BUS.register(this);
-
+        
         ModelLoader.setCustomModelResourceLocation(Gyth.itemBlockModularTank, 0, MODEL);
+        ModelLoader.setCustomModelResourceLocation(Gyth.itemTankUpgrade, 0, MODEL_UPGRADE);
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityModularTank.class, new RendererTank());
-
+        
         MinecraftForge.EVENT_BUS.register(new ItemBlockRenderer());
     }
-
+    
     @SubscribeEvent
     public void onModelBake (ModelBakeEvent event) {
-
+        
         try {
-
-            final IModel currentModel = ModelLoaderRegistry.getModel(new ResourceLocation("gyth", "block/modular_tank"));
-
+            
+            IModel currentModel = ModelLoaderRegistry.getModel(new ResourceLocation("gyth", "block/modular_tank"));
+            
             if (currentModel instanceof IRetexturableModel) {
-
+                
                 final IRetexturableModel model = (IRetexturableModel) currentModel;
                 final IBakedModel baseModel = event.getModelRegistry().getObject(MODEL);
-
+                
                 if (baseModel instanceof IPerspectiveAwareModel)
                     event.getModelRegistry().putObject(MODEL, new ModelRetexturable(model, "case", Blocks.GLASS.getDefaultState(), RenderUtils.getBasicTransforms((IPerspectiveAwareModel) baseModel), new TankItemOverride()));
             }
+            
+            currentModel = ModelLoaderRegistry.getModel(new ResourceLocation("gyth", "item/tank_upgrade"));
+            
+            if (currentModel instanceof IRetexturableModel) {
+                
+                final IRetexturableModel model = (IRetexturableModel) currentModel;
+                final IBakedModel baseModel = event.getModelRegistry().getObject(MODEL_UPGRADE);
+                
+                if (baseModel instanceof IPerspectiveAwareModel)
+                    event.getModelRegistry().putObject(MODEL_UPGRADE, new ModelRetexturable(model, "case", Blocks.GLASS.getDefaultState(), RenderUtils.getBasicTransforms((IPerspectiveAwareModel) baseModel), new UpgradeItemOverride()));
+            }
         }
-
+        
         catch (final Exception exception) {
-
+            
             Constants.LOG.warn(exception);
         }
     }
