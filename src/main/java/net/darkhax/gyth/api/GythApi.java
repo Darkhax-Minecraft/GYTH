@@ -8,7 +8,7 @@ import net.darkhax.bookshelf.lib.util.ItemStackUtils;
 import net.darkhax.bookshelf.lib.util.ModUtils;
 import net.darkhax.bookshelf.lib.util.OreDictUtils;
 import net.darkhax.gyth.Gyth;
-import net.darkhax.gyth.utils.Constants;
+import net.darkhax.gyth.libs.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;

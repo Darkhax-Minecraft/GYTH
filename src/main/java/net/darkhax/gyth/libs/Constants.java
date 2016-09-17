@@ -1,4 +1,4 @@
-package net.darkhax.gyth.utils;
+package net.darkhax.gyth.libs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
