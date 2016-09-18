@@ -1,6 +1,8 @@
 package net.darkhax.gyth.api;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 
@@ -15,7 +17,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.RegistrySimple;
 import net.minecraftforge.fluids.FluidStack;
 
 public class GythApi {
@@ -23,7 +24,7 @@ public class GythApi {
     /**
      * Registry of all tiers that have been registered.
      */
-    public static final RegistrySimple<ResourceLocation, TankTier> REGISTRY = new RegistrySimple<ResourceLocation, TankTier>();
+    public static final Map<ResourceLocation, TankTier> REGISTRY = new HashMap<ResourceLocation, TankTier>();
     
     // Tier 1
     public static final TankTier WOOD_OAK = createTier("oak", Blocks.PLANKS, 0, new ItemStack(Blocks.PLANKS, 1, 0), 1);
@@ -73,11 +74,10 @@ public class GythApi {
      */
     public static TankTier registerTier (ResourceLocation identifier, TankTier tier) {
         
-        REGISTRY.putObject(identifier, tier);
+        REGISTRY.put(identifier, tier);
         return tier;
     }
     
-    // TODO implement a default tier.
     /**
      * Retrieves a TankTier based on it's identifier.
      * 
@@ -86,7 +86,7 @@ public class GythApi {
      */
     public static TankTier getTier (String identifier) {
         
-        return REGISTRY.getObject(new ResourceLocation(identifier));
+        return REGISTRY.get(new ResourceLocation(identifier));
     }
     
     /**
@@ -131,7 +131,6 @@ public class GythApi {
         if (stack.hasTagCompound() && stack.getTagCompound().hasKey("TierID"))
             return getTier(stack.getTagCompound().getString("TierID"));
             
-        // TODO add default tier
         return null;
     }
     
@@ -160,14 +159,28 @@ public class GythApi {
             return;
         }
         
-        tooltip.add(ChatFormatting.RED + "[WARNING]" + ChatFormatting.GRAY + I18n.format("tooltip.gyth.missing"));
+        tooltip.add(ChatFormatting.RED + "[WARNING] " + ChatFormatting.GRAY + I18n.format("tooltip.gyth.missing"));
+    }
+    
+    public static void removeTier (String modId, ResourceLocation tier) {
+        
+        if (REGISTRY.remove(tier) != null) {
+            
+            Constants.LOG.info("The tier " + tier.toString() + " was removed by " + modId);
+        }
+    }
+    
+    public static TankTier createTier (String modId, String name, Block block, int meta, Object recipe, int tier) {
+        
+        final ResourceLocation identifier = new ResourceLocation(modId, name);
+        final TankTier tankTier = new TankTier(identifier, block.getStateFromMeta(meta), recipe, tier);
+        REGISTRY.put(identifier, tankTier);
+        
+        return tankTier;
     }
     
     private static TankTier createTier (String name, Block block, int meta, Object recipe, int tier) {
         
-        final ResourceLocation identifier = new ResourceLocation(Constants.MODID, name);
-        final TankTier tankTier = new TankTier(identifier, block.getStateFromMeta(meta), recipe, tier);
-        REGISTRY.putObject(identifier, tankTier);
-        return tankTier;
+        return createTier(Constants.MODID, name, block, meta, recipe, tier);
     }
 }
