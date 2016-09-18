@@ -1,4 +1,3 @@
-GYTH
+GYTH - Het Ya' Tanks Here
 ====
-
-This mod is pretty dead
+Adds tanks which can be upgraded in a traditional mc mannor. 

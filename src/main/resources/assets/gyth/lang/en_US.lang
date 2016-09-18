@@ -1,13 +1,18 @@
-#English Language File by Darkhax
+#English Language File
 
-tile.gyth.modularTank.name=Modular Tank
+#Blocks
+tile.gyth.tank.name=Modular Tank
 
+#Items
 item.gyth.upgrade.name=Tank Upgrade
 
-itemGroup.tabGyth=Get Ya' Tanks Here
+#Misc
+itemGroup.gyth=GYTH
 
-tooltip.gyth.fluidName=Contains
-tooltip.gyth.fluidAmount=Amount
-tooltip.gyth.tankTier=Tier
-tooltip.gyth.capacity=Buckets
-tooltip.gyth.itemError=There is no data for this item. Do not trust it!
+#Tooltip
+tooltip.gyth.tier=Tier
+tooltip.gyth.owner=Added by %s%s
+tooltip.gyth.block=Type
+tooltip.gyth.capacity=%dmb / %dmb
+tooltip.gyth.contents=Contents
+tooltip.gyth.missing=There is no data for this item. Do not trust it!
