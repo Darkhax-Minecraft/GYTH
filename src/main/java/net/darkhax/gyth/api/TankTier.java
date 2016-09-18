@@ -3,7 +3,7 @@ package net.darkhax.gyth.api;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 
-public class TankTier implements Comparable {
+public class TankTier implements Comparable<TankTier> {
     
     /**
      * The identifier for the tier type. Follows same format as the rest of the game.
@@ -63,9 +63,8 @@ public class TankTier implements Comparable {
     }
     
     @Override
-    public int compareTo (Object other) {
+    public int compareTo (TankTier otherTier) {
         
-        final TankTier otherTier = (TankTier) other;
         return otherTier.tier == this.tier ? 0 : otherTier.tier > this.tier ? -1 : +1;
     }
 }
