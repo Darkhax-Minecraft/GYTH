@@ -153,7 +153,7 @@ public class GythApi {
             }
             
             else
-                tooltip.add(I18n.format("tooltip.gyth.capacity", 0, tier.getCapacity()));
+                tooltip.add(I18n.format("tooltip.gyth.capacity.upgrade", tier.getCapacity() / 1000));
                 
             tooltip.add(I18n.format("tooltip.gyth.block") + ": " + ItemStackUtils.getStackFromState(tier.renderState, 1).getDisplayName());
             tooltip.add(I18n.format("tooltip.gyth.tier") + ": " + tier.tier);
