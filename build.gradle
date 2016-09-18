@@ -177,7 +177,7 @@ curseforge {
         id = System.getenv("projectId") ? System.getenv("projectId") : "0";
         
         releaseType = "alpha";
-        changelog = "All changes can be found here: https://github.com/Darkhax-Minecraft/Dark-Utilities/commits/master/";
+        changelog = "All changes can be found here: https://github.com/Darkhax-Minecraft/GYTH/commits/master/";
 
         addGameVersion "1.10.2"
         
