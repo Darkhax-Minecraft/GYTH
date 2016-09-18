@@ -10,6 +10,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -32,6 +33,9 @@ public class UpgradeItemOverride extends ItemOverrideList {
             if (state != null)
                 return ((ModelRetexturable) originalModel).getRetexturedModel(RenderUtils.getSprite(state).getIconName());
         }
+        
+        else
+            return ((ModelRetexturable) originalModel).getRetexturedModel(RenderUtils.getSprite(Blocks.FIRE.getDefaultState()).getIconName());
         
         return originalModel;
     }
