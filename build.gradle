@@ -55,7 +55,7 @@ repositories {
 
 dependencies {
 
-    compile "net.darkhax.bookshelf:Bookshelf:1.10.2-1.4.0.316"
+    compile "net.darkhax.bookshelf:Bookshelf:1.10.2-1.4.0.318"
 }
 
 //Handles basic resources such as mcmod.info
@@ -188,9 +188,7 @@ curseforge {
 
                 //Adds the file relations to the upload.
                 requiredLibrary 'bookshelf'
-                //optionalLibrary 'thaumcraft'
                 optionalLibrary 'waila'
-                //optionalLibrary 'baubles'
             }
         }
         

@@ -12,8 +12,11 @@ public class RendererTank extends TileEntitySpecialRenderer<TileEntityModularTan
     public void renderTileEntityAt (TileEntityModularTank te, double x, double y, double z, float partialTicks, int destroyStage) {
         
         if (te != null) {
+            
             final FluidTank fluid = te.tank;
+            
             if (fluid != null && fluid.getFluid() != null && fluid.getFluidAmount() > 0) {
+                
                 GlStateManager.pushMatrix();
                 GlStateManager.enableBlend();
                 
