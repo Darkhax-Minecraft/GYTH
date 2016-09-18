@@ -1,5 +1,9 @@
 package net.darkhax.gyth;
 
+import java.util.LinkedHashMap;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
 import net.darkhax.bookshelf.lib.util.ItemStackUtils;
 import net.darkhax.bookshelf.lib.util.OreDictUtils;
 import net.darkhax.gyth.api.GythApi;
@@ -62,6 +66,8 @@ public class Gyth {
     @EventHandler
     public void init (FMLInitializationEvent event) {
         
+        GythApi.REGISTRY = GythApi.REGISTRY.entrySet().stream().sorted(Entry.comparingByValue()).collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+        
         proxy.registerBlockRenderers();
         
         for (final TankTier tier : GythApi.REGISTRY.values()) {
@@ -76,8 +82,7 @@ public class Gyth {
     @EventHandler
     public void handleIMC (IMCEvent event) {
         
-        for (final IMCMessage msg : event.getMessages()) {
-            
+        for (final IMCMessage msg : event.getMessages())
             if (msg.key.equalsIgnoreCase("addTier") && msg.isNBTMessage()) {
                 
                 final NBTTagCompound tag = msg.getNBTValue();
@@ -85,7 +90,7 @@ public class Gyth {
                 final Block block = Block.getBlockFromName(tag.getString("blockId"));
                 final int meta = tag.getInteger("meta");
                 final int tier = tag.getInteger("tier");
-                final Object recipe = getRecipeFromStackString(tag.getString("recipe"));
+                final Object recipe = this.getRecipeFromStackString(tag.getString("recipe"));
                 
                 if (!name.isEmpty() && block != null && meta >= 0 && tier >= 0 && recipe != null)
                     GythApi.createTier(msg.getSender(), name, block, meta, recipe, tier);
@@ -94,16 +99,13 @@ public class Gyth {
                     Constants.LOG.info(msg.getSender() + " tried to register a tier, but it failed.");
             }
             
-            else if (msg.key.equalsIgnoreCase("removeTier") && msg.isResourceLocationMessage()) {
-                
+            else if (msg.key.equalsIgnoreCase("removeTier") && msg.isResourceLocationMessage())
                 GythApi.removeTier(msg.getSender(), msg.getResourceLocationValue());
-            }
-        }
     }
     
-    public Object getRecipeFromStackString (String string) {
+    private Object getRecipeFromStackString (String string) {
         
         final ItemStack stack = ItemStackUtils.createStackFromString(string);
-        return (ItemStackUtils.isValidStack(stack)) ? stack : string;
+        return ItemStackUtils.isValidStack(stack) ? stack : string;
     }
 }

@@ -38,7 +38,7 @@ public class GythWrapper {
         
         if (recipe instanceof ItemStack) {
             
-            ItemStack stack = (ItemStack) recipe;
+            final ItemStack stack = (ItemStack) recipe;
             tag.setString("recipe", stack.getItem().getRegistryName().toString() + "#" + stack.getMetadata());
         }
         

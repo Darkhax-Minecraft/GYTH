@@ -14,6 +14,7 @@ import net.darkhax.gyth.libs.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -24,7 +25,7 @@ public class GythApi {
     /**
      * Registry of all tiers that have been registered.
      */
-    public static final Map<ResourceLocation, TankTier> REGISTRY = new HashMap<ResourceLocation, TankTier>();
+    public static Map<ResourceLocation, TankTier> REGISTRY = new HashMap<ResourceLocation, TankTier>();
     
     // Tier 1
     public static final TankTier WOOD_OAK = createTier("oak", Blocks.PLANKS, 0, new ItemStack(Blocks.PLANKS, 1, 0), 1);
@@ -35,7 +36,7 @@ public class GythApi {
     public static final TankTier WOOD_DARK_OAK = createTier("dark_oak", Blocks.PLANKS, 5, new ItemStack(Blocks.PLANKS, 1, 5), 1);
     
     // Tier 2
-    public static final TankTier STONE_COBBLE = createTier("stone_cobble", Blocks.COBBLESTONE, 0, OreDictUtils.COBBLESTONE, 1);
+    public static final TankTier STONE_COBBLE = createTier("stone_cobble", Blocks.COBBLESTONE, 0, OreDictUtils.COBBLESTONE, 2);
     public static final TankTier STONE_SMOOTH = createTier("stone_smooth", Blocks.STONE, 0, new ItemStack(Blocks.STONE, 1, 0), 2);
     public static final TankTier STONE_GRANITE = createTier("stone_granite", Blocks.STONE, 1, new ItemStack(Blocks.STONE, 1, 1), 2);
     public static final TankTier STONE_GRANITE_SMOOTH = createTier("stone_granite_smooth", Blocks.STONE, 2, new ItemStack(Blocks.STONE, 1, 2), 2);
@@ -48,8 +49,9 @@ public class GythApi {
     public static final TankTier BRICK = createTier("brick", Blocks.BRICK_BLOCK, 0, OreDictUtils.INGOT_BRICK, 2);
     public static final TankTier BRICK_NETHER = createTier("brick_nether", Blocks.NETHER_BRICK, 0, OreDictUtils.INGOT_BRICK_NETHER, 2);
     public static final TankTier BRICK_STONE = createTier("brick_stone", Blocks.STONEBRICK, 0, Blocks.STONEBRICK, 2);
-    public static final TankTier BRICK_END = createTier("brick_end", Blocks.END_BRICKS, 0, Blocks.END_BRICKS, 2);
     public static final TankTier BRICK_PURPUR = createTier("brick_purpur", Blocks.PURPUR_BLOCK, 0, Blocks.PURPUR_BLOCK, 2);
+    public static final TankTier BRICK_END = createTier("brick_end", Blocks.END_BRICKS, 0, Blocks.END_BRICKS, 2);
+    public static final TankTier PRISMARINE = createTier("prismarine", Blocks.PRISMARINE, 0, Items.PRISMARINE_SHARD, 2);
     
     // Tier 3
     public static final TankTier IRON = createTier("iron", Blocks.IRON_BLOCK, 0, OreDictUtils.INGOT_IRON, 3);
@@ -164,10 +166,8 @@ public class GythApi {
     
     public static void removeTier (String modId, ResourceLocation tier) {
         
-        if (REGISTRY.remove(tier) != null) {
-            
+        if (REGISTRY.remove(tier) != null)
             Constants.LOG.info("The tier " + tier.toString() + " was removed by " + modId);
-        }
     }
     
     public static TankTier createTier (String modId, String name, Block block, int meta, Object recipe, int tier) {
