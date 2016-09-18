@@ -49,5 +49,5 @@ This can be done by sending an `addTier` message to `gyth`. The message must be 
 - `tierName` - The name of the tier as a string. This must be an all lower case string with no spaces. This is used to create the identifier. Note that the modID is added automatically, similarly to the way forge adds it. 
 - `blockId` - The identifier for the block to use as the case material, as a string. This is used for pulling texture info for the case.
 - `meta` - The meta value of the case block. This must be an integer from 0 to 15. 
-- `tier` - The position of the tier on the tier hierarchy. Must be an integer greater than 0.
+- `tier` - The position of the tier on the tier hierarchy. Must be an integer greater than 0 but less than 11.
 - `recipe` - The item/block to use for crafting the tier. This must be a string, however there are two ways this can be used. The first is to use any ore dictionary name, the second is to use a generic itemstack format which follows a identifier#meta pattern. The identifier is a string based item/block id which follows mc's format, and the meta is any integer. Blocks require a meta of 0-15. 

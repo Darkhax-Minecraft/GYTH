@@ -93,7 +93,7 @@ public class Gyth {
                 final Object recipe = this.getRecipeFromStackString(tag.getString("recipe"));
                 
                 if (!name.isEmpty() && block != null && meta >= 0 && tier >= 0 && recipe != null)
-                    GythApi.createTier(msg.getSender(), name, block, meta, recipe, tier);
+                    GythApi.createTier(msg.getSender(), name, block, meta, recipe, Math.min(10, tier));
                     
                 else
                     Constants.LOG.info(msg.getSender() + " tried to register a tier, but it failed.");

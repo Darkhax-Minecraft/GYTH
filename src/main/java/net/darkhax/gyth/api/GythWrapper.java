@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
 /**
  * Wrapper class for the GYTH IMC API. This allows for API support without the need to build
@@ -23,8 +24,8 @@ public class GythWrapper {
      *        added it. Your modId will be added to this on Gyth's end, similarly to how forge
      *        adds it to item/block ids.
      * @param block The block to use for the case of this tank tier.
-     * @param meta The meta value for the case block. Must be between 0 to 15.
-     * @param tier The position of this tier on the hierarchy. Must be 1 or greater.
+     * @param meta The meta value for the case block. Must be in range of 0 to 15.
+     * @param tier The position of this tier on the hierarchy. Must be in range of 1 to 10.
      * @param recipe The item to use in the tier crafting recipe. Accepts an ItemStack, or an
      *        oredict name!
      */
@@ -42,6 +43,9 @@ public class GythWrapper {
             tag.setString("recipe", stack.getItem().getRegistryName().toString() + "#" + stack.getMetadata());
         }
         
+        else if (recipe instanceof IForgeRegistryEntry.Impl)
+            tag.setString("recipe", ((IForgeRegistryEntry.Impl) recipe).getRegistryName().toString() + "#" + 0);
+            
         else
             tag.setString("recipe", (String) recipe);
             
