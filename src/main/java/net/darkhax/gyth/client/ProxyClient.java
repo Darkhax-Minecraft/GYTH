@@ -1,19 +1,23 @@
 package net.darkhax.gyth.client;
 
+import net.darkhax.bookshelf.client.event.RenderItemEvent;
 import net.darkhax.bookshelf.client.model.ModelRetexturable;
 import net.darkhax.bookshelf.lib.util.RenderUtils;
 import net.darkhax.gyth.Gyth;
-import net.darkhax.gyth.client.renderer.ItemBlockRenderer;
+import net.darkhax.gyth.api.GythApi;
+import net.darkhax.gyth.api.TankTier;
 import net.darkhax.gyth.client.renderer.RendererTank;
 import net.darkhax.gyth.client.renderer.TankItemOverride;
 import net.darkhax.gyth.client.renderer.UpgradeItemOverride;
 import net.darkhax.gyth.common.ProxyCommon;
 import net.darkhax.gyth.libs.Constants;
 import net.darkhax.gyth.tileentity.TileEntityModularTank;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.IPerspectiveAwareModel;
@@ -21,6 +25,7 @@ import net.minecraftforge.client.model.IRetexturableModel;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -37,8 +42,6 @@ public class ProxyClient extends ProxyCommon {
         ModelLoader.setCustomModelResourceLocation(Gyth.itemBlockModularTank, 0, MODEL);
         ModelLoader.setCustomModelResourceLocation(Gyth.itemTankUpgrade, 0, MODEL_UPGRADE);
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityModularTank.class, new RendererTank());
-        
-        MinecraftForge.EVENT_BUS.register(new ItemBlockRenderer());
     }
     
     @SubscribeEvent
@@ -72,6 +75,37 @@ public class ProxyClient extends ProxyCommon {
         catch (final Exception exception) {
             
             Constants.LOG.warn(exception);
+            exception.printStackTrace();
         }
+    }
+    
+    @SubscribeEvent
+    public void renderItem (RenderItemEvent.Allow event) {
+        
+        if (event.getItemStack().getItem() == Gyth.itemBlockModularTank)
+            event.setCanceled(true);
+    }
+    
+    @SubscribeEvent
+    public void renderItem (RenderItemEvent.Pre event) {
+        
+        GlStateManager.pushMatrix();
+        TankTier tier = null;
+        FluidStack fluid = null;
+        
+        if (event.getItemStack().hasTagCompound() && event.getItemStack().getTagCompound().hasKey("TileData")) {
+            
+            tier = GythApi.getTier(event.getItemStack().getTagCompound().getCompoundTag("TileData").getString("TierID"));
+            fluid = FluidStack.loadFluidStackFromNBT(event.getItemStack().getTagCompound().getCompoundTag("TileData").getCompoundTag("FluidData"));
+        }
+        
+        if (tier != null && fluid != null) {
+            
+            GlStateManager.enableBlend();
+            RenderUtils.renderFluid(fluid, new BlockPos(0, 0, 0), 0.06d, 0.12d, 0.06d, 0.0d, 0.0d, 0.0d, 0.88d, (double) fluid.amount / (double) tier.getCapacity() * 0.8d, 0.88d);
+            GlStateManager.disableBlend();
+        }
+        
+        GlStateManager.popMatrix();
     }
 }
