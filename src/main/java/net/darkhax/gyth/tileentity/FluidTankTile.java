@@ -1,5 +1,6 @@
 package net.darkhax.gyth.tileentity;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -26,7 +27,8 @@ public class FluidTankTile extends FluidTank {
         
         if (this.tile != null) {
             
-            this.tile.getWorld().notifyNeighborsOfStateChange(this.tile.getPos(), this.tile.getBlockType());
+            final IBlockState state = this.tile.getWorld().getBlockState(this.tile.getPos());
+            this.tile.getWorld().notifyBlockUpdate(this.tile.getPos(), state, state, 8);
             this.tile.markDirty();
         }
     }
