@@ -24,7 +24,7 @@ public class UpgradeItemOverride extends ItemOverrideList {
     @Override
     public IBakedModel handleItemState (IBakedModel originalModel, ItemStack stack, World world, EntityLivingBase entity) {
         
-        TankTier tier = GythApi.getTierFromStack(stack);
+        final TankTier tier = GythApi.getTierFromStack(stack);
         
         if (tier != null) {
             
@@ -36,7 +36,7 @@ public class UpgradeItemOverride extends ItemOverrideList {
         
         else
             return ((ModelRetexturable) originalModel).getRetexturedModel(RenderUtils.getSprite(Blocks.FIRE.getDefaultState()).getIconName());
-        
+            
         return originalModel;
     }
 }

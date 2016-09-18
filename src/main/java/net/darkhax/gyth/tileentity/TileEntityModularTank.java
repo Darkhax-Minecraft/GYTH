@@ -57,7 +57,7 @@ public class TileEntityModularTank extends TileEntityBasic {
                 
             else
                 this.tank = new FluidTankTile(this.tier.getCapacity());
-            
+                
             if (this.tank != null)
                 this.tank.setTileEntity(this);
         }
