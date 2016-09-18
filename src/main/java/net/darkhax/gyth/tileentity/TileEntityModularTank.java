@@ -8,17 +8,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntityModularTank extends TileEntityBasic {
     
     public TankTier tier;
-    public FluidTank tank;
+    public FluidTankTile tank;
     
     public TileEntityModularTank() {
         
-        this.tank = new FluidTank(0);
+        this.tank = new FluidTankTile(0);
+        this.tank.setTileEntity(this);
     }
     
     public void upgradeTank (TankTier upgradeTier, IBlockState state) {
@@ -53,10 +53,13 @@ public class TileEntityModularTank extends TileEntityBasic {
         if (this.tier != null) {
             
             if (dataTag.hasKey("FluidData"))
-                this.tank = new FluidTank(FluidStack.loadFluidStackFromNBT(dataTag.getCompoundTag("FluidData")), this.tier.getCapacity());
+                this.tank = new FluidTankTile(FluidStack.loadFluidStackFromNBT(dataTag.getCompoundTag("FluidData")), this.tier.getCapacity());
                 
             else
-                this.tank = new FluidTank(this.tier.getCapacity());
+                this.tank = new FluidTankTile(this.tier.getCapacity());
+            
+            if (this.tank != null)
+                this.tank.setTileEntity(this);
         }
     }
     
