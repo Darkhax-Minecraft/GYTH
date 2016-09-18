@@ -55,7 +55,7 @@ repositories {
 
 dependencies {
 
-    compile "net.darkhax.bookshelf:Bookshelf:1.10.2-1.4.0.316"
+    compile "net.darkhax.bookshelf:Bookshelf:1.10.2-1.4.0.318"
 }
 
 //Handles basic resources such as mcmod.info
@@ -177,7 +177,7 @@ curseforge {
         id = System.getenv("projectId") ? System.getenv("projectId") : "0";
         
         releaseType = "alpha";
-        changelog = "All changes can be found here: https://github.com/Darkhax-Minecraft/Dark-Utilities/commits/master/";
+        changelog = "All changes can be found here: https://github.com/Darkhax-Minecraft/GYTH/commits/master/";
 
         addGameVersion "1.10.2"
         
@@ -188,9 +188,7 @@ curseforge {
 
                 //Adds the file relations to the upload.
                 requiredLibrary 'bookshelf'
-                //optionalLibrary 'thaumcraft'
                 optionalLibrary 'waila'
-                //optionalLibrary 'baubles'
             }
         }
         

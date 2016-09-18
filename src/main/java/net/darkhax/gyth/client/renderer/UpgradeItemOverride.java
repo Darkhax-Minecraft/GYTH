@@ -10,6 +10,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -23,7 +24,7 @@ public class UpgradeItemOverride extends ItemOverrideList {
     @Override
     public IBakedModel handleItemState (IBakedModel originalModel, ItemStack stack, World world, EntityLivingBase entity) {
         
-        TankTier tier = GythApi.getTierFromStack(stack);
+        final TankTier tier = GythApi.getTierFromStack(stack);
         
         if (tier != null) {
             
@@ -33,6 +34,9 @@ public class UpgradeItemOverride extends ItemOverrideList {
                 return ((ModelRetexturable) originalModel).getRetexturedModel(RenderUtils.getSprite(state).getIconName());
         }
         
+        else
+            return ((ModelRetexturable) originalModel).getRetexturedModel(RenderUtils.getSprite(Blocks.FIRE.getDefaultState()).getIconName());
+            
         return originalModel;
     }
 }

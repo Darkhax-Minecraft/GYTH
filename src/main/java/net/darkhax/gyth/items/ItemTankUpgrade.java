@@ -39,7 +39,7 @@ public class ItemTankUpgrade extends Item {
     @SideOnly(Side.CLIENT)
     public void getSubItems (Item item, CreativeTabs tab, List<ItemStack> itemList) {
         
-        for (final TankTier tier : GythApi.REGISTRY)
+        for (final TankTier tier : GythApi.REGISTRY.values())
             itemList.add(GythApi.createTierUpgrade(tier));
     }
 }
