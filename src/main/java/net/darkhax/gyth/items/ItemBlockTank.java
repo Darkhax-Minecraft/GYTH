@@ -5,9 +5,7 @@ import java.util.List;
 import net.darkhax.gyth.api.GythApi;
 import net.darkhax.gyth.api.TankTier;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -22,6 +20,7 @@ public class ItemBlockTank extends ItemBlock {
         super(block);
         this.setMaxStackSize(1);
         this.setRegistryName(new ResourceLocation("gyth", "modular_tank"));
+        this.hasSubtypes = true;
     }
     
     @Override
@@ -38,13 +37,5 @@ public class ItemBlockTank extends ItemBlock {
         }
         
         GythApi.createTierTooltip(tier, fluid, info);
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems (Item item, CreativeTabs tab, List<ItemStack> itemList) {
-        
-        for (final TankTier tier : GythApi.REGISTRY.values())
-            itemList.add(GythApi.createTieredTank(tier));
     }
 }

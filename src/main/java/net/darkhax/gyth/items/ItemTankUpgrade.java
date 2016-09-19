@@ -21,6 +21,7 @@ public class ItemTankUpgrade extends Item {
         this.setRegistryName(new ResourceLocation("gyth", "tank_upgrade"));
         this.setCreativeTab(Gyth.tabGyth);
         this.setUnlocalizedName("gyth.upgrade");
+        this.hasSubtypes = true;
     }
     
     @Override
