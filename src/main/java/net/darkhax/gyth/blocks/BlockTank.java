@@ -1,5 +1,6 @@
 package net.darkhax.gyth.blocks;
 
+import java.util.List;
 import java.util.Random;
 
 import net.darkhax.bookshelf.lib.BlockStates;
@@ -15,8 +16,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -36,6 +39,8 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockTank extends BlockContainer {
     
@@ -177,5 +182,12 @@ public class BlockTank extends BlockContainer {
         ItemStackUtils.dropStackInWorld(world, pos, ItemStackUtils.createStackFromTileEntity(world.getTileEntity(pos)));
         world.setBlockToAir(pos);
         this.onBlockDestroyedByExplosion(world, pos, explosion);
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> itemList) {
+        
+        for (final TankTier tier : GythApi.REGISTRY.values())
+            itemList.add(GythApi.createTieredTank(tier));
     }
 }
