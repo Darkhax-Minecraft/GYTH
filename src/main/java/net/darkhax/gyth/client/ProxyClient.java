@@ -57,7 +57,7 @@ public class ProxyClient extends ProxyCommon {
                 final IBakedModel baseModel = event.getModelRegistry().getObject(MODEL);
                 
                 if (baseModel instanceof IPerspectiveAwareModel)
-                    event.getModelRegistry().putObject(MODEL, new ModelRetexturable(model, "case", Blocks.GLASS.getDefaultState(), RenderUtils.getBasicTransforms((IPerspectiveAwareModel) baseModel), new TankItemOverride()));
+                    event.getModelRegistry().putObject(MODEL, new ModelRetexturable(model, "case", Blocks.GLASS.getDefaultState(), RenderUtils.getBasicTransforms((IPerspectiveAwareModel) baseModel), new TankItemOverride(), null));
             }
             
             currentModel = ModelLoaderRegistry.getModel(new ResourceLocation("gyth", "item/tank_upgrade"));
@@ -68,7 +68,7 @@ public class ProxyClient extends ProxyCommon {
                 final IBakedModel baseModel = event.getModelRegistry().getObject(MODEL_UPGRADE);
                 
                 if (baseModel instanceof IPerspectiveAwareModel)
-                    event.getModelRegistry().putObject(MODEL_UPGRADE, new ModelRetexturable(model, "case", Blocks.GLASS.getDefaultState(), RenderUtils.getBasicTransforms((IPerspectiveAwareModel) baseModel), new UpgradeItemOverride()));
+                    event.getModelRegistry().putObject(MODEL_UPGRADE, new ModelRetexturable(model, "case", Blocks.GLASS.getDefaultState(), RenderUtils.getBasicTransforms((IPerspectiveAwareModel) baseModel), new UpgradeItemOverride(), null));
             }
         }
         

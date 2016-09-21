@@ -184,8 +184,9 @@ public class BlockTank extends BlockContainer {
         this.onBlockDestroyedByExplosion(world, pos, explosion);
     }
     
+    @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> itemList) {
+    public void getSubBlocks (Item itemIn, CreativeTabs tab, List<ItemStack> itemList) {
         
         for (final TankTier tier : GythApi.REGISTRY.values())
             itemList.add(GythApi.createTieredTank(tier));

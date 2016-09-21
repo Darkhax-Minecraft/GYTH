@@ -37,7 +37,7 @@ public class PluginWaila implements IWailaDataProvider {
         
         if (data.getTileEntity() instanceof TileEntityModularTank) {
             
-            TileEntityModularTank tank = (TileEntityModularTank) data.getTileEntity();
+            final TileEntityModularTank tank = (TileEntityModularTank) data.getTileEntity();
             GythApi.createTierTooltip(tank.tier, tank.tank.getFluid(), tip);
         }
         

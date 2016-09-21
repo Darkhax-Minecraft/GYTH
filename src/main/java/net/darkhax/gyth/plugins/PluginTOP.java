@@ -39,7 +39,7 @@ public class PluginTOP implements IProbeInfoProvider {
             final List<String> info = new ArrayList<String>();
             GythApi.createTierTooltip(tileTank.tier, tileTank.tank.getFluid(), info);
             
-            for (String text : info)
+            for (final String text : info)
                 probeInfo.text(text);
         }
     }
