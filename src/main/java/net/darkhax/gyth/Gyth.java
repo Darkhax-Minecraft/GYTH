@@ -12,6 +12,7 @@ import net.darkhax.gyth.blocks.BlockTank;
 import net.darkhax.gyth.common.ProxyCommon;
 import net.darkhax.gyth.items.ItemBlockTank;
 import net.darkhax.gyth.items.ItemTankUpgrade;
+import net.darkhax.gyth.libs.ConfigurationHandler;
 import net.darkhax.gyth.libs.Constants;
 import net.darkhax.gyth.tabs.CreativeTabGyth;
 import net.darkhax.gyth.tileentity.TileEntityModularTank;
@@ -52,6 +53,7 @@ public class Gyth {
     @EventHandler
     public void preInit (FMLPreInitializationEvent event) {
         
+        ConfigurationHandler.initConfig(event.getSuggestedConfigurationFile());;
         tabGyth = new CreativeTabGyth();
         blockModularTanks = new BlockTank();
         itemBlockModularTank = new ItemBlockTank(blockModularTanks);

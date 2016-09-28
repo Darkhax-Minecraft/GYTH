@@ -11,6 +11,7 @@ import net.darkhax.bookshelf.lib.util.ModUtils;
 import net.darkhax.bookshelf.lib.util.OreDictUtils;
 import net.darkhax.bookshelf.lib.util.PlayerUtils;
 import net.darkhax.gyth.Gyth;
+import net.darkhax.gyth.libs.ConfigurationHandler;
 import net.darkhax.gyth.libs.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
@@ -161,7 +162,7 @@ public class GythApi {
             tooltip.add(I18n.format("tooltip.gyth.block") + ": " + ItemStackUtils.getStackFromState(tier.renderState, 1).getDisplayName());
             tooltip.add(I18n.format("tooltip.gyth.tier") + ": " + tier.tier);
             
-            if (tier.isFlammable(PlayerUtils.getClientPlayer().worldObj, BlockPos.ORIGIN, EnumFacing.UP))
+            if (ConfigurationHandler.handleTemperature && tier.isFlammable(PlayerUtils.getClientPlayer().worldObj, BlockPos.ORIGIN, EnumFacing.UP))
                 tooltip.add(ChatFormatting.RED + I18n.format("tooltip.gyth.flammable"));
             
             tooltip.add(I18n.format("tooltip.gyth.owner", ChatFormatting.BLUE, ModUtils.getModName(tier.identifier.getResourceDomain())));

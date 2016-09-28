@@ -9,6 +9,7 @@ import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.api.GythApi;
 import net.darkhax.gyth.api.TankTier;
 import net.darkhax.gyth.items.ItemTankUpgrade;
+import net.darkhax.gyth.libs.ConfigurationHandler;
 import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
@@ -63,7 +64,7 @@ public class BlockTank extends BlockContainer {
         final FluidStack fluid = FluidUtil.getFluidContained(heldItem);
         
         // Handle bad tank
-        if ((tank.tier.isFlammable(worldIn, pos, side) && fluid != null && fluid.getFluid().getTemperature(fluid) > 450) || tank == null || !tank.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
+        if ((ConfigurationHandler.handleTemperature && tank.tier.isFlammable(worldIn, pos, side) && fluid != null && fluid.getFluid().getTemperature(fluid) > ConfigurationHandler.maxFluidHeat) || tank == null || !tank.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
             return heldItem != null && !(heldItem.getItem() instanceof ItemBlock);
         
         // Handle upgrade
