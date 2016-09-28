@@ -53,7 +53,7 @@ public class Gyth {
     @EventHandler
     public void preInit (FMLPreInitializationEvent event) {
         
-        ConfigurationHandler.initConfig(event.getSuggestedConfigurationFile());;
+        ConfigurationHandler.initConfig(event.getSuggestedConfigurationFile());
         tabGyth = new CreativeTabGyth();
         blockModularTanks = new BlockTank();
         itemBlockModularTank = new ItemBlockTank(blockModularTanks);
