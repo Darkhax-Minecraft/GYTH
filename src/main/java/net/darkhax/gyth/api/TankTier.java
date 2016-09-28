@@ -1,7 +1,10 @@
 package net.darkhax.gyth.api;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 
 public class TankTier implements Comparable<TankTier> {
     
@@ -60,6 +63,29 @@ public class TankTier implements Comparable<TankTier> {
     public boolean canApplyUpgrage (TankTier upgradeTier) {
         
         return upgradeTier.tier == this.tier + 1 || upgradeTier.tier == this.tier;
+    }
+    
+    /**
+     * Checks if the tier is flammable or not. A flammable tank can not accept fluids which
+     * have Lava as their material. For the majority of cases all params can be null, however
+     * it is best to try and provide the information.
+     * 
+     * @param access The world access.
+     * @param pos The position of the block.
+     * @param face The face of the block.
+     * @return Whether or not the tank is flammable.
+     */
+    public boolean isFlammable (IBlockAccess access, BlockPos pos, EnumFacing face) {
+        
+        try {
+            
+            return this.renderState.getBlock().isFlammable(access, pos, face);
+        }
+        
+        catch (Exception e) {
+            
+            return true;
+        }
     }
     
     @Override

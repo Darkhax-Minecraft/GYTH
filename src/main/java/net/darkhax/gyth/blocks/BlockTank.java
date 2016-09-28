@@ -36,6 +36,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -58,12 +59,13 @@ public class BlockTank extends BlockContainer {
     @Override
     public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         
-        final TileEntityModularTank tank = (TileEntityModularTank) worldIn.getTileEntity(pos);
+        final TileEntityModularTank tank = (TileEntityModularTank) worldIn.getTileEntity(pos);     
+        final FluidStack fluid = FluidUtil.getFluidContained(heldItem);
         
         // Handle bad tank
-        if (tank == null || !tank.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
-            return false;
-            
+        if ((tank.tier.isFlammable(worldIn, pos, side) && fluid != null && fluid.getFluid().getTemperature(fluid) > 450) || tank == null || !tank.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
+            return heldItem != null && !(heldItem.getItem() instanceof ItemBlock);
+        
         // Handle upgrade
         if (tank != null && heldItem != null && heldItem.getItem() instanceof ItemTankUpgrade) {
             

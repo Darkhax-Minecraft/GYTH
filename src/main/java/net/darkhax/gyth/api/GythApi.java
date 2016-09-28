@@ -9,6 +9,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import net.darkhax.bookshelf.lib.util.ItemStackUtils;
 import net.darkhax.bookshelf.lib.util.ModUtils;
 import net.darkhax.bookshelf.lib.util.OreDictUtils;
+import net.darkhax.bookshelf.lib.util.PlayerUtils;
 import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.libs.Constants;
 import net.minecraft.block.Block;
@@ -17,7 +18,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
 
 public class GythApi {
@@ -132,7 +135,7 @@ public class GythApi {
         
         if (stack.hasTagCompound() && stack.getTagCompound().hasKey("TierID"))
             return getTier(stack.getTagCompound().getString("TierID"));
-            
+        
         return null;
     }
     
@@ -154,9 +157,13 @@ public class GythApi {
             
             else
                 tooltip.add(I18n.format("tooltip.gyth.capacity.upgrade", tier.getCapacity() / 1000));
-                
+            
             tooltip.add(I18n.format("tooltip.gyth.block") + ": " + ItemStackUtils.getStackFromState(tier.renderState, 1).getDisplayName());
             tooltip.add(I18n.format("tooltip.gyth.tier") + ": " + tier.tier);
+            
+            if (tier.isFlammable(PlayerUtils.getClientPlayer().worldObj, BlockPos.ORIGIN, EnumFacing.UP))
+                tooltip.add(ChatFormatting.RED + I18n.format("tooltip.gyth.flammable"));
+            
             tooltip.add(I18n.format("tooltip.gyth.owner", ChatFormatting.BLUE, ModUtils.getModName(tier.identifier.getResourceDomain())));
             return;
         }
