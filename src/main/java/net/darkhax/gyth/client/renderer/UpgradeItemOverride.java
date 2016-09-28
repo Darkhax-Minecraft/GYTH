@@ -36,7 +36,7 @@ public class UpgradeItemOverride extends ItemOverrideList {
         
         else
             return ((ModelRetexturable) originalModel).getRetexturedModel(RenderUtils.getSprite(Blocks.FIRE.getDefaultState()).getIconName());
-            
+        
         return originalModel;
     }
 }

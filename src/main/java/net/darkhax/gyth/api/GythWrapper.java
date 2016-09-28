@@ -45,10 +45,10 @@ public class GythWrapper {
         
         else if (recipe instanceof IForgeRegistryEntry.Impl)
             tag.setString("recipe", ((IForgeRegistryEntry.Impl) recipe).getRegistryName().toString() + "#" + 0);
-            
+        
         else
             tag.setString("recipe", (String) recipe);
-            
+        
         FMLInterModComms.sendMessage("gyth", "addTier", tag);
     }
     

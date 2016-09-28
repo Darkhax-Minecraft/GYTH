@@ -54,10 +54,10 @@ public class TileEntityModularTank extends TileEntityBasic {
             
             if (dataTag.hasKey("FluidData"))
                 this.tank = new FluidTankTile(FluidStack.loadFluidStackFromNBT(dataTag.getCompoundTag("FluidData")), this.tier.getCapacity());
-                
+            
             else
                 this.tank = new FluidTankTile(this.tier.getCapacity());
-                
+            
             if (this.tank != null)
                 this.tank.setTileEntity(this);
         }
@@ -68,7 +68,7 @@ public class TileEntityModularTank extends TileEntityBasic {
         
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
             return true;
-            
+        
         return super.hasCapability(capability, facing);
     }
     
@@ -77,7 +77,7 @@ public class TileEntityModularTank extends TileEntityBasic {
         
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
             return (T) this.tank;
-            
+        
         return super.getCapability(capability, facing);
     }
 }

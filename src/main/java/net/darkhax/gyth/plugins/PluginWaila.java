@@ -55,7 +55,7 @@ public class PluginWaila implements IWailaDataProvider {
         
         if (te != null && !te.isInvalid())
             te.writeToNBT(tag);
-            
+        
         return tag;
     }
     

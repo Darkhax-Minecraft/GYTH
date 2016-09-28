@@ -76,13 +76,13 @@ public class Gyth {
             
             if (tier.tier == 1)
                 GameRegistry.addRecipe(new ShapedOreRecipe(GythApi.createTieredTank(tier), new Object[] { "xyx", "yzy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS, 'z', Items.BUCKET }));
-                
+            
             GameRegistry.addRecipe(new ShapedOreRecipe(GythApi.createTierUpgrade(tier), new Object[] { "xyx", "yxy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS }));
         }
         
         if (Loader.isModLoaded("Waila"))
             FMLInterModComms.sendMessage("Waila", "register", "net.darkhax.gyth.plugins.PluginWaila.registerAddon");
-            
+        
         if (Loader.isModLoaded("theoneprobe"))
             FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "net.darkhax.gyth.plugins.PluginTOP$GetTheOneProbe");
     }
@@ -102,7 +102,7 @@ public class Gyth {
                 
                 if (!name.isEmpty() && block != null && meta >= 0 && tier >= 0 && recipe != null)
                     GythApi.createTier(msg.getSender(), name, block, meta, recipe, Math.min(10, tier));
-                    
+                
                 else
                     Constants.LOG.info(msg.getSender() + " tried to register a tier, but it failed.");
             }

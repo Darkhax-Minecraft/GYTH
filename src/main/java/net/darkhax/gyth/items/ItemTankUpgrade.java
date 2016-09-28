@@ -32,7 +32,7 @@ public class ItemTankUpgrade extends Item {
         
         if (stack.hasTagCompound() && stack.getTagCompound().hasKey("TierID"))
             tier = GythApi.getTier(stack.getTagCompound().getString("TierID"));
-            
+        
         GythApi.createTierTooltip(tier, null, info);
     }
     
