@@ -38,6 +38,7 @@ public class GythApi {
     public static final TankTier WOOD_JUNGLE = createTier("jungle", Blocks.PLANKS, 3, new ItemStack(Blocks.PLANKS, 1, 3), 1);
     public static final TankTier WOOD_ACACIA = createTier("acacia", Blocks.PLANKS, 4, new ItemStack(Blocks.PLANKS, 1, 4), 1);
     public static final TankTier WOOD_DARK_OAK = createTier("dark_oak", Blocks.PLANKS, 5, new ItemStack(Blocks.PLANKS, 1, 5), 1);
+    public static final TankTier CLAY = createTier("clay", Blocks.HARDENED_CLAY, 0, OreDictUtils.INGOT_BRICK, 1);
     
     // Tier 2
     public static final TankTier STONE_COBBLE = createTier("stone_cobble", Blocks.COBBLESTONE, 0, OreDictUtils.COBBLESTONE, 2);
@@ -50,7 +51,7 @@ public class GythApi {
     public static final TankTier STONE_ANDESITE_SMOOTH = createTier("stone_andesite_smooth", Blocks.STONE, 6, new ItemStack(Blocks.STONE, 1, 6), 2);
     public static final TankTier SANDSTONE_BRICK = createTier("sandstone_brick", Blocks.SANDSTONE, 0, Blocks.SANDSTONE, 2);
     public static final TankTier SANDSTONE_BRICK_RED = createTier("sandstone_brick_red", Blocks.RED_SANDSTONE, 0, Blocks.RED_SANDSTONE, 2);
-    public static final TankTier BRICK = createTier("brick", Blocks.BRICK_BLOCK, 0, OreDictUtils.INGOT_BRICK, 2);
+    public static final TankTier BRICK = createTier("brick", Blocks.BRICK_BLOCK, 0, Blocks.BRICK_BLOCK, 2);
     public static final TankTier BRICK_NETHER = createTier("brick_nether", Blocks.NETHER_BRICK, 0, OreDictUtils.INGOT_BRICK_NETHER, 2);
     public static final TankTier BRICK_STONE = createTier("brick_stone", Blocks.STONEBRICK, 0, Blocks.STONEBRICK, 2);
     public static final TankTier BRICK_PURPUR = createTier("brick_purpur", Blocks.PURPUR_BLOCK, 0, Blocks.PURPUR_BLOCK, 2);
@@ -185,6 +186,20 @@ public class GythApi {
         REGISTRY.put(identifier, tankTier);
         
         return tankTier;
+    }
+    
+    /**
+     * Generates a basic markdown table for all tiers added by a mod.
+     * 
+     * @param modId The ID of the mod to look for.
+     */
+    public static void printMarkdownTable (String modId) {
+        
+        System.out.println("|Name|Identifier|Tier|Capacity|Notes|");
+        System.out.println("|----|----------|----|--------|-----|");
+        for (TankTier tier : REGISTRY.values())
+            if (tier.identifier.getResourceDomain().startsWith(modId))
+                System.out.println(String.format("|%s|%s|%d|%s|%s|", ItemStackUtils.getStackFromState(tier.renderState, 1).getDisplayName(), tier.identifier.toString(), tier.tier, (tier.getCapacity() / 1000) + "B", tier.isFlammable(null, null, null) ? "flammable" : ""));
     }
     
     private static TankTier createTier (String name, Block block, int meta, Object recipe, int tier) {
