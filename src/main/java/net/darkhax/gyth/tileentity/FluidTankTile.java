@@ -25,7 +25,7 @@ public class FluidTankTile extends FluidTank {
     }
     
     @Override
-    public boolean canFillFluidType(FluidStack fluid) {
+    public boolean canFillFluidType (FluidStack fluid) {
         
         if (ConfigurationHandler.handleTemperature && fluid != null && this.tile instanceof TileEntityModularTank && ((TileEntityModularTank) this.tile).tier.isFlammable(this.tile.getWorld(), this.tile.getPos(), EnumFacing.UP) && fluid.getFluid().getTemperature() > ConfigurationHandler.maxFluidHeat)
             return false;

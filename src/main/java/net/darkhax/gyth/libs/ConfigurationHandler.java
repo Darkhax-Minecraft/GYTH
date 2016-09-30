@@ -21,7 +21,7 @@ public class ConfigurationHandler {
         
         maxFluidHeat = config.getInt("maxFluidHeat", Configuration.CATEGORY_GENERAL, 450, 0, Integer.MAX_VALUE, "The maximum heat for a fluid in a flammable tier. 450 kelvin is the burning point for wood. Lava is 1300 kelvin.");
         handleTemperature = config.getBoolean("handleTemperature", Configuration.CATEGORY_GENERAL, true, "Should flammability be taken into consideration for tanks? If so, flammable tanks will not be able to hold fluids hotter than the maxFluidHeat setting.");
-                
+        
         if (config.hasChanged())
             config.save();
     }

@@ -60,7 +60,7 @@ public class BlockTank extends BlockContainer {
     @Override
     public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         
-        final TileEntityModularTank tank = (TileEntityModularTank) worldIn.getTileEntity(pos);     
+        final TileEntityModularTank tank = (TileEntityModularTank) worldIn.getTileEntity(pos);
         final FluidStack fluid = FluidUtil.getFluidContained(heldItem);
         
         // Handle bad tank
