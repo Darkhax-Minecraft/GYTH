@@ -64,7 +64,7 @@ public class BlockTank extends BlockContainer {
         final FluidStack fluid = FluidUtil.getFluidContained(heldItem);
         
         // Handle bad tank
-        if ((ConfigurationHandler.handleTemperature && tank.tier.isFlammable(worldIn, pos, side) && fluid != null && fluid.getFluid().getTemperature(fluid) > ConfigurationHandler.maxFluidHeat) || tank == null || !tank.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
+        if (tank == null || tank.tier == null || (ConfigurationHandler.handleTemperature && tank.tier.isFlammable(worldIn, pos, side) && fluid != null && fluid.getFluid().getTemperature(fluid) > ConfigurationHandler.maxFluidHeat) || !tank.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
             return heldItem != null && !(heldItem.getItem() instanceof ItemBlock);
         
         // Handle upgrade
