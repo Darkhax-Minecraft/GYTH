@@ -1,7 +1,7 @@
 package net.darkhax.gyth.client;
 
-import net.darkhax.bookshelf.client.event.RenderItemEvent;
 import net.darkhax.bookshelf.client.model.ModelRetexturable;
+import net.darkhax.bookshelf.events.RenderItemEvent;
 import net.darkhax.bookshelf.lib.util.RenderUtils;
 import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.api.GythApi;
