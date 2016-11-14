@@ -15,6 +15,7 @@ import net.darkhax.gyth.libs.ConfigurationHandler;
 import net.darkhax.gyth.libs.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -149,7 +150,9 @@ public class GythApi {
      */
     public static void createTierTooltip (TankTier tier, FluidStack stack, List<String> tooltip) {
         
-        if (tier != null) {
+        final EntityPlayer clientPlayer = PlayerUtils.getClientPlayer();
+        
+        if (tier != null && clientPlayer != null && clientPlayer.worldObj != null) {
             
             if (stack != null) {
                 
@@ -163,7 +166,7 @@ public class GythApi {
             tooltip.add(I18n.format("tooltip.gyth.block") + ": " + ItemStackUtils.getStackFromState(tier.renderState, 1).getDisplayName());
             tooltip.add(I18n.format("tooltip.gyth.tier") + ": " + tier.tier);
             
-            if (ConfigurationHandler.handleTemperature && tier.isFlammable(PlayerUtils.getClientPlayer().worldObj, BlockPos.ORIGIN, EnumFacing.UP))
+            if (ConfigurationHandler.handleTemperature && tier.isFlammable(clientPlayer.worldObj, BlockPos.ORIGIN, EnumFacing.UP))
                 tooltip.add(ChatFormatting.RED + I18n.format("tooltip.gyth.flammable"));
             
             tooltip.add(I18n.format("tooltip.gyth.owner", ChatFormatting.BLUE, ModUtils.getModName(tier.identifier.getResourceDomain())));
