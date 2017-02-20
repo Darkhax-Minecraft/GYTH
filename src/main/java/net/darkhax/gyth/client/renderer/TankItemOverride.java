@@ -15,31 +15,31 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class TankItemOverride extends ItemOverrideList {
-    
-    public TankItemOverride() {
-        
+
+    public TankItemOverride () {
+
         super(ImmutableList.of());
     }
-    
+
     @Override
     public IBakedModel handleItemState (IBakedModel originalModel, ItemStack stack, World world, EntityLivingBase entity) {
-        
+
         if (stack != null && stack.hasTagCompound() && stack.getTagCompound().hasKey("TileData")) {
-            
+
             final TankTier tier = GythApi.getTier(stack.getTagCompound().getCompoundTag("TileData").getString("TierID"));
-            
+
             if (tier != null) {
-                
+
                 final IBlockState state = tier.renderState;
-                
+
                 if (state != null)
                     return ((ModelRetexturable) originalModel).getRetexturedModel(RenderUtils.getSprite(state).getIconName());
             }
         }
-        
+
         else
             return ((ModelRetexturable) originalModel).getRetexturedModel(RenderUtils.getSprite(Blocks.FIRE.getDefaultState()).getIconName());
-        
+
         return originalModel;
     }
 }

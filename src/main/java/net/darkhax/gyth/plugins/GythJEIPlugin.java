@@ -9,10 +9,10 @@ import net.minecraftforge.oredict.OreDictionary;
 
 @JEIPlugin
 public class GythJEIPlugin extends BlankModPlugin {
-    
+
     @Override
     public void register (IModRegistry registry) {
-        
+
         registry.addDescription(new ItemStack(Gyth.itemBlockModularTank, 1, OreDictionary.WILDCARD_VALUE), "jei.gyth.tank.desc");
         registry.addDescription(new ItemStack(Gyth.itemTankUpgrade, 1, OreDictionary.WILDCARD_VALUE), "jei.gyth.upgrade.desc");
     }

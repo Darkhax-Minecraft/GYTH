@@ -14,6 +14,7 @@ import net.darkhax.gyth.items.ItemBlockTank;
 import net.darkhax.gyth.items.ItemTankUpgrade;
 import net.darkhax.gyth.libs.ConfigurationHandler;
 import net.darkhax.gyth.libs.Constants;
+import net.darkhax.gyth.plugins.PluginCraftTweaker;
 import net.darkhax.gyth.tabs.CreativeTabGyth;
 import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.minecraft.block.Block;
@@ -37,22 +38,24 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 
 @Mod(modid = Constants.MODID, name = Constants.MOD_NAME, version = Constants.VERSION_NUMBER, dependencies = "required-after:bookshelf@[1.4.2.327,)")
 public class Gyth {
-    
+
     @SidedProxy(serverSide = Constants.SERVER, clientSide = Constants.CLIENT)
     public static ProxyCommon proxy;
-    
+
     @Instance(Constants.MODID)
     public static Gyth instance;
-    
+
     public static Block blockModularTanks;
+
     public static Item itemTankUpgrade;
+
     public static Item itemBlockModularTank;
-    
+
     public static CreativeTabs tabGyth;
-    
+
     @EventHandler
     public void preInit (FMLPreInitializationEvent event) {
-        
+
         ConfigurationHandler.initConfig(event.getSuggestedConfigurationFile());
         tabGyth = new CreativeTabGyth();
         blockModularTanks = new BlockTank();
@@ -60,61 +63,70 @@ public class Gyth {
         GameRegistry.register(blockModularTanks);
         GameRegistry.register(itemBlockModularTank);
         GameRegistry.registerTileEntity(TileEntityModularTank.class, "modularTank");
-        
+
         itemTankUpgrade = new ItemTankUpgrade();
         GameRegistry.register(itemTankUpgrade);
-        
+
         proxy.registerBlockRenderers();
+
+        if (Loader.isModLoaded("MineTweaker3")) {
+            PluginCraftTweaker.registerSelf();
+        }
     }
-    
+
     @EventHandler
     public void init (FMLInitializationEvent event) {
-        
+
         GythApi.REGISTRY = GythApi.REGISTRY.entrySet().stream().sorted(Entry.comparingByValue()).collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
-        
+
         proxy.registerBlockRenderers();
-        
+
         for (final TankTier tier : GythApi.REGISTRY.values()) {
-            
-            if (tier.tier == 1)
+
+            if (tier.tier == 1) {
                 GameRegistry.addRecipe(new ShapedOreRecipe(GythApi.createTieredTank(tier), new Object[] { "xyx", "yzy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS, 'z', Items.BUCKET }));
-            
+            }
+
             GameRegistry.addRecipe(new ShapedOreRecipe(GythApi.createTierUpgrade(tier), new Object[] { "xyx", "yxy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS }));
         }
-        
-        if (Loader.isModLoaded("Waila"))
+
+        if (Loader.isModLoaded("Waila")) {
             FMLInterModComms.sendMessage("Waila", "register", "net.darkhax.gyth.plugins.PluginWaila.registerAddon");
-        
-        if (Loader.isModLoaded("theoneprobe"))
+        }
+
+        if (Loader.isModLoaded("theoneprobe")) {
             FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "net.darkhax.gyth.plugins.PluginTOP$GetTheOneProbe");
+        }
     }
-    
+
     @EventHandler
     public void handleIMC (IMCEvent event) {
-        
+
         for (final IMCMessage msg : event.getMessages())
             if (msg.key.equalsIgnoreCase("addTier") && msg.isNBTMessage()) {
-                
+
                 final NBTTagCompound tag = msg.getNBTValue();
                 final String name = tag.getString("tierName");
                 final Block block = Block.getBlockFromName(tag.getString("blockId"));
                 final int meta = tag.getInteger("meta");
                 final int tier = tag.getInteger("tier");
                 final Object recipe = this.getRecipeFromStackString(tag.getString("recipe"));
-                
-                if (!name.isEmpty() && block != null && meta >= 0 && tier >= 0 && recipe != null)
+
+                if (!name.isEmpty() && block != null && meta >= 0 && tier >= 0 && recipe != null) {
                     GythApi.createTier(msg.getSender(), name, block, meta, recipe, Math.min(10, tier));
-                
-                else
+                }
+                else {
                     Constants.LOG.info(msg.getSender() + " tried to register a tier, but it failed.");
+                }
             }
-            
-            else if (msg.key.equalsIgnoreCase("removeTier") && msg.isResourceLocationMessage())
+
+            else if (msg.key.equalsIgnoreCase("removeTier") && msg.isResourceLocationMessage()) {
                 GythApi.removeTier(msg.getSender(), msg.getResourceLocationValue());
+            }
     }
-    
+
     private Object getRecipeFromStackString (String string) {
-        
+
         final ItemStack stack = ItemStackUtils.createStackFromString(string);
         return ItemStackUtils.isValidStack(stack) ? stack : string;
     }

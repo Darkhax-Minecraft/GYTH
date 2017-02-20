@@ -21,37 +21,38 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class PluginTOP implements IProbeInfoProvider {
-    
+
     @Override
     public String getID () {
-        
+
         return Constants.MOD_NAME + ":tank";
     }
-    
+
     @Override
     public void addProbeInfo (ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
-        
+
         final TileEntity tile = world.getTileEntity(data.getPos());
-        
+
         if (tile instanceof TileEntityModularTank) {
-            
+
             final TileEntityModularTank tileTank = (TileEntityModularTank) tile;
-            final List<String> info = new ArrayList<String>();
-            GythApi.createTierTooltip(tileTank.tier, tileTank.tank.getFluid(), info);
-            
-            for (final String text : info)
+            final List<String> info = new ArrayList<>();
+            GythApi.createTierTooltip(tileTank.getTier(), tileTank.tank.getFluid(), info);
+
+            for (final String text : info) {
                 probeInfo.text(text);
+            }
         }
     }
-    
+
     public static class GetTheOneProbe implements Function<ITheOneProbe, Void> {
-        
+
         public static ITheOneProbe theOneProbe;
-        
+
         @Nullable
         @Override
         public Void apply (ITheOneProbe input) {
-            
+
             theOneProbe = input;
             theOneProbe.registerProvider(new PluginTOP());
             return null;

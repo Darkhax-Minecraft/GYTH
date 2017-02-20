@@ -14,33 +14,35 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemTankUpgrade extends Item {
-    
-    public ItemTankUpgrade() {
-        
+
+    public ItemTankUpgrade () {
+
         this.setMaxStackSize(16);
         this.setRegistryName(new ResourceLocation("gyth", "tank_upgrade"));
         this.setCreativeTab(Gyth.tabGyth);
         this.setUnlocalizedName("gyth.upgrade");
         this.hasSubtypes = true;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation (ItemStack stack, EntityPlayer player, List<String> info, boolean advanced) {
-        
+
         TankTier tier = null;
-        
-        if (stack.hasTagCompound() && stack.getTagCompound().hasKey("TierID"))
+
+        if (stack.hasTagCompound() && stack.getTagCompound().hasKey("TierID")) {
             tier = GythApi.getTier(stack.getTagCompound().getString("TierID"));
-        
+        }
+
         GythApi.createTierTooltip(tier, null, info);
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems (Item item, CreativeTabs tab, List<ItemStack> itemList) {
-        
-        for (final TankTier tier : GythApi.REGISTRY.values())
+
+        for (final TankTier tier : GythApi.REGISTRY.values()) {
             itemList.add(GythApi.createTierUpgrade(tier));
+        }
     }
 }

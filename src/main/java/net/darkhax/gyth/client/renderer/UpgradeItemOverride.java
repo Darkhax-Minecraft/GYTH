@@ -15,28 +15,28 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class UpgradeItemOverride extends ItemOverrideList {
-    
-    public UpgradeItemOverride() {
-        
+
+    public UpgradeItemOverride () {
+
         super(ImmutableList.of());
     }
-    
+
     @Override
     public IBakedModel handleItemState (IBakedModel originalModel, ItemStack stack, World world, EntityLivingBase entity) {
-        
+
         final TankTier tier = GythApi.getTierFromStack(stack);
-        
+
         if (tier != null) {
-            
+
             final IBlockState state = tier.renderState;
-            
+
             if (state != null)
                 return ((ModelRetexturable) originalModel).getRetexturedModel(RenderUtils.getSprite(state).getIconName());
         }
-        
+
         else
             return ((ModelRetexturable) originalModel).getRetexturedModel(RenderUtils.getSprite(Blocks.FIRE.getDefaultState()).getIconName());
-        
+
         return originalModel;
     }
 }
