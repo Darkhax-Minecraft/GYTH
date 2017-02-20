@@ -1,5 +1,4 @@
 # GYTH - Get Ya' Tanks Here [![](http://cf.way2muchnoise.eu/226696.svg)](https://minecraft.curseforge.com/projects/get-ya-tanks-here) [![](http://cf.way2muchnoise.eu/versions/226696.svg)](https://minecraft.curseforge.com/projects/get-ya-tanks-here)
-====
 GYTH is a mod for Minecraft which adds fluid storage tanks. These tanks can be upgraded using resources to increase their storage capacity. GYTH tanks will keep their contents when broken. 
 
 ## API Info
