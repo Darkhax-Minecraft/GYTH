@@ -32,9 +32,6 @@ public class GythApi {
      */
     public static Map<ResourceLocation, TankTier> REGISTRY = new HashMap<>();
 
-    // Unknown
-    public static final TankTier UNKNOW = createTier("unknown", Blocks.BEDROCK, 0, "thisOreDictShouldBeEmptyPlease", 100);
-
     // Tier 1
     public static final TankTier WOOD_OAK = createTier("oak", Blocks.PLANKS, 0, new ItemStack(Blocks.PLANKS, 1, 0), 1);
 
