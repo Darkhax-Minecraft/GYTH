@@ -12,14 +12,35 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntityModularTank extends TileEntityBasic {
 
+    /**
+     * The tier of the tank. Cached here for efficiency. Use {@link #getTier()} to access this
+     * field!
+     */
     private TankTier tier;
 
+    /**
+     * The string based ID of the tier. This is cached to help prevent issues when a tank is
+     * loaded but the tier does not yet exist.
+     */
     private String tierId;
 
+    /**
+     * The fluid tank, handles all the fluid logic. This is basically the same as the default
+     * forge one but allows client side packet updates for the visuals of the tank.
+     */
     public FluidTankTile tank;
 
-    private int tankAttempt = 0;
+    /**
+     * A counter used by {@link #getTier()} to represent the amount of times the tier was
+     * looked up for the tank, and the tier was null. A maximum of 5 attempts will be made.
+     */
+    private int tierLookupAttempt = 0;
 
+    /**
+     * The initial NBT tag that the tile reads. This is cached in the event that a tile later
+     * loads with a null tile tier. Used by {@link #writeNBT(NBTTagCompound)} to minimize loss
+     * of data.
+     */
     private NBTTagCompound tagCache;
 
     public TileEntityModularTank () {
@@ -38,10 +59,10 @@ public class TileEntityModularTank extends TileEntityBasic {
 
     public TankTier getTier () {
 
-        if (this.tier == null && this.tankAttempt < 5) {
+        if (this.tier == null && this.tierLookupAttempt < 5) {
 
             this.tier = GythApi.getTier(this.tierId);
-            this.tankAttempt++;
+            this.tierLookupAttempt++;
         }
 
         return this.tier;
