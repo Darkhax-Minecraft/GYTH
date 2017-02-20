@@ -106,10 +106,16 @@ public class TileEntityModularTank extends TileEntityBasic {
             else {
                 this.tank = new FluidTankTile(this.tier.getCapacity());
             }
+        }
 
-            if (this.tank != null) {
-                this.tank.setTileEntity(this);
-            }
+        else if (dataTag.hasKey("FluidData")) {
+
+            final FluidStack stack = FluidStack.loadFluidStackFromNBT(dataTag.getCompoundTag("FluidData"));
+            this.tank = new FluidTankTile(stack, stack.amount);
+        }
+
+        if (this.tank != null) {
+            this.tank.setTileEntity(this);
         }
     }
 
