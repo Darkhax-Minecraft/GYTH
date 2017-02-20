@@ -14,7 +14,7 @@ import net.darkhax.gyth.items.ItemBlockTank;
 import net.darkhax.gyth.items.ItemTankUpgrade;
 import net.darkhax.gyth.libs.ConfigurationHandler;
 import net.darkhax.gyth.libs.Constants;
-import net.darkhax.gyth.plugins.PluginCraftTweaker;
+import net.darkhax.gyth.plugins.PluginMineTweaker;
 import net.darkhax.gyth.tabs.CreativeTabGyth;
 import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.minecraft.block.Block;
@@ -70,7 +70,7 @@ public class Gyth {
         proxy.registerBlockRenderers();
 
         if (Loader.isModLoaded("MineTweaker3")) {
-            PluginCraftTweaker.registerSelf();
+            PluginMineTweaker.registerSelf();
         }
     }
 
