@@ -28,19 +28,33 @@ public class PluginMineTweaker {
     }
 
     @ZenMethod
-    public static void addTier (String name, String blockId, int meta, IIngredient recipe, int tier) {
+    public static void addTier (String name, IIngredient displayBlock, IIngredient recipe, int tier) {
 
-        final Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockId));
+        Block block = null;
+        int meta = 0;
+        
         final Object recipeObj = recipe.getInternal();
+        
+        if (displayBlock.getInternal() instanceof ItemStack) {
 
-        if (block == null) {
-
-            MineTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. No block found with the ID " + blockId);
+            ItemStack stack = (ItemStack) displayBlock.getInternal();
+            block = Block.getBlockFromItem(stack.getItem());
+            meta = stack.getMetadata();
         }
-
+            
         if (!(recipeObj instanceof String || recipeObj instanceof ItemStack || recipeObj instanceof Item || recipeObj instanceof Block)) {
 
             MineTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. The recipe object was invalid! " + recipeObj.toString());
+        }
+        
+        if (block == null) {
+            
+            MineTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. The display block was null!" );
+        }
+        
+        if (meta < 0 || meta > 15) {
+            
+            MineTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. The meta value was out of range!");
         }
 
         MineTweakerAPI.apply(new ActionAddGythTier(name, block, meta, recipeObj, tier));
