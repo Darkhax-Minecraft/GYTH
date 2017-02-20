@@ -214,8 +214,9 @@ curseforge {
                 //Adds the file relations to the upload.
                 requiredLibrary 'bookshelf'
                 optionalLibrary 'waila'
-                //optionalLibrary 'the-one-probe'
-                //optionalLibrary 'just-enough-items-jei'
+                optionalLibrary 'the-one-probe'
+                optionalLibrary 'just-enough-items-jei'
+                optionalLibrary 'minetweaker3'
             }
         }
         
