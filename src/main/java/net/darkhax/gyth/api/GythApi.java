@@ -192,7 +192,7 @@ public class GythApi {
 
         final EntityPlayer clientPlayer = PlayerUtils.getClientPlayer();
 
-        if (tier != null && clientPlayer != null && clientPlayer.worldObj != null) {
+        if (tier != null && clientPlayer != null && clientPlayer.world != null) {
 
             if (stack != null) {
 
@@ -206,7 +206,7 @@ public class GythApi {
             tooltip.add(I18n.format("tooltip.gyth.block") + ": " + ItemStackUtils.getStackFromState(tier.renderState, 1).getDisplayName());
             tooltip.add(I18n.format("tooltip.gyth.tier") + ": " + tier.tier);
 
-            if (ConfigurationHandler.handleTemperature && tier.isFlammable(clientPlayer.worldObj, BlockPos.ORIGIN, EnumFacing.UP)) {
+            if (ConfigurationHandler.handleTemperature && tier.isFlammable(clientPlayer.world, BlockPos.ORIGIN, EnumFacing.UP)) {
                 tooltip.add(ChatFormatting.RED + I18n.format("tooltip.gyth.flammable"));
             }
 
