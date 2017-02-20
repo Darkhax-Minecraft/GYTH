@@ -179,6 +179,17 @@ public class GythApi {
      */
     public static void createTierTooltip (TankTier tier, FluidStack stack, List<String> tooltip) {
 
+        createTierTooltip(tier, stack, tooltip, true);
+    }
+
+    /**
+     * Generates the tooltip for a TankTier.
+     *
+     * @param tier The tier to represent.
+     * @param tooltip The list to add to.
+     */
+    public static void createTierTooltip (TankTier tier, FluidStack stack, List<String> tooltip, boolean showAddedBy) {
+
         final EntityPlayer clientPlayer = PlayerUtils.getClientPlayer();
 
         if (tier != null && clientPlayer != null && clientPlayer.worldObj != null) {
@@ -199,7 +210,9 @@ public class GythApi {
                 tooltip.add(ChatFormatting.RED + I18n.format("tooltip.gyth.flammable"));
             }
 
-            tooltip.add(I18n.format("tooltip.gyth.owner", ChatFormatting.BLUE, ModUtils.getModName(tier.identifier.getResourceDomain())));
+            if (showAddedBy) {
+                tooltip.add(I18n.format("tooltip.gyth.owner", ChatFormatting.BLUE, ModUtils.getModName(tier.identifier.getResourceDomain())));
+            }
             return;
         }
 
