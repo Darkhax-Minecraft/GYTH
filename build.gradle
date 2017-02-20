@@ -18,7 +18,7 @@ buildscript {
 
     dependencies {
 
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.0.7"
     }
 }
@@ -38,9 +38,9 @@ version = getVersionFromJava(file("src/main/java/net/darkhax/gyth/libs/Constants
 //Defines the MC environment information.
 minecraft {
 
-    version = "1.10.2-12.18.1.2076"
+    version = "1.10.2-12.18.3.2221"
+    mappings = "stable_29"
     runDir = "run"
-    mappings = "snapshot_20160518"
     useDepAts = true
 }
 
@@ -54,7 +54,6 @@ repositories {
     
     maven {
 
-        name 'tterrag maven'
         url "http://maven.tterrag.com/"
     }
     
@@ -67,13 +66,20 @@ repositories {
 
         url "http://dvs1.progwml6.com/files/maven"
     }
+    
+    maven {
+    
+        url "http://maven.blamejared.com"
+    }
 }
 
 dependencies {
 
-    compile "net.darkhax.bookshelf:Bookshelf:1.10.2-1.4.2.327"
+    deobfCompile "net.darkhax.bookshelf:Bookshelf:1.10.2-1.4.2.327"
+    deobfCompile "MineTweaker3:MineTweaker3-MC1102-Main:1.10.2-3.0.20.70"
+    deobfCompile "MineTweaker3:MineTweaker3-API:3.0.20.70"
     deobfCompile "mcp.mobius.waila:Waila:1.7.0-B3_1.9.4"
-    deobfCompile "mezz.jei:jei_1.10.2:3.9.5.257"
+    deobfCompile "mezz.jei:jei_1.10.2:3.14.6.410"
     deobfCompile "mcjty.theoneprobe:TheOneProbe:1.10-1.1.1-31"
 }
 
