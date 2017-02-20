@@ -9,8 +9,6 @@ import net.darkhax.gyth.api.TankTier;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -32,28 +30,28 @@ public class PluginMineTweaker {
 
         Block block = null;
         int meta = 0;
-        
+
         final Object recipeObj = recipe.getInternal();
-        
+
         if (displayBlock.getInternal() instanceof ItemStack) {
 
-            ItemStack stack = (ItemStack) displayBlock.getInternal();
+            final ItemStack stack = (ItemStack) displayBlock.getInternal();
             block = Block.getBlockFromItem(stack.getItem());
             meta = stack.getMetadata();
         }
-            
+
         if (!(recipeObj instanceof String || recipeObj instanceof ItemStack || recipeObj instanceof Item || recipeObj instanceof Block)) {
 
             MineTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. The recipe object was invalid! " + recipeObj.toString());
         }
-        
+
         if (block == null) {
-            
-            MineTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. The display block was null!" );
+
+            MineTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. The display block was null!");
         }
-        
+
         if (meta < 0 || meta > 15) {
-            
+
             MineTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. The meta value was out of range!");
         }
 
