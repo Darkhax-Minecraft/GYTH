@@ -120,7 +120,7 @@ public class GythApi {
      */
     public static TankTier getTier (String identifier) {
 
-        return REGISTRY.get(new ResourceLocation(identifier));
+        return (identifier == null || identifier.isEmpty()) ? null : REGISTRY.get(new ResourceLocation(identifier));
     }
 
     /**
