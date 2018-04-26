@@ -1,32 +1,31 @@
 package net.darkhax.gyth.items;
 
-import java.util.List;
-
-import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.api.GythApi;
 import net.darkhax.gyth.api.TankTier;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemTankUpgrade extends Item {
 
     public ItemTankUpgrade () {
 
         this.setMaxStackSize(16);
-        this.setRegistryName(new ResourceLocation("gyth", "tank_upgrade"));
-        this.setCreativeTab(Gyth.tabGyth);
-        this.setUnlocalizedName("gyth.upgrade");
         this.hasSubtypes = true;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation (ItemStack stack, EntityPlayer player, List<String> info, boolean advanced) {
+    public void addInformation (ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag advanced) {
 
         TankTier tier = null;
 
@@ -34,15 +33,16 @@ public class ItemTankUpgrade extends Item {
             tier = GythApi.getTier(stack.getTagCompound().getString("TierID"));
         }
 
-        GythApi.createTierTooltip(tier, null, info);
+        GythApi.createTierTooltip(tier, null, tooltip);
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems (Item item, CreativeTabs tab, List<ItemStack> itemList) {
+    public void getSubItems (@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items) {
 
-        for (final TankTier tier : GythApi.REGISTRY.values()) {
-            itemList.add(GythApi.createTierUpgrade(tier));
+        if (this.isInCreativeTab(tab)) {
+            for (final TankTier tier : GythApi.REGISTRY.values()) {
+                items.add(GythApi.createTierUpgrade(tier));
+            }
         }
     }
 }

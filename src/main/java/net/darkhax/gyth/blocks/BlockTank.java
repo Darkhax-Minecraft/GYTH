@@ -1,11 +1,7 @@
 package net.darkhax.gyth.blocks;
 
-import java.util.List;
-import java.util.Random;
-
-import net.darkhax.bookshelf.lib.BlockStates;
-import net.darkhax.bookshelf.lib.util.ItemStackUtils;
-import net.darkhax.gyth.Gyth;
+import net.darkhax.bookshelf.data.Blockstates;
+import net.darkhax.bookshelf.util.StackUtils;
 import net.darkhax.gyth.api.GythApi;
 import net.darkhax.gyth.api.TankTier;
 import net.darkhax.gyth.items.ItemTankUpgrade;
@@ -20,15 +16,12 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
@@ -41,68 +34,68 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nonnull;
+import java.util.Random;
 
 public class BlockTank extends BlockContainer {
 
     public BlockTank () {
 
         super(Material.GLASS);
-        this.setUnlocalizedName("gyth.tank");
-        this.setRegistryName(new ResourceLocation("gyth", "modular_tank"));
-        this.setCreativeTab(Gyth.tabGyth);
         this.setHardness(0.3F);
         this.setSoundType(SoundType.GLASS);
-        this.setDefaultState(((IExtendedBlockState) this.blockState.getBaseState()).withProperty(BlockStates.HELD_STATE, null).withProperty(BlockStates.BLOCK_ACCESS, null).withProperty(BlockStates.BLOCKPOS, null));
+        this.setDefaultState(((IExtendedBlockState) this.blockState.getBaseState()).withProperty(Blockstates.HELD_STATE, null).withProperty(Blockstates.BLOCK_ACCESS, null).withProperty(Blockstates.BLOCKPOS, null));
     }
 
     @Override
-    public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-
+    public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack heldItem = playerIn.getHeldItem(hand);
         final TileEntityModularTank tank = (TileEntityModularTank) worldIn.getTileEntity(pos);
         final FluidStack fluid = FluidUtil.getFluidContained(heldItem);
 
         // Handle bad tank
-        if (tank == null || tank.getTier() == null || ConfigurationHandler.handleTemperature && tank.getTier().isFlammable(worldIn, pos, side) && fluid != null && fluid.getFluid().getTemperature(fluid) > ConfigurationHandler.maxFluidHeat || !tank.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
-            return heldItem != null && !(heldItem.getItem() instanceof ItemBlock);
+        if (tank == null || tank.getTier() == null || ConfigurationHandler.handleTemperature && tank.getTier().isFlammable(worldIn, pos, facing) && fluid != null && fluid.getFluid().getTemperature(fluid) > ConfigurationHandler.maxFluidHeat || !tank.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing))
+            return !(heldItem.getItem() instanceof ItemBlock);
 
         // Handle upgrade
-        if (tank != null && heldItem != null && heldItem.getItem() instanceof ItemTankUpgrade) {
+        if (tank != null && heldItem.getItem() instanceof ItemTankUpgrade) {
 
             final TankTier upgradeTier = GythApi.getTierFromStack(heldItem);
 
             if (tank != null && !tank.isInvalid() && upgradeTier != null && tank.getTier() != null && tank.getTier().canApplyUpgrage(upgradeTier)) {
 
                 tank.upgradeTank(upgradeTier, state);
-                heldItem.stackSize--;
+                heldItem.shrink(1);
                 return true;
             }
         }
 
         // Handle input
-        final IFluidHandler fluidHandler = tank.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
-        FluidUtil.interactWithFluidHandler(heldItem, fluidHandler, playerIn);
-        return heldItem != null && !(heldItem.getItem() instanceof ItemBlock);
+        final IFluidHandler fluidHandler = tank.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
+        FluidUtil.interactWithFluidHandler(playerIn, hand, fluidHandler);
+        return !(heldItem.getItem() instanceof ItemBlock);
     }
 
     @Override
+    @Nonnull
     public BlockStateContainer createBlockState () {
 
-        return new ExtendedBlockState(this, new IProperty[] {}, new IUnlistedProperty[] { BlockStates.HELD_STATE, BlockStates.BLOCK_ACCESS, BlockStates.BLOCKPOS });
+        return new ExtendedBlockState(this, new IProperty[] {}, new IUnlistedProperty[] { Blockstates.HELD_STATE, Blockstates.BLOCK_ACCESS, Blockstates.BLOCKPOS });
     }
 
     @Override
-    public IBlockState getExtendedState (IBlockState state, IBlockAccess world, BlockPos pos) {
+    @Nonnull
+    public IBlockState getExtendedState (@Nonnull    IBlockState state, IBlockAccess world, BlockPos pos) {
 
-        state = ((IExtendedBlockState) state).withProperty(BlockStates.BLOCK_ACCESS, world).withProperty(BlockStates.BLOCKPOS, pos);
+        state = ((IExtendedBlockState) state).withProperty(Blockstates.BLOCK_ACCESS, world).withProperty(Blockstates.BLOCKPOS, pos);
 
         if (world.getTileEntity(pos) instanceof TileEntityModularTank) {
 
             final TileEntityModularTank tile = (TileEntityModularTank) world.getTileEntity(pos);
 
             if (tile != null && tile.getTier() != null)
-                return ((IExtendedBlockState) state).withProperty(BlockStates.HELD_STATE, tile.getTier().renderState);
+                return ((IExtendedBlockState) state).withProperty(Blockstates.HELD_STATE, tile.getTier().renderState);
         }
         return state;
     }
@@ -114,7 +107,7 @@ public class BlockTank extends BlockContainer {
     }
 
     @Override
-    public TileEntity createNewTileEntity (World world, int meta) {
+    public TileEntity createNewTileEntity (@Nonnull World world, int meta) {
 
         return new TileEntityModularTank();
     }
@@ -126,21 +119,24 @@ public class BlockTank extends BlockContainer {
     }
 
     @Override
+    @Nonnull
     public BlockRenderLayer getBlockLayer () {
 
         return BlockRenderLayer.CUTOUT;
     }
 
     @Override
+    @Nonnull
     public EnumBlockRenderType getRenderType (IBlockState state) {
 
         return EnumBlockRenderType.MODEL;
     }
 
     @Override
-    public ItemStack getPickBlock (IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    @Nonnull
+    public ItemStack getPickBlock (@Nonnull IBlockState state, RayTraceResult target, @Nonnull World world, @Nonnull BlockPos pos, EntityPlayer player) {
 
-        return ItemStackUtils.createStackFromTileEntity(world.getTileEntity(pos));
+        return StackUtils.createStackFromTileEntity(world.getTileEntity(pos));
     }
 
     @Override
@@ -156,12 +152,12 @@ public class BlockTank extends BlockContainer {
     }
 
     @Override
-    public boolean removedByPlayer (IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+    public boolean removedByPlayer (@Nonnull IBlockState state, World world, @Nonnull BlockPos pos, @Nonnull EntityPlayer player, boolean willHarvest) {
 
         if (!player.capabilities.isCreativeMode) {
 
             final TileEntityModularTank tank = (TileEntityModularTank) world.getTileEntity(pos);
-            ItemStackUtils.dropStackInWorld(world, pos, ItemStackUtils.createStackFromTileEntity(tank));
+            StackUtils.dropStackInWorld(world, pos, StackUtils.createStackFromTileEntity(tank));
         }
 
         return world.setBlockToAir(pos);
@@ -181,19 +177,35 @@ public class BlockTank extends BlockContainer {
     }
 
     @Override
-    public void onBlockExploded (World world, BlockPos pos, Explosion explosion) {
+    public void onBlockExploded (World world, @Nonnull BlockPos pos, @Nonnull Explosion explosion) {
 
-        ItemStackUtils.dropStackInWorld(world, pos, ItemStackUtils.createStackFromTileEntity(world.getTileEntity(pos)));
+        StackUtils.dropStackInWorld(world, pos, StackUtils.createStackFromTileEntity(world.getTileEntity(pos)));
         world.setBlockToAir(pos);
         this.onBlockDestroyedByExplosion(world, pos, explosion);
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubBlocks (Item itemIn, CreativeTabs tab, List<ItemStack> itemList) {
+    public void getSubBlocks (CreativeTabs itemIn, NonNullList<ItemStack> items) {
 
         for (final TankTier tier : GythApi.REGISTRY.values()) {
-            itemList.add(GythApi.createTieredTank(tier));
+            items.add(GythApi.createTieredTank(tier));
         }
+    }
+
+    public static ItemStack getVariantFromTag (NBTTagCompound tag) {
+
+        ItemStack stack = new ItemStack(Blocks.LOG);
+
+        if (tag != null && tag.hasKey("TierID")) {
+
+            final ItemStack tagStack = new ItemStack(tag.getCompoundTag("TierID"));
+
+            if (!tagStack.isEmpty()) {
+
+                stack = tagStack;
+            }
+        }
+
+        return stack;
     }
 }

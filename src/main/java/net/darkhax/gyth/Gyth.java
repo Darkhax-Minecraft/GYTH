@@ -1,11 +1,8 @@
 package net.darkhax.gyth;
 
-import java.util.LinkedHashMap;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-
-import net.darkhax.bookshelf.lib.util.ItemStackUtils;
-import net.darkhax.bookshelf.lib.util.OreDictUtils;
+import net.darkhax.bookshelf.registry.RegistryHelper;
+import net.darkhax.bookshelf.util.OreDictUtils;
+import net.darkhax.bookshelf.util.StackUtils;
 import net.darkhax.gyth.api.GythApi;
 import net.darkhax.gyth.api.TankTier;
 import net.darkhax.gyth.blocks.BlockTank;
@@ -13,7 +10,6 @@ import net.darkhax.gyth.common.ProxyCommon;
 import net.darkhax.gyth.items.ItemBlockTank;
 import net.darkhax.gyth.items.ItemTankUpgrade;
 import net.darkhax.gyth.libs.ConfigurationHandler;
-import net.darkhax.gyth.libs.Constants;
 import net.darkhax.gyth.plugins.PluginMineTweaker;
 import net.darkhax.gyth.tabs.CreativeTabGyth;
 import net.darkhax.gyth.tileentity.TileEntityModularTank;
@@ -21,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.Loader;
@@ -34,42 +31,67 @@ import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms.IMCMessage;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.ShapedOreRecipe;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Constants.MODID, name = Constants.MOD_NAME, version = Constants.VERSION_NUMBER, dependencies = "required-after:bookshelf@[1.4.4.347,)")
+import java.util.LinkedHashMap;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
+@Mod(modid = Gyth.MOD_ID, name = Gyth.MOD_NAME, version = Gyth.VERSION_NUMBER, dependencies = Gyth.DEPENDENCIES)
 public class Gyth {
 
-    @SidedProxy(serverSide = Constants.SERVER, clientSide = Constants.CLIENT)
+    public static final String MOD_ID = "gyth";
+
+    public static final String MOD_NAME = "Get Ya' Tanks Here";
+
+    public static final String VERSION_NUMBER = "@VERSION@";
+
+    public static final String DEPENDENCIES = "required-after:bookshelf@[2.3,)";
+
+    public static final Logger LOG = LogManager.getLogger(MOD_NAME);
+
+    public static final CreativeTabs TAB = new CreativeTabGyth();
+
+    public static final RegistryHelper REGISTRY = new RegistryHelper(MOD_ID).setTab(TAB).enableAutoRegistration();
+
+    @SidedProxy(serverSide = "net.darkhax.gyth.common.ProxyCommon", clientSide = "net.darkhax.gyth.client.ProxyClient")
     public static ProxyCommon proxy;
 
-    @Instance(Constants.MODID)
+    @Instance(Gyth.MOD_ID)
     public static Gyth instance;
 
     public static Block blockModularTanks;
 
     public static Item itemTankUpgrade;
 
-    public static Item itemBlockModularTank;
-
-    public static CreativeTabs tabGyth;
+    public static ItemBlock itemBlockModularTank;
 
     @EventHandler
     public void preInit (FMLPreInitializationEvent event) {
 
         ConfigurationHandler.initConfig(event.getSuggestedConfigurationFile());
-        tabGyth = new CreativeTabGyth();
         blockModularTanks = new BlockTank();
         itemBlockModularTank = new ItemBlockTank(blockModularTanks);
-        GameRegistry.register(blockModularTanks);
-        GameRegistry.register(itemBlockModularTank);
+        REGISTRY.registerBlock(blockModularTanks, itemBlockModularTank, "modular_tank");
         GameRegistry.registerTileEntity(TileEntityModularTank.class, "modularTank");
 
         itemTankUpgrade = new ItemTankUpgrade();
-        GameRegistry.register(itemTankUpgrade);
+        REGISTRY.registerItem(itemTankUpgrade, "tank_upgrade");
 
         proxy.registerBlockRenderers();
 
-        if (Loader.isModLoaded("MineTweaker3")) {
+        for (final TankTier tier : GythApi.REGISTRY.values()) {
+
+            if (tier.tier == 1) {
+
+                REGISTRY.addShapedRecipe("modular_tank", GythApi.createTieredTank(tier), "xyx", "yzy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS, 'z', Items.BUCKET);
+            }
+
+            REGISTRY.addShapedRecipe("tank_upgrade", GythApi.createTierUpgrade(tier), "xyx", "yxy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS);
+        }
+
+        if (Loader.isModLoaded("crafttweaker")) {
             PluginMineTweaker.registerSelf();
         }
     }
@@ -79,26 +101,15 @@ public class Gyth {
 
         GythApi.REGISTRY = GythApi.REGISTRY.entrySet().stream().sorted(Entry.comparingByValue()).collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
-        proxy.registerBlockRenderers();
-
-        for (final TankTier tier : GythApi.REGISTRY.values()) {
-
-            if (tier.tier == 1) {
-                GameRegistry.addRecipe(new ShapedOreRecipe(GythApi.createTieredTank(tier), new Object[] { "xyx", "yzy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS, 'z', Items.BUCKET }));
-            }
-
-            GameRegistry.addRecipe(new ShapedOreRecipe(GythApi.createTierUpgrade(tier), new Object[] { "xyx", "yxy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS }));
-        }
-
-        if (Loader.isModLoaded("Waila")) {
-            FMLInterModComms.sendMessage("Waila", "register", "net.darkhax.gyth.plugins.PluginWaila.registerAddon");
+        if (Loader.isModLoaded("waila")) {
+            FMLInterModComms.sendMessage("waila", "register", "net.darkhax.gyth.plugins.PluginWaila.registerAddon");
         }
 
         if (Loader.isModLoaded("theoneprobe")) {
             FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "net.darkhax.gyth.plugins.PluginTOP$GetTheOneProbe");
         }
     }
-
+    
     @EventHandler
     public void handleIMC (IMCEvent event) {
 
@@ -116,7 +127,7 @@ public class Gyth {
                     GythApi.createTier(msg.getSender(), name, block, meta, recipe, Math.min(10, tier));
                 }
                 else {
-                    Constants.LOG.info(msg.getSender() + " tried to register a tier, but it failed.");
+                    LOG.info(msg.getSender() + " tried to register a tier, but it failed.");
                 }
             }
 
@@ -127,7 +138,7 @@ public class Gyth {
 
     private Object getRecipeFromStackString (String string) {
 
-        final ItemStack stack = ItemStackUtils.createStackFromString(string);
-        return ItemStackUtils.isValidStack(stack) ? stack : string;
+        final ItemStack stack = StackUtils.createStackFromString(string);
+        return !stack.isEmpty() ? stack : string;
     }
 }

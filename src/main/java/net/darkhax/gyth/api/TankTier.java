@@ -6,6 +6,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
+import javax.annotation.Nonnull;
+
 public class TankTier implements Comparable<TankTier> {
 
     /**
@@ -14,7 +16,7 @@ public class TankTier implements Comparable<TankTier> {
     public final ResourceLocation identifier;
 
     /**
-     * The crafting ingredient for the tier. Can be ItemStack, Item, Block, or oredict name.
+     * The crafting ingredient for the tier. Can be ItemStack, Item, Block, or OreDict name.
      */
     public final Object recipe;
 
@@ -89,8 +91,8 @@ public class TankTier implements Comparable<TankTier> {
     }
 
     @Override
-    public int compareTo (TankTier otherTier) {
+    public int compareTo (@Nonnull TankTier otherTier) {
 
-        return otherTier.tier == this.tier ? 0 : otherTier.tier > this.tier ? -1 : +1;
+        return Integer.compare(this.tier, otherTier.tier);
     }
 }

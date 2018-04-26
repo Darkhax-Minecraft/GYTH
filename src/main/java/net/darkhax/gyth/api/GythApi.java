@@ -1,18 +1,12 @@
 package net.darkhax.gyth.api;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.mojang.realmsclient.gui.ChatFormatting;
-
-import net.darkhax.bookshelf.lib.util.ItemStackUtils;
-import net.darkhax.bookshelf.lib.util.ModUtils;
-import net.darkhax.bookshelf.lib.util.OreDictUtils;
-import net.darkhax.bookshelf.lib.util.PlayerUtils;
+import net.darkhax.bookshelf.util.ModUtils;
+import net.darkhax.bookshelf.util.OreDictUtils;
+import net.darkhax.bookshelf.util.PlayerUtils;
+import net.darkhax.bookshelf.util.StackUtils;
 import net.darkhax.gyth.Gyth;
 import net.darkhax.gyth.libs.ConfigurationHandler;
-import net.darkhax.gyth.libs.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,6 +18,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GythApi {
 
@@ -147,7 +145,7 @@ public class GythApi {
     public static ItemStack createTieredTank (TankTier tier) {
 
         final ItemStack stack = new ItemStack(Gyth.blockModularTanks);
-        ItemStackUtils.prepareDataTag(stack);
+        StackUtils.prepareStackTag(stack);
         final NBTTagCompound tag = new NBTTagCompound();
         tag.setString("TierID", tier.identifier.toString());
         stack.getTagCompound().setTag("TileData", tag);
@@ -200,7 +198,7 @@ public class GythApi {
                 tooltip.add(I18n.format("tooltip.gyth.capacity.upgrade", tier.getCapacity() / 1000));
             }
 
-            tooltip.add(I18n.format("tooltip.gyth.block") + ": " + ItemStackUtils.getStackFromState(tier.renderState, 1).getDisplayName());
+            tooltip.add(I18n.format("tooltip.gyth.block") + ": " + StackUtils.getStackFromState(tier.renderState, 1).getDisplayName());
             tooltip.add(I18n.format("tooltip.gyth.tier") + ": " + tier.tier);
 
             if (ConfigurationHandler.handleTemperature && tier.isFlammable(clientPlayer.world, BlockPos.ORIGIN, EnumFacing.UP)) {
@@ -219,7 +217,7 @@ public class GythApi {
     public static void removeTier (String modId, ResourceLocation tier) {
 
         if (REGISTRY.remove(tier) != null) {
-            Constants.LOG.info("The tier " + tier.toString() + " was removed by " + modId);
+            Gyth.LOG.info("The tier " + tier.toString() + " was removed by " + modId);
         }
     }
 
@@ -243,12 +241,12 @@ public class GythApi {
         System.out.println("|----|----------|----|--------|-----|");
         for (final TankTier tier : REGISTRY.values())
             if (tier.identifier.getResourceDomain().startsWith(modId)) {
-                System.out.println(String.format("|%s|%s|%d|%s|%s|", ItemStackUtils.getStackFromState(tier.renderState, 1).getDisplayName(), tier.identifier.toString(), tier.tier, tier.getCapacity() / 1000 + "B", tier.isFlammable(null, null, null) ? "flammable" : ""));
+                System.out.println(String.format("|%s|%s|%d|%s|%s|", StackUtils.getStackFromState(tier.renderState, 1).getDisplayName(), tier.identifier.toString(), tier.tier, tier.getCapacity() / 1000 + "B", tier.isFlammable(null, null, null) ? "flammable" : ""));
             }
     }
 
     private static TankTier createTier (String name, Block block, int meta, Object recipe, int tier) {
 
-        return createTier(Constants.MODID, name, block, meta, recipe, tier);
+        return createTier(Gyth.MOD_ID, name, block, meta, recipe, tier);
     }
 }

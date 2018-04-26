@@ -3,8 +3,9 @@ package net.darkhax.gyth.tabs;
 import net.darkhax.gyth.api.GythApi;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import javax.annotation.Nonnull;
 
 public class CreativeTabGyth extends CreativeTabs {
 
@@ -15,12 +16,14 @@ public class CreativeTabGyth extends CreativeTabs {
     }
 
     @Override
-    public Item getTabIconItem () {
+    @Nonnull
+    public ItemStack getTabIconItem () {
 
-        return Items.BUCKET;
+        return new ItemStack(Items.BUCKET);
     }
 
     @Override
+    @Nonnull
     public ItemStack getIconItemStack () {
 
         return GythApi.createTieredTank(GythApi.WOOD_OAK);

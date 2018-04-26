@@ -1,9 +1,8 @@
 package net.darkhax.gyth.plugins;
 
-import minetweaker.IUndoableAction;
-import minetweaker.MineTweakerAPI;
-import minetweaker.api.item.IIngredient;
-import minetweaker.mc1102.MineTweakerMod;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.IAction;
+import crafttweaker.api.item.IIngredient;
 import net.darkhax.gyth.api.GythApi;
 import net.darkhax.gyth.api.TankTier;
 import net.minecraft.block.Block;
@@ -22,7 +21,7 @@ public class PluginMineTweaker {
      */
     public static void registerSelf () {
 
-        MineTweakerAPI.registerClass(PluginMineTweaker.class);
+        CraftTweakerAPI.registerClass(PluginMineTweaker.class);
     }
 
     @ZenMethod
@@ -42,20 +41,20 @@ public class PluginMineTweaker {
 
         if (!(recipeObj instanceof String || recipeObj instanceof ItemStack || recipeObj instanceof Item || recipeObj instanceof Block)) {
 
-            MineTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. The recipe object was invalid! " + recipeObj.toString());
+            CraftTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. The recipe object was invalid! " + recipeObj.toString());
         }
 
         if (block == null) {
 
-            MineTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. The display block was null!");
+            CraftTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. The display block was null!");
         }
 
         if (meta < 0 || meta > 15) {
 
-            MineTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. The meta value was out of range!");
+            CraftTweakerAPI.logInfo("The GYTH tier " + name + " could not be created. The meta value was out of range!");
         }
 
-        MineTweakerAPI.apply(new ActionAddGythTier(name, block, meta, recipeObj, tier));
+        CraftTweakerAPI.apply(new ActionAddGythTier(name, block, meta, recipeObj, tier));
     }
 
     @ZenMethod
@@ -65,13 +64,13 @@ public class PluginMineTweaker {
 
         if (tier == null) {
 
-            MineTweakerAPI.logInfo("The GYTH tier could not be removed. No tier found with name " + tierName);
+            CraftTweakerAPI.logInfo("The GYTH tier could not be removed. No tier found with name " + tierName);
         }
 
-        MineTweakerAPI.apply(new ActionRemoveGythTier(tier));
+        CraftTweakerAPI.apply(new ActionRemoveGythTier(tier));
     }
 
-    public static class ActionAddGythTier implements IUndoableAction {
+    public static class ActionAddGythTier implements IAction {
 
         private final String name;
 
@@ -95,12 +94,7 @@ public class PluginMineTweaker {
         @Override
         public void apply () {
 
-            GythApi.createTier(MineTweakerMod.MODID, this.name, this.block, this.meta, this.recipe, this.tier);
-        }
-
-        @Override
-        public void undo () {
-
+            GythApi.createTier("crafttweaker", this.name, this.block, this.meta, this.recipe, this.tier);
         }
 
         @Override
@@ -108,27 +102,9 @@ public class PluginMineTweaker {
 
             return "Creating a GYTH tier called crafttweaker: " + this.name;
         }
-
-        @Override
-        public String describeUndo () {
-
-            return "Unable to remove GYTH tier! THIS IS NOT AN ERROR";
-        }
-
-        @Override
-        public boolean canUndo () {
-
-            return true;
-        }
-
-        @Override
-        public Object getOverrideKey () {
-
-            return null;
-        }
     }
 
-    public static class ActionRemoveGythTier implements IUndoableAction {
+    public static class ActionRemoveGythTier implements IAction {
 
         private final TankTier tier;
 
@@ -140,36 +116,13 @@ public class PluginMineTweaker {
         @Override
         public void apply () {
 
-            GythApi.removeTier(MineTweakerMod.MODID, this.tier.identifier);
-        }
-
-        @Override
-        public void undo () {
-
+            GythApi.removeTier("crafttweaker", this.tier.identifier);
         }
 
         @Override
         public String describe () {
 
             return "Removing a GYTH tier called " + this.tier.identifier.toString();
-        }
-
-        @Override
-        public String describeUndo () {
-
-            return "Unable to re-add GYTH tier! THIS IS NOT AN ERROR";
-        }
-
-        @Override
-        public boolean canUndo () {
-
-            return true;
-        }
-
-        @Override
-        public Object getOverrideKey () {
-
-            return null;
         }
     }
 }

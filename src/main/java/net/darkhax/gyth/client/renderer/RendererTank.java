@@ -1,6 +1,6 @@
 package net.darkhax.gyth.client.renderer;
 
-import net.darkhax.bookshelf.lib.util.RenderUtils;
+import net.darkhax.bookshelf.util.RenderUtils;
 import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -9,7 +9,7 @@ import net.minecraftforge.fluids.FluidTank;
 public class RendererTank extends TileEntitySpecialRenderer<TileEntityModularTank> {
 
     @Override
-    public void renderTileEntityAt (TileEntityModularTank te, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void render (TileEntityModularTank te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 
         if (te != null) {
 

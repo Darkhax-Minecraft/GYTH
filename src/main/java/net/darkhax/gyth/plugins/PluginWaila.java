@@ -1,7 +1,5 @@
 package net.darkhax.gyth.plugins;
 
-import java.util.List;
-
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -17,22 +15,28 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 
-@Optional.Interface(iface = "IWailaDataProvider", modid = "Waila")
+import javax.annotation.Nonnull;
+import java.util.List;
+
+@Optional.Interface(iface = "IWailaDataProvider", modid = "waila")
 public class PluginWaila implements IWailaDataProvider {
 
     @Override
+    @Nonnull
     public ItemStack getWailaStack (IWailaDataAccessor data, IWailaConfigHandler cfg) {
 
         return data.getStack();
     }
 
     @Override
+    @Nonnull
     public List<String> getWailaHead (ItemStack stack, List<String> tip, IWailaDataAccessor data, IWailaConfigHandler cfg) {
 
         return tip;
     }
 
     @Override
+    @Nonnull
     public List<String> getWailaBody (ItemStack stack, List<String> tip, IWailaDataAccessor data, IWailaConfigHandler cfg) {
 
         if (data.getTileEntity() instanceof TileEntityModularTank) {
@@ -45,12 +49,14 @@ public class PluginWaila implements IWailaDataProvider {
     }
 
     @Override
+    @Nonnull
     public List<String> getWailaTail (ItemStack stack, List<String> tip, IWailaDataAccessor data, IWailaConfigHandler cfg) {
 
         return tip;
     }
 
     @Override
+    @Nonnull
     public NBTTagCompound getNBTData (EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
 
         if (te != null && !te.isInvalid()) {

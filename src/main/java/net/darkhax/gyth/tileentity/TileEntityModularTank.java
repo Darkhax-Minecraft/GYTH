@@ -1,6 +1,6 @@
 package net.darkhax.gyth.tileentity;
 
-import net.darkhax.bookshelf.tileentity.TileEntityBasic;
+import net.darkhax.bookshelf.block.tileentity.TileEntityBasic;
 import net.darkhax.gyth.api.GythApi;
 import net.darkhax.gyth.api.TankTier;
 import net.minecraft.block.state.IBlockState;
@@ -9,6 +9,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+
+import javax.annotation.Nonnull;
 
 public class TileEntityModularTank extends TileEntityBasic {
 
@@ -120,7 +122,7 @@ public class TileEntityModularTank extends TileEntityBasic {
     }
 
     @Override
-    public boolean hasCapability (Capability<?> capability, EnumFacing facing) {
+    public boolean hasCapability (@Nonnull Capability<?> capability, EnumFacing facing) {
 
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
             return true;
@@ -129,7 +131,7 @@ public class TileEntityModularTank extends TileEntityBasic {
     }
 
     @Override
-    public <T> T getCapability (Capability<T> capability, EnumFacing facing) {
+    public <T> T getCapability (@Nonnull Capability<T> capability, EnumFacing facing) {
 
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
             return (T) this.tank;

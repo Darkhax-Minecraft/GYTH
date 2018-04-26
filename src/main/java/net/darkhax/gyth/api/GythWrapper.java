@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
-import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 /**
  * Wrapper class for the GYTH IMC API. This allows for API support without the need to build
@@ -33,18 +33,18 @@ public class GythWrapper {
 
         final NBTTagCompound tag = new NBTTagCompound();
         tag.setString("tierName", tierName);
-        tag.setString("blockId", block.getRegistryName().toString());
+        tag.setString("blockId", String.valueOf(block.getRegistryName()));
         tag.setInteger("meta", meta);
         tag.setInteger("tier", tier);
 
         if (recipe instanceof ItemStack) {
 
             final ItemStack stack = (ItemStack) recipe;
-            tag.setString("recipe", stack.getItem().getRegistryName().toString() + "#" + stack.getMetadata());
+            tag.setString("recipe", String.valueOf(stack.getItem().getRegistryName()) + "#" + stack.getMetadata());
         }
 
         else if (recipe instanceof IForgeRegistryEntry.Impl) {
-            tag.setString("recipe", ((IForgeRegistryEntry.Impl) recipe).getRegistryName().toString() + "#" + 0);
+            tag.setString("recipe", String.valueOf(((IForgeRegistryEntry.Impl) recipe).getRegistryName()) + "#" + 0);
         }
         else {
             tag.setString("recipe", (String) recipe);
