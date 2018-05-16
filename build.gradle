@@ -52,7 +52,7 @@ repositories {
 
     maven {
 
-        url = "http://maven.epoxide.xyz"
+        url = "http://maven.mcmoddev.com"
     }
     
     maven {
