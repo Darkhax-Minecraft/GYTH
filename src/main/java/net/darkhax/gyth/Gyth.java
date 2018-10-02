@@ -86,10 +86,10 @@ public class Gyth {
 
             if (tier.tier == 1) {
 
-                REGISTRY.addShapedRecipe("modular_tank", GythApi.createTieredTank(tier), "xyx", "yzy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS, 'z', Items.BUCKET);
+                REGISTRY.addShapedRecipe("modular_tank_" + tier.identifier.getPath(), GythApi.createTieredTank(tier), "xyx", "yzy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS, 'z', Items.BUCKET);
             }
 
-            REGISTRY.addShapedRecipe("tank_upgrade", GythApi.createTierUpgrade(tier), "xyx", "yxy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS);
+            REGISTRY.addShapedRecipe("tank_upgrade_" + tier.identifier.getPath(), GythApi.createTierUpgrade(tier), "xyx", "yxy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS);
 
         }
 

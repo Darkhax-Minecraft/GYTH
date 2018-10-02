@@ -6,6 +6,7 @@ import net.darkhax.gyth.api.GythApi;
 import net.darkhax.gyth.api.TankTier;
 import net.darkhax.gyth.items.ItemTankUpgrade;
 import net.darkhax.gyth.libs.ConfigurationHandler;
+import net.darkhax.gyth.tileentity.FluidTankTile;
 import net.darkhax.gyth.tileentity.TileEntityModularTank;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
@@ -21,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
@@ -144,9 +146,21 @@ public class BlockTank extends BlockContainer {
     }
 
     @Override
-    public int getComparatorInputOverride (IBlockState blockState, World worldIn, BlockPos pos) {
+    public int getComparatorInputOverride (IBlockState blockState, World world, BlockPos pos) {
+        
+        return calcRedstoneFromTank((TileEntityModularTank) world.getTileEntity(pos));
+    }
 
-        return 0;
+    private int calcRedstoneFromTank(TileEntityModularTank tank) {
+
+        if (tank == null) {
+
+            return 0;
+        } else {
+
+            FluidTankTile fluidTank = tank.tank;
+            return MathHelper.floor((float) fluidTank.getFluidAmount() / (float) fluidTank.getCapacity() * 14.0F) + (fluidTank.getFluidAmount() > 0 ? 1 : 0);
+        }
     }
 
     @Override
