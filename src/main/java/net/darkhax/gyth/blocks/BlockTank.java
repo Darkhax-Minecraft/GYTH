@@ -16,10 +16,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -190,22 +188,5 @@ public class BlockTank extends BlockContainer {
         for (final TankTier tier : GythApi.REGISTRY.values()) {
             items.add(GythApi.createTieredTank(tier));
         }
-    }
-
-    public static ItemStack getVariantFromTag (NBTTagCompound tag) {
-
-        ItemStack stack = new ItemStack(Blocks.LOG);
-
-        if (tag != null && tag.hasKey("TierID")) {
-
-            final ItemStack tagStack = new ItemStack(tag.getCompoundTag("TierID"));
-
-            if (!tagStack.isEmpty()) {
-
-                stack = tagStack;
-            }
-        }
-
-        return stack;
     }
 }

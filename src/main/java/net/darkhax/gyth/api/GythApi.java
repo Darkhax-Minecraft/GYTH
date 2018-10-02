@@ -144,7 +144,7 @@ public class GythApi {
      */
     public static ItemStack createTieredTank (TankTier tier) {
 
-        final ItemStack stack = new ItemStack(Gyth.blockModularTanks);
+        final ItemStack stack = new ItemStack(Gyth.itemBlockModularTank);
         StackUtils.prepareStackTag(stack);
         final NBTTagCompound tag = new NBTTagCompound();
         tag.setString("TierID", tier.identifier.toString());

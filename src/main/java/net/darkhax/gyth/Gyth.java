@@ -20,6 +20,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -74,7 +75,7 @@ public class Gyth {
         blockModularTanks = new BlockTank();
         itemBlockModularTank = new ItemBlockTank(blockModularTanks);
         REGISTRY.registerBlock(blockModularTanks, itemBlockModularTank, "modular_tank");
-        GameRegistry.registerTileEntity(TileEntityModularTank.class, "modularTank");
+        GameRegistry.registerTileEntity(TileEntityModularTank.class, new ResourceLocation(MOD_ID, "modularTank"));
 
         itemTankUpgrade = new ItemTankUpgrade();
         REGISTRY.registerItem(itemTankUpgrade, "tank_upgrade");
@@ -89,6 +90,7 @@ public class Gyth {
             }
 
             REGISTRY.addShapedRecipe("tank_upgrade", GythApi.createTierUpgrade(tier), "xyx", "yxy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS);
+
         }
 
         if (Loader.isModLoaded("crafttweaker")) {

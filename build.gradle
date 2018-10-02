@@ -85,7 +85,7 @@ dependencies {
 
     deobfCompile "net.darkhax.bookshelf:Bookshelf-${version_minecraft}:${version_bookshelf}"
     deobfCompile "CraftTweaker2:CraftTweaker2-API:${version_crt}"
-    deobfCompile "mcp.mobius.waila:Hwyla:${version_hwyla}"
+    deobfCompile "mcp.mobius.waila:Hwyla:${version_hwyla}_${version_minecraft}"
     deobfCompile "mezz.jei:jei_${version_minecraft}:${version_jei}"
     deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:${version_top}"
 }
