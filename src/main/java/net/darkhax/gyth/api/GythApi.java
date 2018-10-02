@@ -206,7 +206,7 @@ public class GythApi {
             }
 
             if (showAddedBy) {
-                tooltip.add(I18n.format("tooltip.gyth.owner", ChatFormatting.BLUE, ModUtils.getModName(tier.identifier.getResourceDomain())));
+                tooltip.add(I18n.format("tooltip.gyth.owner", ChatFormatting.BLUE, ModUtils.getModName(tier.identifier.getNamespace())));
             }
             return;
         }
@@ -240,7 +240,7 @@ public class GythApi {
         System.out.println("|Name|Identifier|Tier|Capacity|Notes|");
         System.out.println("|----|----------|----|--------|-----|");
         for (final TankTier tier : REGISTRY.values())
-            if (tier.identifier.getResourceDomain().startsWith(modId)) {
+            if (tier.identifier.getNamespace().startsWith(modId)) {
                 System.out.println(String.format("|%s|%s|%d|%s|%s|", StackUtils.getStackFromState(tier.renderState, 1).getDisplayName(), tier.identifier.toString(), tier.tier, tier.getCapacity() / 1000 + "B", tier.isFlammable(null, null, null) ? "flammable" : ""));
             }
     }

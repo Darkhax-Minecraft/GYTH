@@ -17,14 +17,14 @@ public class CreativeTabGyth extends CreativeTabs {
 
     @Override
     @Nonnull
-    public ItemStack getTabIconItem () {
+    public ItemStack createIcon () {
 
         return new ItemStack(Items.BUCKET);
     }
 
     @Override
     @Nonnull
-    public ItemStack getIconItemStack () {
+    public ItemStack getIcon () {
 
         return GythApi.createTieredTank(GythApi.WOOD_OAK);
     }

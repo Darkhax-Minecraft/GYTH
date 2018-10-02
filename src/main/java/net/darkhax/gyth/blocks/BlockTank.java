@@ -120,7 +120,7 @@ public class BlockTank extends BlockContainer {
 
     @Override
     @Nonnull
-    public BlockRenderLayer getBlockLayer () {
+    public BlockRenderLayer getRenderLayer () {
 
         return BlockRenderLayer.CUTOUT;
     }
@@ -181,7 +181,7 @@ public class BlockTank extends BlockContainer {
 
         StackUtils.dropStackInWorld(world, pos, StackUtils.createStackFromTileEntity(world.getTileEntity(pos)));
         world.setBlockToAir(pos);
-        this.onBlockDestroyedByExplosion(world, pos, explosion);
+        this.onExplosionDestroy(world, pos, explosion);
     }
 
     @Override
