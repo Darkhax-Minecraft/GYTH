@@ -47,9 +47,11 @@ public class ModelTank extends CachedDynamicBakedModel {
     @Override
     public String getCacheKey(IBlockState state, EnumFacing side) {
 
-        ItemStack stack = new ItemStack(((IExtendedBlockState) state).getValue(Blockstates.HELD_STATE).getBlock());
+    	final IBlockState heldState = ((IExtendedBlockState) state).getValue(Blockstates.HELD_STATE);
+    	
+        ItemStack stack = heldState != null ? new ItemStack(heldState.getBlock()) : new ItemStack(Blocks.FIRE);
 
-        if (stack == null || stack.isEmpty()) {
+        if (stack.isEmpty()) {
 
             stack = new ItemStack(Blocks.LOG);
         }

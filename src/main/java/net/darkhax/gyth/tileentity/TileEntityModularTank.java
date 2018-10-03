@@ -38,13 +38,6 @@ public class TileEntityModularTank extends TileEntityBasic {
      */
     private int tierLookupAttempt = 0;
 
-    /**
-     * The initial NBT tag that the tile reads. This is cached in the event that a tile later
-     * loads with a null tile tier. Used by {@link #writeNBT(NBTTagCompound)} to minimize loss
-     * of data.
-     */
-    private NBTTagCompound tagCache;
-
     public TileEntityModularTank () {
 
         this.tank = new FluidTankTile(0);
@@ -86,17 +79,11 @@ public class TileEntityModularTank extends TileEntityBasic {
                 dataTag.setTag("FluidData", tankTag);
             }
         }
-
-        else {
-
-            this.tagCache.merge(dataTag);
-        }
     }
 
     @Override
     public void readNBT (NBTTagCompound dataTag) {
-
-        this.tagCache = dataTag;
+    	
         this.tierId = dataTag.getString("TierID");
         this.tier = GythApi.getTier(this.tierId);
 
