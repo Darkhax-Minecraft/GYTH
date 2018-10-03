@@ -79,6 +79,10 @@ repositories {
 	
         url = "http://maven.covers1624.net"
     }
+	
+	maven {
+        url = "https://minecraft.curseforge.com/api/maven/"
+    }
 }
 
 dependencies {
@@ -88,6 +92,7 @@ dependencies {
     deobfCompile "mcp.mobius.waila:Hwyla:${version_hwyla}"
     deobfCompile "mezz.jei:jei_${version_minecraft}:${version_jei}"
     deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:${version_top}"
+    deobfCompile 'extra-utilities:extrautils2:1.12:1.9.4'
 }
 
 processResources {
