@@ -39,14 +39,12 @@ import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-@Mod(modid = Gyth.MOD_ID, name = Gyth.MOD_NAME, version = Gyth.VERSION_NUMBER, dependencies = Gyth.DEPENDENCIES)
+@Mod(modid = Gyth.MOD_ID, name = Gyth.MOD_NAME, version = "@VERSION@", dependencies = Gyth.DEPENDENCIES, certificateFingerprint = "@FINGERPRINT@")
 public class Gyth {
 
     public static final String MOD_ID = "gyth";
 
     public static final String MOD_NAME = "Get Ya' Tanks Here";
-
-    public static final String VERSION_NUMBER = "@VERSION@";
 
     public static final String DEPENDENCIES = "required-after:bookshelf@[2.3,)";
 
