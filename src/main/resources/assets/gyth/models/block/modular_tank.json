@@ -1,7 +1,8 @@
 {
   "parent": "block/block",
   "textures": {
-    "glass": "blocks/glass"
+    "glass": "blocks/glass",
+	"particle": "blocks/glass"
   },
   "elements": [
     {
