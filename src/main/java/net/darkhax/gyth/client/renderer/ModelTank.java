@@ -47,16 +47,14 @@ public class ModelTank extends CachedDynamicBakedModel {
     @Override
     public String getCacheKey(IBlockState state, EnumFacing side) {
 
-    	final IBlockState heldState = ((IExtendedBlockState) state).getValue(Blockstates.HELD_STATE);
+    	IBlockState heldState = ((IExtendedBlockState) state).getValue(Blockstates.HELD_STATE);
     	
-        ItemStack stack = heldState != null ? new ItemStack(heldState.getBlock()) : new ItemStack(Blocks.FIRE);
+    	if (heldState == null) {
+    		
+    		heldState = Blocks.FIRE.getDefaultState();
+    	}
 
-        if (stack.isEmpty()) {
-
-            stack = new ItemStack(Blocks.LOG);
-        }
-
-        return RenderUtils.getParticleTexture(stack).getIconName();
+        return RenderUtils.getSprite(heldState).getIconName();
     }
 
     @Override
