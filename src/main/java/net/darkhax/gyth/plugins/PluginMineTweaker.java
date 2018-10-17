@@ -2,6 +2,7 @@ package net.darkhax.gyth.plugins;
 
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
 import net.darkhax.gyth.api.GythApi;
 import net.darkhax.gyth.api.TankTier;
@@ -11,18 +12,9 @@ import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
+@ZenRegister
 @ZenClass("mods.gyth.Tiers")
 public class PluginMineTweaker {
-
-    /**
-     * This method exists because Jared was too lazy to implement auto class loading using the
-     * ZenClass annotation which he already has. So now I have to make this pointless method.
-     * >_<
-     */
-    public static void registerSelf () {
-
-        CraftTweakerAPI.registerClass(PluginMineTweaker.class);
-    }
 
     @ZenMethod
     public static void addTier (String name, IIngredient displayBlock, IIngredient recipe, int tier) {

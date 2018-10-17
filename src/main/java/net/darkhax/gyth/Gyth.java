@@ -90,10 +90,6 @@ public class Gyth {
             REGISTRY.addShapedRecipe("tank_upgrade_" + tier.identifier.getPath(), GythApi.createTierUpgrade(tier), "xyx", "yxy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS);
 
         }
-
-        if (Loader.isModLoaded("crafttweaker")) {
-            PluginMineTweaker.registerSelf();
-        }
     }
 
     @EventHandler
