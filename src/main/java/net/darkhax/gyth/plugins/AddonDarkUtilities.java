@@ -6,6 +6,7 @@ import net.darkhax.gyth.api.TankTier;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
@@ -38,7 +39,7 @@ public class AddonDarkUtilities {
             
             if (state != null) {
                 
-                TankTier tankTier = new TankTier(new ResourceLocation("darkutils", name), state, itemBlock, tier);
+                TankTier tankTier = new TankTier(new ResourceLocation("darkutils", name), state, new ItemStack(itemBlock, 1, meta), tier);
                 GythApi.REGISTRY.put(new ResourceLocation("darkutils", name), tankTier);
                 return tankTier;
             }

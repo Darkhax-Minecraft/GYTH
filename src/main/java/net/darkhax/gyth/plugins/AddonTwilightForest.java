@@ -6,6 +6,7 @@ import net.darkhax.gyth.api.TankTier;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
@@ -68,7 +69,7 @@ public class AddonTwilightForest {
             
             if (state != null) {
                 
-                TankTier tankTier = new TankTier(new ResourceLocation("twilightforest", name), state, itemBlock, tier);
+                TankTier tankTier = new TankTier(new ResourceLocation("twilightforest", name), state, new ItemStack(itemBlock, 1, meta), tier);
                 GythApi.REGISTRY.put(new ResourceLocation("twilightforest", name), tankTier);
                 return tankTier;
             }
