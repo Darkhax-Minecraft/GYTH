@@ -43,8 +43,6 @@ public class GythApi {
 
     public static final TankTier WOOD_DARK_OAK = createTier("dark_oak", Blocks.PLANKS, 5, new ItemStack(Blocks.PLANKS, 1, 5), 1);
 
-    public static final TankTier CLAY = createTier("clay", Blocks.HARDENED_CLAY, 0, OreDictUtils.INGOT_BRICK, 1);
-
     // Tier 2
     public static final TankTier STONE_COBBLE = createTier("stone_cobble", Blocks.COBBLESTONE, 0, OreDictUtils.COBBLESTONE, 2);
 
@@ -70,6 +68,8 @@ public class GythApi {
 
     public static final TankTier BRICK_NETHER = createTier("brick_nether", Blocks.NETHER_BRICK, 0, OreDictUtils.INGOT_BRICK_NETHER, 2);
 
+    public static final TankTier RED_BRICK_NETHER = createTier("red_brick_nether", Blocks.RED_NETHER_BRICK, 0, Blocks.RED_NETHER_BRICK, 2);
+    
     public static final TankTier BRICK_STONE = createTier("brick_stone", Blocks.STONEBRICK, 0, Blocks.STONEBRICK, 2);
 
     public static final TankTier BRICK_PURPUR = createTier("brick_purpur", Blocks.PURPUR_BLOCK, 0, Blocks.PURPUR_BLOCK, 2);
@@ -77,7 +77,43 @@ public class GythApi {
     public static final TankTier BRICK_END = createTier("brick_end", Blocks.END_BRICKS, 0, Blocks.END_BRICKS, 2);
 
     public static final TankTier PRISMARINE = createTier("prismarine", Blocks.PRISMARINE, 0, Items.PRISMARINE_SHARD, 2);
-
+    
+    public static final TankTier CLAY = createTier("clay", Blocks.HARDENED_CLAY, 0, OreDictUtils.INGOT_BRICK, 2);
+    
+    public static final TankTier WHITE_STANINED_CLAY = createTier("white_stained_clay", Blocks.STAINED_HARDENED_CLAY, 0, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 0), 2);
+    public static final TankTier ORANGE_STANINED_CLAY = createTier("orange_stained_clay", Blocks.STAINED_HARDENED_CLAY, 1, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 1), 2);
+    public static final TankTier MAGENTA_STANINED_CLAY = createTier("magenta_stained_clay", Blocks.STAINED_HARDENED_CLAY, 2, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 2), 2);
+    public static final TankTier LIGHT_BLUE_STANINED_CLAY = createTier("light_blue_stained_clay", Blocks.STAINED_HARDENED_CLAY, 3, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 3), 2);
+    public static final TankTier YELLOW_STANINED_CLAY = createTier("yellow_stained_clay", Blocks.STAINED_HARDENED_CLAY, 4, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 4), 2);
+    public static final TankTier LIME_GREEN_STANINED_CLAY = createTier("lime_green_stained_clay", Blocks.STAINED_HARDENED_CLAY, 5, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 5), 2);
+    public static final TankTier PINK_STANINED_CLAY = createTier("pink_stained_clay", Blocks.STAINED_HARDENED_CLAY, 6, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 6), 2);
+    public static final TankTier GRAY_STANINED_CLAY = createTier("gray_stained_clay", Blocks.STAINED_HARDENED_CLAY, 7, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 7), 2);
+    public static final TankTier LIGHT_GRAY_STANINED_CLAY = createTier("light_gray_stained_clay", Blocks.STAINED_HARDENED_CLAY, 8, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 8), 2);
+    public static final TankTier CYAN_STANINED_CLAY = createTier("cyan_stained_clay", Blocks.STAINED_HARDENED_CLAY, 9, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 9), 2);
+    public static final TankTier PURPLE_STANINED_CLAY = createTier("purple_stained_clay", Blocks.STAINED_HARDENED_CLAY, 10, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 10), 2);
+    public static final TankTier BLUE_STANINED_CLAY = createTier("blue_stained_clay", Blocks.STAINED_HARDENED_CLAY, 11, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 11), 2);
+    public static final TankTier BROWN_STANINED_CLAY = createTier("brown_stained_clay", Blocks.STAINED_HARDENED_CLAY, 12, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 12), 2);
+    public static final TankTier GREEN_STANINED_CLAY = createTier("green_stained_clay", Blocks.STAINED_HARDENED_CLAY, 13, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 13), 2);
+    public static final TankTier RED_STANINED_CLAY = createTier("red_stained_clay", Blocks.STAINED_HARDENED_CLAY, 14, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 14), 2);
+    public static final TankTier BLACK_STANINED_CLAY = createTier("black_stained_clay", Blocks.STAINED_HARDENED_CLAY, 15, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 15), 2);
+    
+    public static final TankTier WHITE_CONCRETE = createTier("white_concrete", Blocks.CONCRETE, 0, new ItemStack(Blocks.CONCRETE, 1, 0), 2);
+    public static final TankTier ORANGE_CONCRETE = createTier("orange_concrete", Blocks.CONCRETE, 1, new ItemStack(Blocks.CONCRETE, 1, 1), 2);
+    public static final TankTier MAGENTA_CONCRETE = createTier("magenta_concrete", Blocks.CONCRETE, 2, new ItemStack(Blocks.CONCRETE, 1, 2), 2);
+    public static final TankTier LIGHT_BLUE_CONCRETE = createTier("light_blue_concrete", Blocks.CONCRETE, 3, new ItemStack(Blocks.CONCRETE, 1, 3), 2);
+    public static final TankTier YELLOW_CONCRETE = createTier("yellow_concrete", Blocks.CONCRETE, 4, new ItemStack(Blocks.CONCRETE, 1, 4), 2);
+    public static final TankTier LIME_GREEN_CONCRETE = createTier("lime_green_concrete", Blocks.CONCRETE, 5, new ItemStack(Blocks.CONCRETE, 1, 5), 2);
+    public static final TankTier PINK_CONCRETE = createTier("pink_concrete", Blocks.CONCRETE, 6, new ItemStack(Blocks.CONCRETE, 1, 6), 2);
+    public static final TankTier GRAY_CONCRETE = createTier("gray_concrete", Blocks.CONCRETE, 7, new ItemStack(Blocks.CONCRETE, 1, 7), 2);
+    public static final TankTier LIGHT_GRAY_CONCRETE = createTier("light_gray_concrete", Blocks.CONCRETE, 8, new ItemStack(Blocks.CONCRETE, 1, 8), 2);
+    public static final TankTier CYAN_CONCRETE = createTier("cyan_concrete", Blocks.CONCRETE, 9, new ItemStack(Blocks.CONCRETE, 1, 9), 2);
+    public static final TankTier PURPLE_CONCRETE = createTier("purple_concrete", Blocks.CONCRETE, 10, new ItemStack(Blocks.CONCRETE, 1, 10), 2);
+    public static final TankTier BLUE_CONCRETE = createTier("blue_concrete", Blocks.CONCRETE, 11, new ItemStack(Blocks.CONCRETE, 1, 11), 2);
+    public static final TankTier BROWN_CONCRETE = createTier("brown_concrete", Blocks.CONCRETE, 12, new ItemStack(Blocks.CONCRETE, 1, 12), 2);
+    public static final TankTier GREEN_CONCRETE = createTier("green_concrete", Blocks.CONCRETE, 13, new ItemStack(Blocks.CONCRETE, 1, 13), 2);
+    public static final TankTier RED_CONCRETE = createTier("red_concrete", Blocks.CONCRETE, 14, new ItemStack(Blocks.CONCRETE, 1, 14), 2);
+    public static final TankTier BLACK_CONCRETE = createTier("black_concrete", Blocks.CONCRETE, 15, new ItemStack(Blocks.CONCRETE, 1, 15), 2);
+    
     // Tier 3
     public static final TankTier IRON = createTier("iron", Blocks.IRON_BLOCK, 0, OreDictUtils.INGOT_IRON, 3);
 
