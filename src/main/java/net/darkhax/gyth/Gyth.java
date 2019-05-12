@@ -81,24 +81,15 @@ public class Gyth {
         ConfigurationHandler.initConfig(event.getSuggestedConfigurationFile());
         blockModularTanks = new BlockTank();
         itemBlockModularTank = new ItemBlockTank(blockModularTanks);
+        itemBlockModularTank.setHasSubtypes(true);
         REGISTRY.registerBlock(blockModularTanks, itemBlockModularTank, "modular_tank");
         GameRegistry.registerTileEntity(TileEntityModularTank.class, new ResourceLocation(MOD_ID, "modularTank"));
 
         itemTankUpgrade = new ItemTankUpgrade();
+        itemTankUpgrade.setHasSubtypes(true);
         REGISTRY.registerItem(itemTankUpgrade, "tank_upgrade");
 
         proxy.registerBlockRenderers();
-
-        for (final TankTier tier : GythApi.REGISTRY.values()) {
-
-            if (tier.tier == 1) {
-
-                REGISTRY.addShapedRecipe("modular_tank_" + tier.identifier.getPath(), GythApi.createTieredTank(tier), "xyx", "yzy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS, 'z', Items.BUCKET);
-            }
-
-            REGISTRY.addShapedRecipe("tank_upgrade_" + tier.identifier.getPath(), GythApi.createTierUpgrade(tier), "xyx", "yxy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS);
-
-        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -120,6 +111,17 @@ public class Gyth {
             
             LOG.info("Loading Dark Utils support. This seems oddly familiar.");
             AddonDarkUtilities.initialize();
+        }
+        
+        for (final TankTier tier : GythApi.REGISTRY.values()) {
+
+            if (tier.tier == 1) {
+
+                REGISTRY.addShapedRecipe("modular_tank_" + tier.identifier.getPath(), GythApi.createTieredTank(tier), "xyx", "yzy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS, 'z', Items.BUCKET);
+            }
+
+            REGISTRY.addShapedRecipe("tank_upgrade_" + tier.identifier.getPath(), GythApi.createTierUpgrade(tier), "xyx", "yxy", "xyx", 'x', tier.recipe, 'y', OreDictUtils.PANE_GLASS);
+
         }
     }
     
