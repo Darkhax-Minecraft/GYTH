@@ -196,8 +196,23 @@ public class GythApi {
      */
     public static TankTier getTierFromStack (ItemStack stack) {
 
-        if (stack.hasTagCompound() && stack.getTagCompound().hasKey("TierID"))
-            return getTier(stack.getTagCompound().getString("TierID"));
+        if (stack.hasTagCompound()) {
+            
+            if (stack.getTagCompound().hasKey("TierID")) {
+                
+                return getTier(stack.getTagCompound().getString("TierID"));
+            }
+            
+            else if (stack.getTagCompound().hasKey("TileData")) {
+                
+                NBTTagCompound tag = stack.getTagCompound().getCompoundTag("TileData");
+                
+                if (tag.hasKey("TierID")) {
+                    
+                    return getTier(tag.getString("TierID"));
+                }
+            }
+        }
 
         return null;
     }
