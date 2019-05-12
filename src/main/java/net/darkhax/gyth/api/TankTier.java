@@ -67,6 +67,12 @@ public class TankTier implements Comparable<TankTier> {
         return upgradeTier.tier == this.tier + 1 || upgradeTier.tier == this.tier;
     }
 
+    @Override
+    public String toString() {
+        
+        return this.identifier.toString();
+    }
+    
     /**
      * Checks if the tier is flammable or not. A flammable tank can not accept fluids which
      * have Lava as their material. For the majority of cases all params can be null, however
