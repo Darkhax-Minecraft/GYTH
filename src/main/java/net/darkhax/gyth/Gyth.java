@@ -10,6 +10,9 @@ import net.darkhax.gyth.common.ProxyCommon;
 import net.darkhax.gyth.items.ItemBlockTank;
 import net.darkhax.gyth.items.ItemTankUpgrade;
 import net.darkhax.gyth.libs.ConfigurationHandler;
+import net.darkhax.gyth.plugins.AddonAtum2;
+import net.darkhax.gyth.plugins.AddonDarkUtilities;
+import net.darkhax.gyth.plugins.AddonTwilightForest;
 import net.darkhax.gyth.plugins.PluginMineTweaker;
 import net.darkhax.gyth.tabs.CreativeTabGyth;
 import net.darkhax.gyth.tileentity.TileEntityModularTank;
@@ -19,10 +22,13 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -31,6 +37,8 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms.IMCMessage;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,6 +48,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 @Mod(modid = Gyth.MOD_ID, name = Gyth.MOD_NAME, version = "@VERSION@", dependencies = Gyth.DEPENDENCIES, certificateFingerprint = "@FINGERPRINT@")
+@EventBusSubscriber
 public class Gyth {
 
     public static final String MOD_ID = "gyth";
@@ -92,6 +101,28 @@ public class Gyth {
         }
     }
 
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void registerRecipes(Register<IRecipe> event) {
+        
+        if (Loader.isModLoaded("atum")) {
+            
+            LOG.info("Loading Atum2 support. These tanks belong in a museum!");
+            AddonAtum2.initialize();
+        }
+        
+        if (Loader.isModLoaded("twilightforest")) {
+            
+            LOG.info("Loading Twilight Forest support. You've just crossed over into the Twilight Zone.");
+            AddonTwilightForest.initialize();
+        }
+        
+        if (Loader.isModLoaded("darkutils")) {
+            
+            LOG.info("Loading Dark Utils support. This seems oddly familiar.");
+            AddonDarkUtilities.initialize();
+        }
+    }
+    
     @EventHandler
     public void init (FMLInitializationEvent event) {
 
